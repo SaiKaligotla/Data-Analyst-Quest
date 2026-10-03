@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7-day plan &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n on" href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>My 7-Day Data Analyst Interview Plan</h1>
+<p><strong>Fresher · basic SQL + Python · ~8 hrs/day</strong><br>Companion file: <code>sql-days-1-2.md</code> (40 SQL practice questions)</p>
+<hr>
+<h2>How to use this document</h2>
+<p>Two buckets. Everything in this plan is one or the other — never confuse them.</p>
+<table><thead><tr><th>Bucket</th><th>What it means</th><th>Time spent</th></tr></thead><tbody><tr><td>🔨 <strong>PRACTICE</strong></td><td>You must be able to <em>write it from a blank screen</em></td><td>80% of your week</td></tr><tr><td>📖 <strong>EXPLAIN</strong></td><td>You only need to <em>say it out loud correctly</em></td><td>20% — read once, revise Day 7</td></tr></tbody></table>
+<p><strong>The daily loop, per topic:</strong> 10 min input → 45 min doing → write one line in your own words → tick the node on roadmap.sh.<br>If you can't write that line without looking, don't tick it.</p>
+<p><strong>When stuck:</strong> 10 minutes → read the solution → understand → <strong>close it and redo from blank.</strong> That last step is the whole thing.</p>
+<hr>
+<h1>DAY 1 — SQL foundations + JOINs</h1>
+<h3>📖 Theory block (1 hr — do this first, get it out of the way)</h3>
+<ul><li>4 Types of Analytics: Descriptive (what happened) · Diagnostic (why) · Predictive (what will) · Prescriptive (what to do)</li><li>Relational databases · SQL vs NoSQL — one line each</li><li>Primary Key vs Foreign Key</li><li><strong>DDL vs DML vs DCL</strong></li><li>DDL = structure: CREATE, ALTER, DROP, TRUNCATE</li><li>DML = data: SELECT, INSERT, UPDATE, DELETE</li><li>DCL = permissions: GRANT, REVOKE</li><li><strong>DELETE vs TRUNCATE vs DROP</strong> ← commonly asked</li></ul>
+<table><thead><tr><th></th><th>Does</th><th>Rollback</th><th>Speed</th></tr></thead><tbody><tr><td>DELETE</td><td>removes rows, takes WHERE</td><td>Yes</td><td>Slow</td></tr><tr><td>TRUNCATE</td><td>wipes all rows, keeps table</td><td>No</td><td>Fast</td></tr><tr><td>DROP</td><td>deletes the table itself</td><td>No</td><td>Fast</td></tr></tbody></table>
+<ul><li>Recognise the syntax shape only:</li></ul>
+<p>  ```sql<br>  CREATE TABLE t (id INT PRIMARY KEY, name VARCHAR(50));<br>  ALTER TABLE t ADD COLUMN dept VARCHAR(30);<br>  INSERT INTO t (id, name) VALUES (1, 'Asha');<br>  UPDATE t SET name = 'Ravi' WHERE id = 1;<br>  DELETE FROM t WHERE id = 1;<br>  ```</p>
+<h3>🔨 Practice block (5 hrs)</h3>
+<ul><li>SELECT, WHERE, ORDER BY, LIMIT, DISTINCT</li><li>Aggregates: SUM, COUNT, AVG, MIN, MAX</li><li><strong>GROUP BY + HAVING</strong></li><li>CASE WHEN · COALESCE · IS NULL</li><li><strong>JOINs: INNER, LEFT, RIGHT, FULL OUTER, Self Join</strong></li></ul>
+<p>→ <strong>Do questions 1–15 in <code>sql-days-1-2.md</code></strong> on DataLemur.</p>
+<h3>✅ End of Day 1 — say these out loud</h3>
+<ul><li>WHERE vs HAVING (before grouping vs after)</li><li>INNER vs LEFT JOIN</li><li>Why <code>= NULL</code> fails</li><li>COUNT(*) vs COUNT(column)</li><li>DELETE vs TRUNCATE</li></ul>
+<hr>
+<h1>DAY 2 — SQL advanced <em>(highest-value day of the week)</em></h1>
+<h3>🔨 Morning (3 hrs)</h3>
+<ul><li>Nested subqueries · Correlated subqueries · scalar subquery</li><li><strong>CTEs</strong> (<code>WITH</code>)</li></ul>
+<h3>🔨 Afternoon (4 hrs) — Window Functions</h3>
+<p><code>ROW_NUMBER</code> · <code>RANK</code> · <code>DENSE_RANK</code> · <code>LEAD</code> · <code>LAG</code> · <code>FIRST_VALUE</code> · <code>PARTITION BY</code></p>
+<h3>🔨 Evening (1 hr) — functions</h3>
+<p>CONCAT, LENGTH, SUBSTRING, UPPER/LOWER · ROUND, FLOOR, CEILING · CASE, NULLIF, COALESCE · DATE, DATEPART, DATEADD</p>
+<p>→ <strong>Do questions 16–40 in <code>sql-days-1-2.md</code>.</strong></p>
+<h3>✅ Gate — do not move to Day 3 until you can write these from blank</h3>
+<ol><li>Month-over-month growth % using LAG</li><li>Top 3 per group using DENSE_RANK</li><li>Customers with no orders using LEFT JOIN</li></ol>
+<p>Also be able to say: RANK vs DENSE_RANK vs ROW_NUMBER · PARTITION BY vs GROUP BY · why use a CTE.</p>
+<hr>
+<h1>DAY 3 — Excel</h1>
+<h3>🔨 Practice (6 hrs)</h3>
+<ul><li>SUM, AVERAGE, COUNT, MIN/MAX</li><li>IF</li><li><strong>VLOOKUP / HLOOKUP</strong> ← most-asked Excel question</li><li>TRIM, and cleaning: remove duplicates, text-to-columns, find &amp; replace</li><li><strong>PIVOT TABLES</strong> ← #1 Excel interview topic. Spend 2 hours here.</li><li>Charting + conditional formatting</li></ul>
+<p><em>Skipped (roadmap struck these, correctly): DATEDIF, CONCAT, UPPER/LOWER/PROPER, REPLACE/SUBSTITUTE</em></p>
+<h3>🔨 Deliverable</h3>
+<p>Download a messy CSV from Kaggle. Clean it. Build a pivot table summary with a slicer.<br><strong>Keep this dataset — it becomes your Day 6 project.</strong></p>
+<h3>✅ Say out loud</h3>
+<ul><li>What a pivot table does, and when you'd use one</li><li>VLOOKUP vs INDEX-MATCH (and VLOOKUP's limitation: can't look left)</li></ul>
+<hr>
+<h1>DAY 4 — Python / pandas</h1>
+<h3>🔨 Practice (6 hrs)</h3>
+<ul><li>Load: <code>pd.read_csv</code>, <code>.head() .info() .describe() .shape</code></li><li>Filter: boolean masks, <code>loc</code> vs <code>iloc</code></li><li><strong>Cleaning:</strong> <code>isnull().sum()</code>, <code>fillna</code>, <code>dropna</code>, <code>drop_duplicates</code>, <code>astype</code>, <code>rename</code></li><li><strong>Outliers (added back — roadmap wrongly cut this):</strong> IQR method — <code>Q1 - 1.5<em>IQR</code>, <code>Q3 + 1.5</em>IQR</code>, boxplot</li><li><strong>Data transformation (added back):</strong> <code>apply</code>, <code>map</code>, creating new columns, binning</li><li>Aggregate: <code>groupby().agg()</code>, <code>pivot_table</code>, <code>value_counts</code>, <code>sort_values</code></li><li>Combine: <code>merge</code> — map each type directly onto the SQL joins you learned Day 1</li><li>Plot: seaborn — bar, line, hist, box, <strong>heatmap</strong></li></ul>
+<h3>✅ Say out loud</h3>
+<ul><li>loc vs iloc</li><li>merge vs concat</li><li><strong>How you handle missing data — and why</strong> (drop vs fill, and what you'd fill with)</li><li>How you detect outliers</li></ul>
+<hr>
+<h1>DAY 5 — Statistics</h1>
+<h3>📖 + 🔨 (5 hrs) — StatQuest on YouTube is worth watching here</h3>
+<ul><li><strong>Central tendency:</strong> Mean, Median, Mode — <em>and when median beats mean</em> (skewed data, outliers, income)</li><li><strong>Dispersion (added back — roadmap wrongly cut these):</strong> Range, <strong>Variance</strong>, <strong>Standard Deviation</strong></li><li>Variance = average squared deviation. Std dev = its square root, back in original units.</li><li><code>df.describe()</code> — read every row of the output and know what it means</li><li>Distributions: normal, skew (left/right), what a histogram tells you</li><li><strong>Correlation Analysis</strong> + <strong>correlation ≠ causation</strong> ← guaranteed talking point</li><li>Correlation heatmap on your dataset</li></ul>
+<h3>📖 Vocabulary only — 30 min, do not go deeper</h3>
+<ul><li>Hypothesis testing: null hypothesis, p-value, 0.05 threshold</li><li><strong>Regression: 10 minutes.</strong> "Fits a line to predict a continuous outcome; R² = variance explained." Stop there.</li><li>A/B testing: what it is, at a concept level</li></ul>
+<h3>📖 Business metrics (1 hr) — freshers get caught out here</h3>
+<p>DAU/MAU · retention · churn · conversion rate · funnel · AOV · CAC · LTV · cohort</p>
+<h3>✅ Say out loud</h3>
+<ul><li>Variance vs standard deviation</li><li>When you'd use median over mean</li><li>An example of correlation without causation</li></ul>
+<hr>
+<h1>DAY 6 — Power BI + THE PROJECT</h1>
+<h3>🔨 Power BI (3 hrs)</h3>
+<ul><li>Power Query: import + clean</li><li>Relationships between tables</li><li>Basic DAX: <code>SUM</code>, <code>AVERAGE</code>, <code>CALCULATE</code>, <code>DIVIDE</code> · measure vs calculated column</li><li>Build a <strong>one-page dashboard</strong>: KPI cards, bar, line, slicer</li></ul>
+<h3>🔨 The project (5 hrs) — this matters more than any remaining topic</h3>
+<p>Use the dataset from Day 3. <strong>Do a sales-performance analysis.</strong><br><em>(Ignore the roadmap's suggested projects — "predicting sales trends" and "customer segmentation" are both ML.)</em></p>
+<p>Full loop:</p>
+<ol><li>SQL queries to pull and aggregate</li><li>pandas to clean and explore</li><li>Power BI dashboard</li><li><strong>Write 3–5 insights, each with a recommendation</strong></li><li>GitHub repo + README</li></ol>
+<h3>✅ Rehearse</h3>
+<p>A 2-minute narration: what the data was → what you cleaned and why → what you found → what you'd recommend.</p>
+<hr>
+<h1>DAY 7 — Revision + mock</h1>
+<h3>Morning (3 hrs)</h3>
+<p>25 mixed SQL problems, timed, no notes. Weakest topics first.</p>
+<h3>Afternoon (3 hrs) — rehearse <strong>out loud</strong>, not in your head</h3>
+<ol><li>Tell me about yourself <em>(60 sec)</em></li><li>Walk me through your project <em>(2 min)</em></li><li>How do you handle missing data and outliers?</li><li>WHERE vs HAVING · INNER vs LEFT JOIN · RANK vs DENSE_RANK</li><li>Variance vs standard deviation · mean vs median</li><li>DELETE vs TRUNCATE vs DROP</li><li>Explain a pivot table</li><li>Descriptive vs predictive analytics</li><li>Explain a technical finding to a non-technical stakeholder</li><li>"Sales dropped 20% last month — how would you investigate?"</li><li>What metric would you track for a food delivery app?</li></ol>
+<h3>Evening (2 hrs)</h3>
+<p>Your own one-line notes only. <strong>No new topics.</strong></p>
+<hr>
+<h1>Not learning — and the honest answer</h1>
+<p>Machine Learning · Deep Learning · Big Data (Hadoop/Spark) · Tableau · R ·<br>APIs &amp; Web Scraping · Views · Indexes · Transactions/ACID · Stored Procedures ·<br>Query Optimization · Recursive &amp; Dynamic SQL</p>
+<blockquote><em>"I focused on the analytics core — SQL, Python and Power BI. Machine learning and big data tools are my next step."</em></blockquote>
+<p>Perfectly fine from a fresher. <strong>Never pretend to know ML.</strong></p>
+<hr>
+<h1>Progress log</h1>
+<table><thead><tr><th>Day</th><th>Focus</th><th>Nodes done</th><th>Problems</th><th>Gate passed?</th></tr></thead><tbody><tr><td>1</td><td>SQL basics + JOINs</td><td></td><td>/15</td><td>☐</td></tr><tr><td>2</td><td>CTEs + Window fns</td><td></td><td>/25</td><td>☐</td></tr><tr><td>3</td><td>Excel + pivot tables</td><td></td><td></td><td>☐</td></tr><tr><td>4</td><td>pandas + cleaning</td><td></td><td></td><td>☐</td></tr><tr><td>5</td><td>Statistics</td><td></td><td></td><td>☐</td></tr><tr><td>6</td><td>Power BI + project</td><td></td><td></td><td>☐</td></tr><tr><td>7</td><td>Mock interview</td><td></td><td>/25</td><td>☐</td></tr></tbody></table>
+<h3>Non-negotiables by Day 7</h3>
+<ol><li>Write a window function from a blank screen</li><li>Narrate your project in 2 minutes</li><li>Build a pivot table live</li><li>Explain variance vs standard deviation in plain English</li><li>Answer DELETE vs TRUNCATE without hesitating</li></ol><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

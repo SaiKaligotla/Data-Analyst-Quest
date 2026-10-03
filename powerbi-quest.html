@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Power BI Quest</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--pan2:#1b2130;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#f97316}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+code,pre,textarea,input.num,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:100;background:rgba(11,14,20,.93);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:17px;letter-spacing:-.3px;cursor:pointer}
+.logo span{color:var(--ac)}
+.hm{font-size:12px;color:var(--mut);text-decoration:none;border:1px solid var(--br);padding:4px 9px;border-radius:7px}
+.hm:hover{color:var(--tx)}
+.stats{display:flex;gap:10px;margin-left:auto;align-items:center;font-size:13px;font-weight:700;flex-wrap:wrap}
+.stat{display:flex;align-items:center;gap:5px;background:var(--pan);border:1px solid var(--br);
+padding:5px 11px;border-radius:99px}
+.xpbar{flex:1;min-width:90px;max-width:200px;height:7px;background:var(--pan);border-radius:99px;overflow:hidden}
+.xpbar>div{height:100%;background:linear-gradient(90deg,var(--ac),#a855f7);width:0;transition:width .5s}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px 80px}
+.hero{text-align:center;padding:26px 0 10px}
+.hero h1{font-size:34px;font-weight:800;letter-spacing:-1px}
+.hero p{color:var(--mut);margin-top:6px}
+.world{margin-top:30px}
+.wh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.wdot{width:11px;height:11px;border-radius:99px}
+.wh h2{font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.wh .wc{font-size:12px;color:var(--mut);margin-left:auto;font-weight:600}
+.nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+.node{background:var(--pan);border:1px solid var(--br);border-radius:12px;padding:13px;cursor:pointer;
+position:relative;transition:transform .12s,border-color .12s}
+.node:hover{transform:translateY(-2px)}
+.node .ln{font-size:11px;color:var(--mut);font-weight:800;letter-spacing:.5px}
+.node .lt{font-size:14px;font-weight:600;margin-top:2px}
+.node.lock{opacity:.38;cursor:not-allowed}.node.lock:hover{transform:none}
+.node.done{border-color:#1e5235;background:linear-gradient(180deg,#14301f22,var(--pan))}
+.node.cur{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac),0 6px 24px -8px var(--ac)}
+.tick{position:absolute;top:10px;right:11px;font-size:14px}
+.lv{display:none}.lv.on{display:block}
+.back{background:none;border:none;color:var(--mut);font-size:13px;cursor:pointer;padding:0;font-weight:600}
+.back:hover{color:var(--tx)}
+.lvhead{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px;flex-wrap:wrap}
+.lvhead .n{font-size:12px;font-weight:800;color:var(--ac);letter-spacing:1px}
+.lvhead h2{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:860px){.cols{grid-template-columns:1fr}}
+.box{background:var(--pan);border:1px solid var(--br);border-radius:14px;padding:18px}
+.box h3{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.lesson p{margin-bottom:9px;font-size:14.5px}
+.lesson ul{margin:0 0 9px 18px;font-size:14.5px}.lesson li{margin-bottom:4px}
+.lesson pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:8px;
+padding:12px;margin:9px 0;font-size:12.5px;color:#a5f3d0;overflow-x:auto;white-space:pre-wrap;line-height:1.5}
+.lesson code{background:#070a10;padding:1px 5px;border-radius:4px;font-size:12.5px;color:#fbbf24}
+.lesson table{margin:9px 0}
+.task{background:linear-gradient(135deg,#1e1b4b55,#312e8133);border:1px solid #4338ca66;
+border-radius:12px;padding:15px;font-size:15px}
+.task b{color:#c7d2fe}
+textarea{width:100%;min-height:130px;background:#070a10;border:1px solid var(--br);border-radius:10px;
+color:#dbe4f0;padding:13px;font-size:13.5px;resize:vertical;line-height:1.6}
+textarea:focus{outline:none;border-color:var(--ac)}
+input.num{width:100%;background:#070a10;border:1px solid var(--br);border-radius:10px;color:#dbe4f0;
+padding:14px;font-size:19px;font-weight:700}
+input.num:focus{outline:none;border-color:var(--ac)}
+.mc{display:flex;flex-direction:column;gap:8px}
+.opt{background:#070a10;border:1px solid var(--br);border-radius:10px;padding:12px 14px;cursor:pointer;
+font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.opt:hover{border-color:#39425a}
+.opt.sel{border-color:var(--ac);background:#11162480}
+.opt .k{font-weight:800;color:var(--mut);flex-shrink:0}
+.opt.sel .k{color:var(--ac)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button.b{background:var(--pan2);border:1px solid var(--br);color:#cdd5e3;padding:9px 15px;border-radius:9px;
+cursor:pointer;font-size:13px;font-weight:700}
+button.b:hover{background:#242c3d}
+button.go{background:var(--ac);border-color:var(--ac);color:#fff;flex:1}
+button.go:hover{filter:brightness(1.12)}
+.msg{margin-top:11px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
+.msg.ok{display:block;background:#0f2a1a;border:1px solid #1e5235;color:#86efac}
+.msg.bad{display:block;background:#2a1414;border:1px solid #5c2626;color:#fca5a5}
+.hintbox{margin-top:10px;background:#1c1708;border-left:3px solid #f59e0b;border-radius:8px;
+padding:10px 13px;font-size:13.5px;color:#fde68a;display:none}
+.hintbox.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;padding:7px 9px;background:#070a10;color:var(--mut);font-weight:700;
+border-bottom:1px solid var(--br);white-space:nowrap;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+td{padding:6px 9px;border-bottom:1px solid #1b2130;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;max-height:290px;overflow-y:auto;border:1px solid var(--br);border-radius:9px}
+.tabsm{display:flex;gap:5px;margin-bottom:9px;flex-wrap:wrap}
+.tabsm button{background:var(--pan2);border:1px solid var(--br);color:var(--mut);font-size:11px;
+padding:4px 9px;border-radius:6px;cursor:pointer;font-weight:700}
+.tabsm button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.sol{display:none;margin-top:10px}.sol.on{display:block}
+.sol pre{background:#070a10;border:1px solid var(--br);border-left:3px solid #22c55e;border-radius:9px;
+padding:13px;font-size:13px;color:#86efac;overflow-x:auto;white-space:pre-wrap;line-height:1.6}
+.why{margin-top:10px;background:#0d1620;border-left:3px solid #38bdf8;border-radius:8px;padding:11px 13px;
+font-size:13.5px;color:#bae6fd;display:none}
+.why.on{display:block}
+.ov{position:fixed;inset:0;background:rgba(5,7,12,.86);backdrop-filter:blur(5px);z-index:200;
+display:none;align-items:center;justify-content:center;padding:20px}
+.ov.on{display:flex}
+.ovc{background:var(--pan);border:1px solid #2f3a52;border-radius:20px;padding:34px;max-width:420px;
+width:100%;text-align:center}
+.ovc .em{font-size:52px}
+.ovc h3{font-size:25px;font-weight:800;margin:8px 0 4px}
+.ovc p{color:var(--mut);font-size:14.5px;margin-bottom:8px}
+.gain{display:inline-block;background:#1e1b4b;border:1px solid #4338ca;color:#c7d2fe;
+padding:5px 14px;border-radius:99px;font-weight:800;font-size:14px;margin:8px 0 18px}
+.ovc .row{justify-content:center}
+.fin{background:linear-gradient(135deg,#312e81,#1e1b4b);border:1px solid #4338ca;border-radius:16px;
+padding:24px;text-align:center;margin-top:26px}
+.fin h3{font-size:21px;font-weight:800}
+.fin p{color:#c7d2fe;font-size:14px;margin-top:6px}
+.note{color:var(--mut);font-size:12.5px;margin-top:14px;text-align:center}
+.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.pl{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--pan2);
+border:1px solid var(--br);color:var(--mut)}
+</style></head><body>
+
+<div class="top">
+  <div class="logo" onclick="goMap()">PowerBI <span>Quest</span></div>
+  <a class="hm" href="index.html">All games</a>
+  <div class="xpbar"><div id="xpf"></div></div>
+  <div class="stats">
+    <div class="stat">&#9889; <span id="sxp">0</span> XP</div>
+    <div class="stat">&#11088; <span id="sdone">0</span>/<span id="stot">0</span></div>
+    <div class="stat">&#128293; <span id="sstreak">0</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="map">
+    <div class="hero">
+      <h1>Power BI Quest</h1>
+      <p>29 levels. Power Query, modelling, DAX and the project that wins the interview.</p>
+      <div class="pillrow" style="justify-content:center">
+        <span class="pl">Works offline</span><span class="pl">Progress saved</span>
+        <span class="pl">Real computed answers</span><span class="pl">Interview-focused</span>
+      </div>
+    </div>
+    <div id="worlds"></div>
+    <div class="note">Levels unlock as you go. Hints cost XP, not pride &mdash; but try first.
+    <br><button class="back" style="margin-top:8px;text-decoration:underline" onclick="resetAll()">Reset all progress</button></div>
+  </div>
+
+  <div id="lv" class="lv">
+    <button class="back" onclick="goMap()">&larr; Back to map</button>
+    <div class="lvhead"><span class="n" id="lvn"></span><h2 id="lvt"></h2></div>
+    <div class="cols">
+      <div>
+        <div class="box lesson" id="lesson"></div>
+        <div class="box" style="margin-top:16px" id="databox">
+          <h3>The model</h3>
+          <div class="tabsm" id="tabsm"></div>
+          <div class="scroll" id="tbl"></div>
+        </div>
+      </div>
+      <div>
+        <div class="task" id="task"></div>
+        <div class="box" style="margin-top:16px">
+          <h3 id="anslabel">Your answer</h3>
+          <div id="inputzone"></div>
+          <div class="row">
+            <button class="b go" onclick="check()">Check answer</button>
+            <button class="b" onclick="hint()">Hint</button>
+            <button class="b" onclick="showSol()">Solution</button>
+          </div>
+          <div class="hintbox" id="hb"></div>
+          <div class="msg" id="msg"></div>
+          <div class="sol" id="sol"><h3 style="margin-top:14px">Model answer</h3><pre id="solp"></pre></div>
+          <div class="why" id="why"></div>
+        </div>
+        <div class="box" style="margin-top:16px" id="expbox">
+          <h3 id="explabel">Target output</h3>
+          <div class="scroll" id="exp"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov"><div class="ovc">
+  <div class="em" id="ovem">&#127881;</div>
+  <h3 id="ovh">Correct</h3>
+  <p id="ovp"></p>
+  <div class="gain" id="ovg"></div>
+  <div class="row">
+    <button class="b" onclick="closeOv()">Stay here</button>
+    <button class="b go" onclick="nextLevel()" id="ovnext">Next level &rarr;</button>
+  </div>
+</div></div>
+
+<script>
+const DATA={"levels": [{"world": 1, "title": "The three Power BIs", "lesson": "<p>Three products share the name:</p><ul><li><b>Desktop</b> &mdash; free Windows app. You <i>build</i> here.</li><li><b>Service</b> &mdash; the web portal. You <i>publish and share</i> here.</li><li><b>Mobile</b> &mdash; apps for viewing.</li></ul><p>Everything in this game happens in Desktop.</p>", "task": "Where do you actually build a report?", "hints": ["One of them is the authoring tool.", "It is the free desktop application.", "Power BI Desktop."], "type": "mc", "options": ["Power BI Service", "Power BI Desktop", "Power BI Mobile", "Excel"], "correct": 1, "sol": "Build in Desktop, publish to the Service, view anywhere including Mobile.", "why": "A quick confident answer here sets the tone. Many candidates are vague about it.", "n": 1}, {"world": 1, "title": "The four stages", "lesson": "<p>Every Power BI project runs in the same order:</p><pre>1. Connect   - get the data in\n2. Transform - clean it in Power Query\n3. Model     - relate tables, write measures\n4. Visualise - build the report</pre><p>Skipping stage 2 or 3 is why most beginner dashboards are a mess.</p>", "task": "Where does <b>cleaning</b> happen?", "hints": ["It is stage 2.", "Before the data reaches the model.", "In Power Query."], "type": "mc", "options": ["In the visuals", "In Power Query, before loading to the model", "In DAX measures", "In Excel beforehand"], "correct": 1, "sol": "Power Query is the transform layer. Clean there, not with DAX workarounds later.", "n": 2}, {"world": 1, "title": "Import vs DirectQuery", "lesson": "<p><b>Import</b> copies the data into the .pbix file. Fast, full feature support, but needs refreshing to stay current.</p><p><b>DirectQuery</b> leaves it in the source and queries live. Always current, but slower and some DAX is unavailable.</p><p>Import is the default and the right answer most of the time.</p>", "task": "You need near real-time data from a large database. Which mode?", "hints": ["Import would be a snapshot.", "You need live queries.", "DirectQuery."], "type": "mc", "options": ["Import", "DirectQuery", "Both at once", "Neither"], "correct": 1, "sol": "DirectQuery for live data. Import when a scheduled refresh is good enough - which is usually.", "why": "Mention the trade-off, not just the answer: DirectQuery costs you speed and some DAX functions.", "n": 3}, {"world": 2, "title": "Applied Steps", "lesson": "<p>Every action in Power Query is recorded as a step in the <b>Applied Steps</b> list on the right. You can click back through them, edit one, or delete it.</p><p>This is the real advantage over Excel: the cleaning is <b>reproducible</b>. Next month's file gets the same treatment automatically on refresh.</p>", "task": "Why does the Applied Steps list matter more than it first appears?", "hints": ["Think about next month's data.", "It is a recorded recipe.", "The cleaning replays automatically on refresh."], "type": "mc", "options": ["It makes the file smaller", "It records the cleaning as a repeatable recipe that re-runs on every refresh - unlike manual Excel edits", "It is only for undo", "It speeds up the visuals"], "correct": 1, "sol": "Applied Steps = reproducible cleaning. Say this in an interview and you demonstrate you understand why a BI tool beats manual spreadsheet work.", "why": "A strong, specific answer to 'why Power BI over Excel?'", "n": 4}, {"world": 2, "title": "Fix the data types", "lesson": "<p>The first thing to check in Power Query is the little type icon in each column header. A date read as text, or a number read as text, will break everything downstream.</p><p><b>Transform &gt; Data Type</b>, or click the icon.</p>", "task": "Your date column loaded as text. Where do you fix it?", "hints": ["Fix it as early as possible.", "In the transform layer.", "Power Query, change the column data type."], "type": "mc", "options": ["With a DAX measure", "In Power Query - change the column data type, so everything downstream inherits it", "In the visual's formatting pane", "It does not matter"], "correct": 1, "sol": "Power Query, change type. Fixing types late with DAX is a workaround, not a fix.", "n": 5}, {"world": 2, "title": "Merge vs Append", "lesson": "<p>Two ways to combine tables &mdash; the exact same distinction as pandas merge vs concat, and SQL JOIN vs UNION.</p><ul><li><b>Merge</b> &mdash; joins on a key, adds columns sideways</li><li><b>Append</b> &mdash; stacks rows underneath, needs matching columns</li></ul>", "task": "You have twelve monthly sales files with identical columns. Which do you use?", "hints": ["No key is involved.", "You are stacking rows.", "Append."], "type": "mc", "options": ["Merge on the date column", "Append", "Pivot", "Group By"], "correct": 1, "sol": "Append stacks rows. Merge joins on a key and widens the table.", "why": "If you already answered merge vs concat in pandas and JOIN vs UNION in SQL, say so - showing the same concept across three tools is impressive.", "n": 6}, {"world": 2, "title": "Custom and conditional columns", "lesson": "<p><b>Custom Column</b> writes an expression &mdash; e.g. <code>[Qty] * [Price]</code>.</p><p><b>Conditional Column</b> is a point-and-click IF: if Region equals East then 1 else 0. No code needed.</p><p>Both are computed on load and stored, so they behave like real columns.</p>", "task": "You need a column flagging orders over 100000 as 'Large'. Simplest Power Query route?", "hints": ["There is a no-code option for if/then.", "It is in the Add Column tab.", "Conditional Column."], "type": "mc", "options": ["Write DAX", "Add Column > Conditional Column", "Append the table to itself", "Use a slicer"], "correct": 1, "sol": "Add Column > Conditional Column - a no-code IF. Use a Custom Column when the logic needs an expression.", "n": 7}, {"world": 3, "title": "Facts and dimensions", "lesson": "<p>Two kinds of table:</p><ul><li><b>Fact</b> &mdash; the events, with the numbers you aggregate. Long and narrow. <i>Sales</i> here.</li><li><b>Dimension</b> &mdash; descriptive attributes you slice by. Short and wide. <i>Products</i> here.</li></ul><p>Look at the two tabs on the left: Sales has amounts, Products has names and categories.</p>", "task": "Which of these is the <b>fact</b> table?", "hints": ["Facts hold the measurable events.", "Which one has Amount in it?", "Sales."], "type": "mc", "options": ["Products", "Sales", "Both", "Neither"], "correct": 1, "sol": "Sales is the fact table - one row per event, containing the numbers you sum. Products is a dimension.", "n": 8}, {"world": 3, "title": "Star schema", "lesson": "<p>A <b>star schema</b> is one fact table in the middle with dimension tables around it, each joined by a key. It looks like a star.</p><p>A <b>snowflake</b> breaks the dimensions into further sub-tables. More normalised, slower, harder to read.</p><p>Power BI is built for star schemas. Use one.</p>", "task": "Describe a star schema in one sentence.", "hints": ["Picture the shape.", "One central table, several around it.", "A central fact table surrounded by dimension tables."], "type": "mc", "options": ["Every table joined to every other table", "A central fact table surrounded by dimension tables, each joined by a key", "A single flat table containing everything", "Tables stacked on top of each other"], "correct": 1, "sol": "One fact table at the centre, dimensions radiating out. Simpler and faster than a snowflake.", "why": "If asked 'how would you model this?', saying 'star schema, fact in the middle' immediately signals you have done it properly.", "n": 9}, {"world": 3, "title": "Relationships", "lesson": "<p>Drag <code>ProductID</code> from Products onto <code>ProductID</code> in Sales. Power BI creates a <b>one-to-many</b> relationship: one product, many sales rows.</p><p>The filter flows from the <b>one</b> side to the <b>many</b> side. Pick Category in a visual and it filters the Sales rows.</p>", "task": "Which direction does the filter flow by default in a one-to-many relationship?", "hints": ["From the smaller table to the bigger one.", "Dimension filters fact.", "From the one side to the many side."], "type": "mc", "options": ["From many to one", "From the one side (dimension) to the many side (fact)", "Both directions always", "Neither - you must write DAX"], "correct": 1, "sol": "One -> many. The dimension filters the fact. That is why slicing by Category works.", "n": 10}, {"world": 3, "title": "Granularity", "lesson": "<p><b>Granularity</b> is what a single row represents. One row per order? Per order line? Per day per store?</p><p>Getting this wrong is how you end up double-counting revenue. Always ask 'what is one row here?' before you aggregate anything.</p>", "task": "Your revenue total is exactly double what finance reports. What is the most likely cause?", "hints": ["Think about row duplication.", "A join may have fanned out the rows.", "A relationship or join is duplicating fact rows."], "type": "mc", "options": ["DAX is unreliable", "A relationship is duplicating fact rows - probably a many-to-many, or the dimension has duplicate keys", "The data needs refreshing", "You should use AVERAGE instead"], "correct": 1, "sol": "Duplicate keys in the dimension, or a many-to-many relationship, fan out the fact rows and inflate the total. Check that the dimension key is genuinely unique.", "why": "A very practical answer. It shows you have debugged a real model rather than just followed a tutorial.", "n": 11}, {"world": 4, "title": "Your first measure", "lesson": "<p>A <b>measure</b> is a calculation written in DAX. Name, equals sign, expression:</p><pre>Total Sales = SUM(Sales[Amount])</pre><p>Table name, then column in square brackets. Measures recalculate based on whatever is filtered.</p>", "task": "Write a measure called <b>Total Sales</b> that sums <b>Sales[Amount]</b>.", "hints": ["Name = FUNCTION(Table[Column])", "Use SUM.", "Total Sales = SUM(Sales[Amount])"], "sol": "Total Sales = SUM(Sales[Amount])", "check": ["total\\s*sales\\s*=", "sum\\s*\\(", "sales\\s*\\[\\s*amount\\s*\\]"], "ph": "Measure = ...", "anslabel": "Your DAX measure", "exp": {"cols": ["Result"], "rows": [[988000]]}, "explabel": "Against the sample data this returns", "n": 12, "type": "code"}, {"world": 4, "title": "Columns vs measures", "lesson": "<p style='color:#fbbf24'>The most asked Power BI interview question.</p><ul><li><b>Calculated column</b> &mdash; computed row by row when the data loads, stored in the model, takes up memory. Use when you need a value per row, e.g. to slice by.</li><li><b>Measure</b> &mdash; computed on the fly from whatever is currently filtered, stores nothing. Use for aggregations.</li></ul>", "task": "What is the difference between a calculated column and a measure?", "hints": ["One is stored, one is computed live.", "Think about when each is evaluated.", "Column = per row at load time; measure = on the fly in filter context."], "type": "mc", "options": ["They are the same, just different names", "A column is computed per row and stored in the model; a measure is computed on demand from the current filter context", "Columns are faster for aggregation", "Measures can only use SUM"], "correct": 1, "sol": "Column: row by row, at refresh, stored. Measure: on demand, filter-aware, not stored. Rule of thumb - if you want to aggregate it, make it a measure; if you want to slice or filter by it, make it a column.", "why": "Learn this answer word for word. It comes up in almost every Power BI interview.", "n": 13}, {"world": 4, "title": "COUNTROWS", "lesson": "<p>Counting rows in a table.</p><pre>Order Count = COUNTROWS(Sales)</pre><p>Note it takes a <i>table</i>, not a column.</p>", "task": "Write a measure called <b>Order Count</b> that counts the rows in <b>Sales</b>.", "hints": ["One function, one table name.", "COUNTROWS takes the table itself.", "Order Count = COUNTROWS(Sales)"], "sol": "Order Count = COUNTROWS(Sales)", "check": ["order\\s*count\\s*=", "countrows\\s*\\(\\s*sales\\s*\\)"], "ph": "Measure = ...", "anslabel": "Your DAX measure", "exp": {"cols": ["Result"], "rows": [[10]]}, "explabel": "This returns", "n": 14, "type": "code"}, {"world": 4, "title": "DIVIDE", "lesson": "<p>Never use <code>/</code> in DAX. Use <b>DIVIDE</b>, which handles division by zero instead of erroring.</p><pre>AOV = DIVIDE([Total Sales], [Order Count])</pre><p>Square brackets with no table name means 'another measure'.</p>", "task": "Write a measure <b>AOV</b> that divides <b>[Total Sales]</b> by <b>[Order Count]</b> using DIVIDE.", "hints": ["Two arguments.", "DIVIDE(numerator, denominator)", "AOV = DIVIDE([Total Sales], [Order Count])"], "sol": "AOV = DIVIDE([Total Sales], [Order Count])", "check": ["aov\\s*=", "divide\\s*\\(", "total\\s*sales", "order\\s*count"], "ph": "Measure = ...", "anslabel": "Your DAX measure", "exp": {"cols": ["Result"], "rows": [[98800]]}, "explabel": "This returns", "why": "If asked why DIVIDE over the slash: it returns blank instead of an error when the denominator is zero.", "n": 15, "type": "code"}, {"world": 4, "title": "DISTINCTCOUNT", "lesson": "<p>Counting unique values &mdash; distinct customers, distinct products.</p><pre>Products Sold = DISTINCTCOUNT(Sales[ProductID])</pre>", "task": "Write a measure <b>Products Sold</b> counting distinct <b>Sales[ProductID]</b>.", "hints": ["One function.", "DISTINCTCOUNT takes a column.", "Products Sold = DISTINCTCOUNT(Sales[ProductID])"], "sol": "Products Sold = DISTINCTCOUNT(Sales[ProductID])", "check": ["products\\s*sold\\s*=", "distinctcount\\s*\\(", "productid"], "ph": "Measure = ...", "anslabel": "Your DAX measure", "exp": {"cols": ["Result"], "rows": [[4]]}, "explabel": "This returns", "n": 16, "type": "code"}, {"world": 4, "title": "CALCULATE", "lesson": "<p>The most important function in DAX. It evaluates an expression with a <b>changed filter context</b>.</p><pre>East Sales = CALCULATE(\n    SUM(Sales[Amount]),\n    Sales[Region] = \"East\"\n)</pre><p>First argument: what to compute. The rest: how to change the filters.</p>", "task": "Write a measure <b>East Sales</b> that sums <b>Sales[Amount]</b> only where <b>Sales[Region]</b> is <b>East</b>.", "hints": ["Wrap the SUM in CALCULATE.", "Second argument is the filter condition.", "East Sales = CALCULATE(SUM(Sales[Amount]), Sales[Region] = \"East\")"], "sol": "East Sales = CALCULATE(SUM(Sales[Amount]), Sales[Region] = \"East\")", "check": ["east\\s*sales\\s*=", "calculate\\s*\\(", "sum\\s*\\(", "region", "east"], "ph": "Measure = ...", "anslabel": "Your DAX measure", "exp": {"cols": ["Result"], "rows": [[388000]]}, "explabel": "This returns", "why": "If you only learn one DAX function properly, make it CALCULATE.", "n": 17, "type": "code"}, {"world": 4, "title": "Percent of total", "lesson": "<p>Combining measures. <code>ALL()</code> removes a filter, giving you the grand total to divide by.</p><pre>Pct = DIVIDE([Total Sales],\n     CALCULATE([Total Sales], ALL(Sales)))</pre>", "task": "East sales are <b>388,000</b> and total sales are <b>988,000</b>. What percentage is East? Round to 1 decimal.", "hints": ["Divide East by the total.", "Then times 100.", "388000 / 988000 x 100"], "type": "num", "answer": 39.3, "tol": 0.15, "sol": "388000 / 988000 x 100 = 39.3%", "n": 18}, {"world": 5, "title": "Choosing a chart", "lesson": "<p>The decision is driven by the question, not by taste:</p><ul><li>Compare categories &rarr; <b>bar / column</b></li><li>Trend over time &rarr; <b>line</b></li><li>Part of a whole &rarr; <b>stacked bar</b>, or pie if very few slices</li><li>Relationship between two numbers &rarr; <b>scatter</b></li><li>One headline number &rarr; <b>card / KPI</b></li><li>Precise values &rarr; <b>table / matrix</b></li></ul>", "task": "You need to show monthly revenue across two years. Which visual?", "hints": ["It is time based.", "You want to see the shape of the trend.", "A line chart."], "type": "mc", "options": ["Pie chart", "Line chart", "Scatter plot", "Card"], "correct": 1, "sol": "Line chart - time on the x-axis, revenue on the y-axis. Lines are for trends.", "why": "Expect 'how do you choose a chart type?'. Answer with the question-first logic, not a list of charts.", "n": 19}, {"world": 5, "title": "Why pie charts get criticised", "lesson": "<p>People are bad at comparing angles. With more than about four slices a pie becomes unreadable, and a bar chart shows the same data more clearly.</p><p>Not banned &mdash; just rarely the best choice.</p>", "task": "When is a pie chart acceptable?", "hints": ["Think about the number of slices.", "Only when very simple.", "Two or three categories showing parts of a whole."], "type": "mc", "options": ["Never, under any circumstances", "With two or three categories where you want to show share of a whole", "Whenever you have percentages", "For time series"], "correct": 1, "sol": "A couple of slices, part-to-whole. Beyond that, use a bar chart.", "n": 20}, {"world": 5, "title": "Cards and KPIs", "lesson": "<p>A <b>card</b> shows one number large. Put three or four across the top of your dashboard &mdash; total revenue, order count, AOV, growth.</p><p>This is the first thing anyone looks at. Make sure those four numbers are the ones that matter.</p>", "task": "What belongs in the cards at the top of a sales dashboard?", "hints": ["The headline numbers.", "What a manager asks first.", "Total revenue, orders, AOV, growth."], "type": "mc", "options": ["Every available metric", "The three or four headline numbers a decision maker asks for first - revenue, orders, AOV, growth", "The raw data table", "A list of product IDs"], "correct": 1, "sol": "Three or four headline KPIs. If everything is highlighted, nothing is.", "n": 21}, {"world": 5, "title": "Slicers and cross-filtering", "lesson": "<p>A <b>slicer</b> is an on-canvas filter the user clicks. <b>Cross-filtering</b> means clicking a bar in one visual filters all the others automatically.</p><p>Together they turn a static report into something a manager can explore without asking you for a new version.</p>", "task": "What is the real business value of slicers and cross-filtering?", "hints": ["Think about who uses the dashboard.", "It reduces requests to you.", "Self-service exploration for non-technical users."], "type": "mc", "options": ["They make the file load faster", "They let non-technical users answer their own follow-up questions instead of requesting new reports", "They are required for publishing", "They improve data quality"], "correct": 1, "sol": "Self-service. A good dashboard answers the next three questions before they are asked.", "why": "Framing a feature in terms of business value, not mechanics, is what distinguishes a strong candidate.", "n": 22}, {"world": 5, "title": "Dashboard design", "lesson": "<p>Rules that hold up in review:</p><ul><li>One page. Scrolling dashboards do not get read.</li><li>4&ndash;6 visuals. Resist adding more.</li><li>KPIs top, detail below &mdash; eyes go top-left first.</li><li>Every chart titled in plain language.</li><li>Consistent colours, one accent for emphasis.</li></ul>", "task": "A stakeholder asks for 'everything' on one dashboard. What is the right response?", "hints": ["Agreeing to everything is not the right answer.", "Find out the actual decision.", "Ask what decisions it needs to support, then prioritise."], "type": "mc", "options": ["Add every chart requested", "Ask what decisions the dashboard must support, build the 4-6 visuals that serve those, and offer detail on a second page", "Refuse to build it", "Build 20 visuals and let them choose"], "correct": 1, "sol": "Clarify the decisions first. A focused dashboard plus an optional detail page beats a wall of charts.", "why": "This answer shows stakeholder management, which is half the job and rarely demonstrated by freshers.", "n": 23}, {"world": 6, "title": "Plan the project", "lesson": "<p>Your Day 6 deliverable &mdash; the thing you will actually talk about in the interview.</p><p>One page: 4 KPI cards, a revenue trend line, a top-10 bar, a region breakdown, and two slicers.</p>", "task": "What should you decide <b>before</b> opening Power BI?", "hints": ["Not the colours.", "Start from the question.", "The business question the dashboard answers."], "type": "mc", "options": ["Which colour theme to use", "The business question it answers and who the audience is", "How many visuals to include", "Which DAX functions to show off"], "correct": 1, "sol": "Question and audience first. Everything else follows from those two.", "n": 24}, {"world": 6, "title": "Write the insights", "lesson": "<p>A dashboard alone is not analysis. Three to five written insights turn it into one.</p><p><span style='color:#f87171'>Weak:</span> 'Revenue increased by 12%.'<br><span style='color:#4ade80'>Strong:</span> 'Revenue is up 12%, but entirely from the East region while the other three are flat &mdash; the East campaign should be replicated.'</p>", "task": "What turns an observation into an insight?", "hints": ["One of them tells you what to do.", "Add the so-what.", "Context plus a recommended action."], "type": "mc", "options": ["Using more precise decimals", "Explaining what is driving the number and what the business should do about it", "Adding more charts", "Using a bigger font"], "correct": 1, "sol": "Observation + cause + recommendation. Without the recommendation you are a report writer, not an analyst.", "why": "This single habit is the biggest difference between a fresher who gets hired and one who does not.", "n": 25}, {"world": 6, "title": "The 2-minute narration", "lesson": "<p>You will be asked to walk through your project. Structure it:</p><pre>1. The question I set out to answer\n2. Where the data came from\n3. What was dirty and how I fixed it\n4. What I found\n5. What I would recommend</pre><p>Two minutes. Rehearse it out loud, not in your head.</p>", "task": "Which part do candidates most often leave out?", "hints": ["It is not the charts.", "Think about what makes the work credible.", "The cleaning, and the recommendation."], "type": "mc", "options": ["The colour scheme", "What was wrong with the data and how they fixed it, plus the recommendation at the end", "The number of rows", "The software version"], "correct": 1, "sol": "Cleaning and recommendation. The cleaning proves the data was real; the recommendation proves you think like an analyst.", "why": "Most candidates describe charts. Describing decisions is what gets remembered.", "n": 26}, {"world": 7, "title": "BOSS: Power BI or Excel?", "lesson": "<p>Judgement questions again.</p>", "task": "'When would you use Power BI instead of Excel?'", "hints": ["Think about repetition and audience.", "Who consumes it, and how often does it refresh?", "Recurring, shared, larger data, automated refresh."], "type": "mc", "options": ["Power BI is always better", "When the report is recurring and shared with others, the data is too big or too relational for a sheet, and it needs scheduled refresh - Excel is still fine for quick one-off analysis", "Only when the company has a licence", "Excel is always better for analysts"], "correct": 1, "sol": "Recurring + shared + larger + needs refresh -> Power BI. One-off exploration -> Excel. Say both halves.", "why": "Absolute answers sound naive. 'Here is when each wins' sounds experienced.", "n": 27}, {"world": 7, "title": "BOSS: the dashboard is slow", "lesson": "<p>A practical troubleshooting question.</p>", "task": "Your report takes 30 seconds to load. What do you look at first?", "hints": ["Think about how much data and how complex the model is.", "Too many visuals and a bad model are the usual culprits.", "Reduce the data, simplify the model and the visuals."], "type": "mc", "options": ["Buy a faster computer", "Reduce the rows and columns loaded, simplify the model towards a star schema, cut the number of visuals on the page, and avoid heavy calculated columns", "Switch every chart to a table", "Nothing can be done"], "correct": 1, "sol": "Load less data, model it as a star, fewer visuals per page, prefer measures over calculated columns. You do not need deep optimisation knowledge - just the sensible first moves.", "why": "You are not expected to know Performance Analyzer as a fresher. Sensible instincts are enough.", "n": 28}, {"world": 7, "title": "BOSS: walk me through your dashboard", "lesson": "<p>Final level. The question your whole Day 6 exists for.</p>", "task": "Which opening line is strongest?", "hints": ["Lead with the problem, not the tool.", "They want business context first.", "Start with the question it answers."], "type": "mc", "options": ["'I used Power BI with five visuals and some DAX measures.'", "'I wanted to understand why regional sales were diverging, so I built a one-page dashboard for a sales manager. Let me show you what I found.'", "'It took me about six hours to build.'", "'I followed a tutorial and adapted it.'"], "correct": 1, "sol": "Open with the question and the audience. Tools come later, and only if asked. Close with your recommendation.", "why": "The opening sentence sets whether they hear you as a tool user or an analyst. Rehearse it until it is automatic.", "n": 29}], "worlds": {"1": ["Getting started", "#f97316"], "2": ["Power Query", "#f59e0b"], "3": ["Data modelling", "#eab308"], "4": ["DAX", "#84cc16"], "5": ["Visuals", "#06b6d4"], "6": ["The project", "#8b5cf6"], "7": ["Interview boss", "#ef4444"]}, "tables": {"Sales (fact)": {"cols": ["SalesID", "ProductID", "Region", "Qty", "Amount", "OrderDate"], "rows": [[1, 1, "East", 3, 165000, "2025-01-05"], [2, 2, "West", 10, 120000, "2025-01-22"], [3, 3, "East", 12, 96000, "2025-02-03"], [4, 1, "North", 2, 110000, "2025-02-14"], [5, 4, "West", 4, 88000, "2025-02-19"], [6, 2, "East", 6, 72000, "2025-03-02"], [7, 3, "North", 15, 120000, "2025-03-11"], [8, 1, "East", 1, 55000, "2025-03-27"], [9, 4, "West", 3, 66000, "2025-04-08"], [10, 2, "North", 8, 96000, "2025-04-19"]]}, "Products (dimension)": {"cols": ["ProductID", "Product", "Category"], "rows": [[1, "Laptop", "Electronics"], [2, "Monitor", "Electronics"], [3, "Chair", "Furniture"], [4, "Desk", "Furniture"]]}}};
+
+const K='pbiquest_v1';
+function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+function store(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+let S=load();
+S.done=S.done||{}; S.xp=S.xp||0; S.hints=S.hints||{}; S.streak=S.streak||0; S.ans=S.ans||{};
+let cur=0, hintIdx=0, mcPick=null;
+const LV=DATA.levels, W=DATA.worlds, T=DATA.tables||{}, TOT=LV.length;
+
+function maxUnlocked(){let m=1;for(let i=1;i<=TOT;i++){if(S.done[i])m=Math.max(m,i+1);}return m;}
+function buildMap(){
+  const byW={};LV.forEach(l=>{(byW[l.world]=byW[l.world]||[]).push(l)});
+  const mu=maxUnlocked();let h='';
+  Object.keys(byW).forEach(w=>{
+    const nm=W[w][0],col=W[w][1],ls=byW[w];
+    const dn=ls.filter(l=>S.done[l.n]).length;
+    h+='<div class="world"><div class="wh"><span class="wdot" style="background:'+col+'"></span>'+
+       '<h2 style="color:'+col+'">'+nm+'</h2><span class="wc">'+dn+' / '+ls.length+'</span></div><div class="nodes">';
+    ls.forEach(l=>{
+      const done=!!S.done[l.n], lock=l.n>mu, is=l.n===mu&&!done;
+      h+='<div class="node'+(done?' done':'')+(lock?' lock':'')+(is?' cur':'')+'" '+
+         (lock?'':'onclick="openLevel('+l.n+')"')+'>'+
+         (done?'<span class="tick">&#9989;</span>':lock?'<span class="tick">&#128274;</span>':'')+
+         '<div class="ln">LEVEL '+l.n+'</div><div class="lt">'+l.title+'</div></div>';
+    });
+    h+='</div></div>';
+  });
+  if(Object.keys(S.done).length===TOT) h+='<div class="fin"><h3>&#127942; Power BI cleared</h3><p>You can clean in Power Query, model a star schema, write the core DAX and narrate a dashboard. That is the whole Day 6.</p></div>';
+  document.getElementById('worlds').innerHTML=h;hud();
+}
+function hud(){
+  const d=Object.keys(S.done).length;
+  document.getElementById('sxp').textContent=S.xp;
+  document.getElementById('sdone').textContent=d;
+  document.getElementById('stot').textContent=TOT;
+  document.getElementById('sstreak').textContent=S.streak;
+  document.getElementById('xpf').style.width=(100*d/TOT)+'%';
+}
+function goMap(){document.getElementById('lv').classList.remove('on');
+  document.getElementById('map').style.display='';buildMap();window.scrollTo(0,0);}
+
+function tbl(cols,rows){
+  if(!rows||!rows.length)return '<div style="padding:14px;color:#8792a8;font-size:13px">no rows</div>';
+  let h='<table><thead><tr>';cols.forEach(c=>h+='<th>'+c+'</th>');h+='</tr></thead><tbody>';
+  rows.forEach(r=>{h+='<tr>';r.forEach(v=>h+='<td>'+(v===null?'<span style="color:#64748b">NULL</span>':v)+'</td>');h+='</tr>'});
+  return h+'</tbody></table>';
+}
+function showTbl(n){
+  document.querySelectorAll('#tabsm button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));
+  document.getElementById('tbl').innerHTML=tbl(T[n].cols,T[n].rows);}
+
+function openLevel(n){
+  cur=n;hintIdx=0;mcPick=null;
+  const l=LV[n-1];
+  document.getElementById('map').style.display='none';
+  document.getElementById('lv').classList.add('on');
+  document.getElementById('lvn').textContent='LEVEL '+n+' / '+TOT;
+  document.getElementById('lvt').textContent=l.title;
+  document.getElementById('lesson').innerHTML='<h3>Lesson</h3>'+l.lesson;
+  document.getElementById('task').innerHTML='<b>Your task &mdash;</b> '+l.task;
+  document.getElementById('msg').className='msg';document.getElementById('msg').textContent='';
+  document.getElementById('hb').className='hintbox';
+  document.getElementById('sol').className='sol';
+  document.getElementById('solp').textContent=l.sol;
+  const why=document.getElementById('why');
+  if(l.why){why.innerHTML='<b>Why it matters:</b> '+l.why;}else{why.innerHTML='';}
+  why.className='why';
+
+  const iz=document.getElementById('inputzone');
+  if(l.type==='mc'){
+    document.getElementById('anslabel').textContent='Pick one';
+    let h='<div class="mc">';
+    l.options.forEach((o,i)=>{h+='<div class="opt" data-i="'+i+'" onclick="pick('+i+')">'+
+      '<span class="k">'+'ABCD'[i]+'</span><span>'+o+'</span></div>'});
+    iz.innerHTML=h+'</div>';
+  }else if(l.type==='num'){
+    document.getElementById('anslabel').textContent='Your answer (a number)';
+    iz.innerHTML='<input class="num" id="ed" placeholder="type a number" value="'+(S.ans[n]||'')+'">';
+  }else{
+    document.getElementById('anslabel').textContent=l.anslabel||'Your answer';
+    iz.innerHTML='<textarea id="ed" spellcheck="false" placeholder="'+(l.ph||'type here')+'">'+
+      (S.ans[n]||'').replace(/</g,'&lt;')+'</textarea>';
+  }
+  const eb=document.getElementById('expbox');
+  if(l.exp&&l.exp.rows&&l.exp.rows.length){
+    eb.style.display='';
+    document.getElementById('explabel').textContent=l.explabel||'Target output';
+    document.getElementById('exp').innerHTML=tbl(l.exp.cols,l.exp.rows);
+  }else{eb.style.display='none';}
+  const db=document.getElementById('databox');
+  const keys=Object.keys(T);
+  if(keys.length&&l.showdata!==false){
+    db.style.display='';
+    let tb='';keys.forEach(t=>{tb+='<button data-t="'+t+'" onclick="showTbl(\''+t+'\')">'+t+'</button>'});
+    document.getElementById('tabsm').innerHTML=tb;
+    showTbl(l.table||keys[0]);
+  }else{db.style.display='none';}
+  window.scrollTo(0,0);
+}
+function pick(i){mcPick=i;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',+o.dataset.i===i));}
+document.addEventListener('input',e=>{if(e.target.id==='ed'){S.ans[cur]=e.target.value;store();}});
+
+function norm(q){return q.toLowerCase().replace(/#[^\n]*/g,' ').replace(/--[^\n]*/g,' ')
+  .replace(/\s+/g,' ').replace(/;+\s*$/,'').trim();}
+function check(){
+  const l=LV[cur-1];const m=document.getElementById('msg');
+  let good=false, why='';
+  if(l.type==='mc'){
+    if(mcPick===null){m.className='msg bad';m.textContent='Pick an option first.';return;}
+    good = mcPick===l.correct;
+    if(!good) why='Not that one. Re-read the lesson above.';
+  }else if(l.type==='num'){
+    const v=parseFloat((document.getElementById('ed').value||'').replace(/[, ]/g,''));
+    if(isNaN(v)){m.className='msg bad';m.textContent='Enter a number.';return;}
+    const tol=l.tol||0.01;
+    good=Math.abs(v-l.answer)<=tol;
+    if(!good) why = (Math.abs(v-l.answer)<=l.answer*0.25) ? 'Close, but not right. Check your arithmetic.' : 'Not right. Work through it step by step.';
+  }else{
+    const q=norm(document.getElementById('ed').value);
+    if(!q){m.className='msg bad';m.textContent='Write something first.';return;}
+    const miss=l.check.filter(p=>!(new RegExp(p,'i')).test(q));
+    good=miss.length===0;
+    if(!good) why='Your answer is missing <b>'+label(miss[0])+'</b>.';
+  }
+  if(good){
+    if(!S.done[cur]){
+      const used=S.hints[cur]||0;
+      const gain=Math.max(10,30-used*7);
+      S.done[cur]=1;S.xp+=gain;S.streak=(S.streak||0)+1;store();win(gain,used);
+    }else{m.className='msg ok';m.textContent='Correct again. Already cleared.';}
+    document.getElementById('why').className=LV[cur-1].why?'why on':'why';
+    hud();
+  }else{
+    S.streak=0;store();hud();
+    m.className='msg bad';m.innerHTML=why+' Try the Hint button if you are stuck.';
+  }
+}
+const LBL={"group\\s+by": "GROUP BY", "having": "HAVING", "left\\s+join": "LEFT JOIN", "join": "a JOIN", "where": "WHERE", "order\\s+by": "ORDER BY", "limit": "LIMIT", "distinct": "DISTINCT", "over": "an OVER clause", "partition": "PARTITION BY", "with": "a CTE (WITH)", "coalesce": "COALESCE", "case": "CASE", "is\\s+null": "IS NULL", "nullif": "NULLIF", "groupby": "groupby()", "merge": "merge()", "fillna": "fillna()", "dropna": "dropna()", "drop_duplicates": "drop_duplicates()", "value_counts": "value_counts()", "isnull": "isnull()", "sort_values": "sort_values()", "pivot_table": "pivot_table()", "describe": "describe()", "vlookup": "VLOOKUP", "xlookup": "XLOOKUP", "index": "INDEX", "match": "MATCH", "sumifs?": "SUMIF / SUMIFS", "countifs?": "COUNTIF / COUNTIFS", "iferror": "IFERROR", "trim": "TRIM", "calculate": "CALCULATE", "divide": "DIVIDE", "sum": "SUM", "count": "COUNT", "avg|mean": "the average", "median": "median", "std": "std"};
+function label(p){
+  for(const k in LBL){if(p.indexOf(k)>=0)return LBL[k];}
+  const c=p.replace(/\\s\+/g,' ').replace(/[\\^$()?*+\[\]|]/g,'').trim();
+  return c?('something like: '+c):'a required piece';
+}
+function hint(){
+  const l=LV[cur-1];const hb=document.getElementById('hb');
+  if(hintIdx>=l.hints.length){hb.className='hintbox on';
+    hb.innerHTML='<b>No hints left.</b> Press Solution, read it, then close it and redo the level from blank.';return;}
+  S.hints[cur]=Math.max(S.hints[cur]||0,hintIdx+1);store();
+  hb.className='hintbox on';
+  hb.innerHTML='<b>Hint '+(hintIdx+1)+' of '+l.hints.length+':</b> '+l.hints[hintIdx];
+  hintIdx++;
+}
+function showSol(){S.hints[cur]=3;store();document.getElementById('sol').classList.add('on');
+  const l=LV[cur-1];if(l.why)document.getElementById('why').className='why on';}
+function win(gain,used){
+  const last=cur===TOT;
+  document.getElementById('ovem').innerHTML=last?'&#127942;':(used===0?'&#127919;':'&#9989;');
+  document.getElementById('ovh').textContent=last?'Complete':(used===0?'Clean solve':'Correct');
+  document.getElementById('ovp').textContent=last?'You can clean in Power Query, model a star schema, write the core DAX and narrate a dashboard. That is the whole Day 6.'
+    :(used===0?'No hints used. That is how it has to feel in the interview.'
+              :'Solved with '+used+' hint'+(used>1?'s':'')+'. Redo it later from blank.');
+  document.getElementById('ovg').textContent='+'+gain+' XP';
+  document.getElementById('ovnext').style.display=last?'none':'';
+  document.getElementById('ov').classList.add('on');
+}
+function closeOv(){document.getElementById('ov').classList.remove('on');}
+function nextLevel(){closeOv();if(cur<TOT)openLevel(cur+1);else goMap();}
+function resetAll(){if(confirm('Erase all progress for this game?')){
+  S={done:{},xp:0,hints:{},streak:0,ans:{}};store();buildMap();}}
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&document.getElementById('lv').classList.contains('on'))check();
+  if(e.key==='Escape')closeOv();});
+buildMap();
+</script></body></html>

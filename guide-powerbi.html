@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Power BI &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n on" href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>Power BI — Learn / Skip</h1>
+<p><strong>Day 6 · ~10% of your interview, but it carries your portfolio project</strong></p>
+<blockquote><strong>Source:</strong> node-by-node against <strong>roadmap.sh/power-bi</strong> (fetched from the live roadmap).<br>Every branch below is a real branch on that map.</blockquote>
+<p>🔨 = practice · 📖 = explain only · ❌ = skip</p>
+<hr>
+<h2>⚠️ Read this first</h2>
+<p>The Power BI roadmap is designed to make you a <strong>Power BI Expert</strong> — it covers governance,<br>deployment, tenant admin and Fabric. You need enough to **build one good dashboard and<br>talk about it.** You'll skip about 70% of this map.</p>
+<p>Also: pick Power BI <strong>only</strong>. The Data Analyst roadmap offers Tableau too — it struck<br>Tableau out, correctly. Learning two BI tools in a week means knowing neither.</p>
+<hr>
+<h2>✅ "Introduction" branch</h2>
+<p>📖 <strong>Power BI Ecosystem</strong> — Desktop (build) · Service (share) · Mobile (view)<br>📖 <strong>Desktop vs Service vs Mobile</strong> ← common question<br>🔨 <strong>Installing Power BI</strong> — Desktop is free, Windows only<br>❌ Licensing Tiers <em>(Pro vs Premium vs PPU — 30 seconds of reading, not a study topic)</em></p>
+<h2>✅ "Connecting to Data" branch</h2>
+<p>🔨 <strong>Files</strong> — CSV and Excel, the only ones you need<br>📖 <strong>Databases</strong> — know you <em>can</em> connect to SQL Server/Postgres<br>❌ Clouds · ❌ APIs</p>
+<h2>⚠️ "Connection Modes" branch — mostly skip</h2>
+<p>📖 <strong>Import Mode vs DirectQuery</strong> — one line each. Import = data copied in, fast. DirectQuery = live, slower.<br>❌ Direct Lake · ❌ Dual Storage Mode · ❌ On-premises Data Gateway</p>
+<h2>✅ "Power Query" branch ← this is your cleaning layer, learn it properly</h2>
+<p>🔨 <strong>Applied Steps</strong> — the step list on the right, and that it's reproducible<br>🔨 <strong>Data Types &amp; Casting</strong><br>🔨 <strong>Removing Duplicates</strong><br>🔨 <strong>Changing Text / Changing Numbers / Changing Dates</strong><br>🔨 <strong>Splitting Columns</strong><br>🔨 <strong>Custom Columns</strong><br>🔨 <strong>Conditional Columns</strong><br>🔨 <strong>Appending Tables</strong> — stacking<br>📖 <strong>Joins</strong> (Merge Queries) — same idea as SQL joins, which you already know<br>📖 <strong>Data Profiling</strong> — column quality/distribution view. Nice to mention.<br>📖 <strong>Pivot &amp; Transpose</strong></p>
+<p>❌ M Language Basics · ❌ Advanced Editor · ❌ Parameters &amp; Functions<br>❌ Query Folding · ❌ Incremental Refresh<br>📖 <strong>DAX vs M Language</strong> — one line: <em>M transforms data on load, DAX calculates after load.</em> Good answer to have.</p>
+<h2>✅ "Data Modeling" branch — keep the basics</h2>
+<p>🔨 <strong>Relationships and Cardinality</strong> — drag key to key, one-to-many<br>🔨 <strong>Calculated Tables &amp; Columns</strong> <em>(the column half)</em><br>📖 <strong>Star vs Snowflake Schema</strong> — star: one fact table surrounded by dimension tables. One line.<br>📖 <strong>Facts &amp; Dimensions</strong> — facts = numbers/events, dimensions = descriptive attributes<br>📖 <strong>Cross Filter Direction</strong> — single vs both. Know it exists.<br>📖 <strong>Granularity</strong> — what one row represents</p>
+<p>❌ Hierarchies · ❌ Aggregations · ❌ Performance Analyzer</p>
+<h2>✅ "DAX" branch — fundamentals only</h2>
+<p>🔨 <strong>DAX Syntax</strong><br>🔨 <strong>Columns vs Measures</strong> ← <strong>the most common Power BI interview question</strong><br>  → <em>A calculated column is computed per row and stored in the model; a measure is computed on the fly based on current filter context.</em><br>🔨 <strong>Aggregation Functions</strong> — <code>SUM</code>, <code>AVERAGE</code>, <code>COUNT</code>, <code>DISTINCTCOUNT</code><br>🔨 <strong>Logical Functions</strong> — <code>IF</code>, <code>SWITCH</code>, <code>DIVIDE</code> (safe division)<br>🔨 <strong>CALCULATE Function</strong> — the one that modifies filter context. Learn the basic form.<br>📖 <strong>Row vs Filter Context</strong> — hard concept, but be able to say the sentence<br>📖 <strong>Quick Measures</strong> — the UI shortcut</p>
+<p>❌ Variables in DAX · ❌ Field Parameters · ❌ Visual Calculations<br>❌ Context Transition · ❌ Iterator Functions (SUMX/FILTER/ALL/EARLIER)<br>❌ DAX Window Functions · ❌ Table Manipulation · ❌ Time Intelligence<br>❌ Calculation Groups · ❌ DAX Performance</p>
+<h2>✅ "Data Visualization" branch — keep the core visuals</h2>
+<p>🔨 <strong>Gauges, Cards &amp; KPIs</strong> — your headline numbers<br>🔨 <strong>Bar &amp; Column Charts</strong><br>🔨 <strong>Line &amp; Area Charts</strong><br>🔨 <strong>Matrix &amp; Table Visuals</strong><br>🔨 <strong>Slicers and Filters</strong><br>🔨 <strong>Sorting Data</strong><br>🔨 <strong>Formatting &amp; Themes</strong> — titles, labels, consistent colours<br>🔨 <strong>Cross-filtering</strong> — clicking one visual filters the others<br>📖 <strong>Scatter &amp; Bubble Charts</strong> · 📖 <strong>Pie &amp; Donut</strong> <em>(use sparingly, and know why)</em><br>📖 <strong>Maps</strong> — only if your data has geography<br>📖 <strong>Conditional Formatting</strong><br>📖 <strong>Accessibility</strong> — colour-blind safe palettes. Nice thing to mention.</p>
+<p>❌ Combination Charts · ❌ Custom Visuals · ❌ Drill-through &amp; Drill-down<br>❌ Bookmarks · ❌ Buttons &amp; Navigation · ❌ Explore Feature · ❌ Custom Tooltips<br>❌ Decomposition Tree · ❌ Key Influencers · ❌ Small Multiples · ❌ Q&amp;A Visual</p>
+<h2>⚠️ "Power BI Service" branch — one node only</h2>
+<p>📖 <strong>Publishing Reports</strong> — know you publish from Desktop to the Service to share<br>📖 <strong>Dashboards vs Reports</strong> — a report is multi-page and interactive; a dashboard is a single-page pinned summary. ← occasionally asked<br>❌ Workspaces · ❌ Sharing &amp; Permissions · ❌ Apps · ❌ Subscriptions and Alerts<br>❌ Refresh &amp; Change Detection</p>
+<h2>❌ "Security &amp; Governance" branch — SKIP ENTIRELY</h2>
+<p>Row-Level Security · Object-Level Security · Sensitivity Labels · Data Loss Prevention ·<br>Access Control · Tenant Settings · Workspace Roles · Audit Logs · Certified Datasets</p>
+<h2>❌ "Automation &amp; Integration" branch — SKIP ENTIRELY</h2>
+<p>Power Automate · REST API · Deployment Pipelines · Power BI Embedded ·<br>Python &amp; R visuals · Microsoft Fabric · Paginated Reports (RDL)</p>
+<p>📖 <em>One exception:</em> <strong>Power BI with Excel</strong> — worth 30 seconds, since you're learning both.</p>
+<hr>
+<h1>🔨 Day 6 deliverable — the thing that actually wins the interview</h1>
+<p>Use the dataset you cleaned on Day 3 and analysed on Day 4.</p>
+<p><strong>A one-page sales performance dashboard:</strong></p>
+<ul><li>4 KPI cards — Total Revenue · Total Orders · AOV · Growth %</li><li>Revenue trend over time <em>(line)</em></li><li>Top 10 products <em>(bar)</em></li><li>Revenue by region <em>(bar or map)</em></li><li>Slicers — date range, category</li></ul>
+<p>Then write <strong>3–5 insights, each with a recommendation.</strong> Not <em>"revenue went up"</em> but<br>*"revenue is up 12%, driven entirely by one region while three are flat — the regional<br>campaign should be replicated."*</p>
+<p>GitHub repo + README: the question, the data, what you cleaned, the insights, a screenshot.</p>
+<h2>Rehearse — 2 minutes, out loud</h2>
+<ol><li>What question was I answering?</li><li>Where did the data come from?</li><li>What was dirty, and how did I fix it?</li><li>What did I find?</li><li>What would I recommend?</li></ol>
+<p><strong>This narration matters more than any single technical topic in the entire plan.</strong></p>
+<hr>
+<h2>Likely interview questions</h2>
+<ol><li><strong>Columns vs Measures</strong></li><li>What is Power Query used for?</li><li>How do you create a relationship between two tables?</li><li>Import mode vs DirectQuery</li><li>Star schema — what is it?</li><li>Walk me through a dashboard you built</li><li>How do you choose a chart type?</li></ol><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

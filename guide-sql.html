@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQL &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n on" href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>SQL — Learn / Skip</h1>
+<p><strong>Days 1–2 · 40% of your interview · the single most important document here</strong></p>
+<blockquote><strong>Source:</strong> node-by-node against <strong>roadmap.sh/sql</strong>, cross-checked against your own<br>personalized PDF export. Branch names below match the roadmap's branches:<br>Learn the Basics · Basic SQL Syntax · DDL · DML · Aggregate Queries · Data Constraints ·<br>JOIN Queries · Subqueries · Advanced Functions · Views · Indexes · Transactions ·<br>Data Integrity &amp; Security · Stored Procedures · Performance Optimization · Advanced SQL</blockquote>
+<p>Practice: DataLemur, StrataScratch</p>
+<p>🔨 = practice until you can write it from blank · 📖 = just be able to explain it · ❌ = skip</p>
+<hr>
+<h2>🔨 LEARN — Core querying</h2>
+<h3>Basics</h3>
+<ul><li><code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>LIMIT</code>, <code>DISTINCT</code></li><li>Operators: <code>=</code>, <code>&lt;&gt;</code>, <code>&gt;</code>, <code>&lt;</code>, <code>IN</code>, <code>BETWEEN</code>, <code>LIKE</code>, <code>AND/OR/NOT</code></li><li><code>IS NULL</code> / <code>IS NOT NULL</code> — <strong>never <code>= NULL</code></strong></li><li>Data types: INT, VARCHAR, DATE, DECIMAL, BOOLEAN</li></ul>
+<h3>Aggregation</h3>
+<ul><li><code>SUM</code>, <code>COUNT</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code></li><li><code>COUNT(*)</code> vs <code>COUNT(column)</code> — the second ignores NULLs</li><li><strong><code>GROUP BY</code></strong></li><li><strong><code>HAVING</code></strong> — filters groups, WHERE filters rows</li></ul>
+<h3>JOINs ← highest-value branch</h3>
+<ul><li><code>INNER JOIN</code> · <code>LEFT JOIN</code> · <code>RIGHT JOIN</code> · <code>FULL OUTER JOIN</code></li><li><strong><code>SELF JOIN</code></strong> — "employees earning more than their manager", "employee + manager name"</li><li>Anti-join pattern: <code>LEFT JOIN ... WHERE right.id IS NULL</code> (find non-matches)</li><li>Joining 3+ tables</li></ul>
+<h3>Subqueries</h3>
+<ul><li>Scalar subquery (returns one value)</li><li>Nested subquery in WHERE / IN</li><li><strong>Correlated subquery</strong> — runs once per outer row</li></ul>
+<h3>CTEs</h3>
+<ul><li><code>WITH name AS (...)</code> — chaining multiple CTEs</li><li>When to prefer a CTE over a subquery: readability, reuse</li></ul>
+<h3>Window Functions ← THE interview differentiator</h3>
+<ul><li><code>ROW_NUMBER()</code> · <code>RANK()</code> · <code>DENSE_RANK()</code> — know exactly how ties differ</li><li><code>LAG()</code> / <code>LEAD()</code> — month-over-month growth, time between events</li><li><code>FIRST_VALUE()</code></li><li><code>SUM() OVER (ORDER BY ...)</code> — running totals</li><li><code>PARTITION BY</code> — and how it differs from GROUP BY (doesn't collapse rows)</li></ul>
+<h3>Functions</h3>
+<ul><li>Conditional: <code>CASE WHEN</code>, <code>COALESCE</code>, <code>NULLIF</code></li><li>String: <code>CONCAT</code>, <code>LENGTH</code>, <code>SUBSTRING</code>, <code>UPPER</code>, <code>LOWER</code>, <code>TRIM</code></li><li>Numeric: <code>ROUND</code>, <code>FLOOR</code>, <code>CEILING</code></li><li>Date: <code>DATE</code>, <code>DATEPART</code>, <code>DATEADD</code>, extracting year/month</li></ul>
+<h3>Set operations</h3>
+<ul><li><code>UNION</code> vs <code>UNION ALL</code> (the second keeps duplicates and is faster)</li></ul>
+<hr>
+<h2>📖 LEARN — Explain only, ~1 hour total</h2>
+<ul><li><strong>DDL vs DML vs DCL</strong></li><li>DDL = structure: CREATE, ALTER, DROP, TRUNCATE</li><li>DML = data: SELECT, INSERT, UPDATE, DELETE</li><li>DCL = permissions: GRANT, REVOKE</li><li><strong>DELETE vs TRUNCATE vs DROP</strong> ← commonly asked</li></ul>
+<table><thead><tr><th></th><th>Does</th><th>Rollback</th><th>Speed</th></tr></thead><tbody><tr><td>DELETE</td><td>removes rows, takes WHERE</td><td>Yes</td><td>Slow</td></tr><tr><td>TRUNCATE</td><td>wipes all rows, keeps table</td><td>No</td><td>Fast</td></tr><tr><td>DROP</td><td>removes the table itself</td><td>No</td><td>Fast</td></tr></tbody></table>
+<ul><li>Primary Key vs Foreign Key · Unique vs NOT NULL</li><li>What a relational database is · SQL vs NoSQL in one line</li><li>Normalization 1NF/2NF/3NF — one sentence each</li><li><strong>Logical execution order:</strong> FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</li><li>Recognise the syntax of CREATE / ALTER / INSERT / UPDATE / DELETE — don't drill it</li><li>What an index is, in one sentence ("speeds up lookups, costs write speed")</li></ul>
+<hr>
+<h2>❌ SKIP ENTIRELY</h2>
+<ul><li>Writing DDL from scratch, table design</li><li>Views: creating, modifying, dropping</li><li>Index management, query optimization, execution plans</li><li>Transactions: BEGIN, COMMIT, ROLLBACK, SAVEPOINT, <strong>ACID, isolation levels</strong></li><li>Stored procedures, triggers, user-defined functions</li><li>GRANT/REVOKE, database security</li><li>Recursive queries, Dynamic SQL, PIVOT/UNPIVOT</li><li><code>CROSS JOIN</code></li><li>Database-specific admin (PostgreSQL config, MongoDB, NoSQL)</li></ul>
+<p><strong>All of this is backend/DBA territory. You are a read-only analyst.</strong></p>
+<hr>
+<h2>The 6 questions you will actually be asked</h2>
+<ol><li>WHERE vs HAVING</li><li>INNER vs LEFT JOIN</li><li>Find the 2nd/Nth highest salary</li><li>RANK vs DENSE_RANK vs ROW_NUMBER</li><li>Find duplicate rows</li><li>DELETE vs TRUNCATE</li></ol>
+<h2>Gate — write these from a blank screen before moving on</h2>
+<ul><li>Month-over-month growth % using LAG</li><li>Top 3 per group using DENSE_RANK</li><li>Customers with zero orders using LEFT JOIN</li></ul>
+<p>→ Practise: <a href="sql-quest.html">SQL Quest</a> (34 levels) or <a href="sql-written.html">the written Q&amp;A</a> (40 written Q&amp;A)</p><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

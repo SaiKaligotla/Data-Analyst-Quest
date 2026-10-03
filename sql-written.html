@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQL written Q&amp;A &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n on" href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>SQL — Days 1 &amp; 2 (audited against my personalized SQL roadmap)</h1>
+<h2>Audit: the personalization is excellent</h2>
+<p><strong>Correctly struck out (~60% of the roadmap):</strong><br>DDL (Create/Alter/Drop/Truncate Table) · INSERT / UPDATE / DELETE · Views ·<br>Indexes &amp; Managing Indexes · Query Optimization · Transactions (BEGIN, COMMIT,<br>ROLLBACK, SAVEPOINT, ACID, Isolation Levels) · Data Integrity &amp; Security ·<br>GRANT/Revoke · Stored Procedures · Performance Optimization · Recursive Queries ·<br>Dynamic SQL · Pivot/Unpivot · Cross Join · ABS/MOD · REPLACE · TIME/TIMESTAMP ·<br>Unique/NOT NULL/CHECK · MongoDB / PostgreSQL admin</p>
+<p><strong>Correctly kept:</strong> everything an analyst actually queries with. Including Self Join<br>and FULL OUTER JOIN — I expected it to drop Self Join, it didn't. Good.</p>
+<h3>⚠️ The one bug</h3>
+<p><strong>HAVING appears twice.</strong> It's struck out in the DML branch but kept under Aggregate<br>Queries. Ignore the strike — HAVING is essential. It's covered.</p>
+<h3>Minor</h3>
+<p>Subquery "Different Types" (Scalar, Column, Row, Table) all struck out. Fine —<br>but know what a <strong>scalar subquery</strong> is: a subquery returning one single value.<br>2 minutes.</p>
+<hr>
+<h1>DAY 1</h1>
+<h2>Morning — foundations (2 hrs)</h2>
+<ul><li>What are Relational Databases · SQL vs NoSQL — 15 min, one-liners</li><li>SQL Keywords, Data Types, Operators</li><li>SELECT, FROM, WHERE, ORDER BY, LIMIT</li><li><strong>GROUP BY + HAVING</strong></li><li>Aggregates: SUM, COUNT, AVG, MIN, MAX</li><li>Data Constraints: Primary Key, Foreign Key — definitions only</li></ul>
+<h2>Afternoon — JOINs (3 hrs) ← the highest-value branch</h2>
+<p>INNER · LEFT · RIGHT · FULL OUTER · <strong>Self Join</strong></p>
+<h2>Day 1 practice questions</h2>
+<ol><li>Select all employees in the Sales department, sorted by salary descending.</li><li>Count how many employees are in each department.</li><li>Show departments with more than 5 employees. <em>(GROUP BY + HAVING)</em></li><li>Find the average salary per department, rounded to 2 decimals.</li><li>Total revenue per product category.</li><li>Count orders per customer, showing only customers with 3+ orders.</li><li>List all customers <strong>and</strong> their orders, including customers who never ordered. <em>(LEFT JOIN)</em></li><li>List only customers who have placed at least one order. <em>(INNER JOIN)</em></li><li>Find customers who have <strong>never</strong> placed an order. <em>(LEFT JOIN + WHERE o.id IS NULL)</em></li><li>Join orders to products to show order id, product name, quantity, line total.</li><li>Find employees who earn more than their manager. <em>(<strong>Self Join</strong> — classic)</em></li><li>List each employee alongside their manager's name. <em>(Self Join)</em></li><li>Total sales per region per month, sorted highest first.</li><li>Use CASE WHEN to bucket salaries into Low / Medium / High and count each bucket.</li><li>Replace NULL commission with 0 using COALESCE, then compute total compensation.</li></ol>
+<h3>Concepts you must be able to say out loud after Day 1</h3>
+<ul><li>WHERE vs HAVING → WHERE filters rows <em>before</em> grouping, HAVING filters groups <em>after</em></li><li>INNER vs LEFT JOIN</li><li>Why <code>WHERE col = NULL</code> never works → use <code>IS NULL</code></li><li>What COUNT(*) vs COUNT(column) do differently → COUNT(column) ignores NULLs</li><li>Logical execution order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY</li></ul>
+<hr>
+<h1>DAY 2</h1>
+<h2>Morning — Subqueries &amp; CTEs (2 hrs)</h2>
+<ul><li>Nested subqueries · Correlated subqueries · scalar subquery</li><li><strong>Common Table Expressions</strong> (<code>WITH</code>)</li></ul>
+<h2>Afternoon — Window Functions (3 hrs) ← THE interview topic</h2>
+<p><code>ROW_NUMBER</code> · <code>RANK</code> · <code>DENSE_RANK</code> · <code>LEAD</code> · <code>LAG</code> · <code>FIRST_VALUE</code> · <code>PARTITION BY</code></p>
+<h2>Evening — Functions (1 hr)</h2>
+<p>String: CONCAT, LENGTH, SUBSTRING, UPPER, LOWER<br>Numeric: ROUND, FLOOR, CEILING<br>Conditional: CASE, NULLIF, COALESCE<br>Date: DATE, DATEPART, DATEADD</p>
+<h2>Day 2 practice questions</h2>
+<ol><li>Find employees earning above the company average. <em>(scalar subquery)</em></li><li>Find the department with the highest total payroll.</li><li>For each department, find employees earning above <strong>their own department's</strong> average. <em>(correlated subquery)</em></li><li>Rewrite question 18 using a CTE. Compare readability.</li><li>Use a CTE to find the top 3 customers by revenue, then join back for their details.</li><li><strong>Find the 2nd highest salary.</strong> Three ways: subquery, DENSE_RANK, OFFSET.</li><li><strong>Find the Nth highest salary per department.</strong> <em>(DENSE_RANK + PARTITION BY)</em></li><li>Rank employees by salary within each department. <em>(RANK vs DENSE_RANK vs ROW_NUMBER — know the difference)</em></li><li>Top 3 selling products in each category. <em>(top-N per group)</em></li><li>Running total of daily sales. <em>(SUM OVER ORDER BY)</em></li><li><strong>Month-over-month revenue growth %.</strong> <em>(LAG)</em></li><li>Days between each customer's consecutive orders. <em>(LAG on order date)</em></li><li>For each employee, show the highest salary in their department. <em>(MAX OVER PARTITION BY)</em></li><li>Flag each customer's first-ever order. <em>(ROW_NUMBER = 1)</em></li><li>Compare each month's revenue to the next month. <em>(LEAD)</em></li><li><strong>Find duplicate rows in a table.</strong> <em>(GROUP BY HAVING COUNT(</em>) &gt; 1)*</li><li>Delete-proof version: identify duplicates keeping the earliest. <em>(ROW_NUMBER)</em></li><li>Find dates with no sales — gaps in a date sequence.</li><li>Percentage each product contributes to total revenue. <em>(SUM OVER ())</em></li><li>Cumulative percentage of revenue by customer, ranked. <em>(running total + window)</em></li><li>Extract year and month from order_date and aggregate by it. <em>(DATEPART)</em></li><li>Build full_name from first and last name, properly capitalised. <em>(CONCAT + UPPER/LOWER/SUBSTRING)</em></li><li>Use NULLIF to avoid divide-by-zero in a conversion-rate calculation.</li><li>Customer retention: customers who ordered in both Jan and Feb.</li><li>A simple funnel: count users at each stage, with conversion % between stages.</li></ol>
+<h3>Concepts you must be able to say out loud after Day 2</h3>
+<ul><li>RANK vs DENSE_RANK vs ROW_NUMBER — ties, and whether numbers get skipped</li><li>What PARTITION BY does vs GROUP BY → GROUP BY collapses rows, PARTITION BY doesn't</li><li>When to use a CTE over a subquery → readability, reuse, chaining</li><li>What a correlated subquery is → runs once per outer row, slower</li></ul>
+<hr>
+<h2>Where to practice</h2>
+<p><strong>DataLemur</strong> (free tier, real company questions) or <strong>StrataScratch</strong>.<br>LeetCode Database as backup.</p>
+<h2>The rule</h2>
+<p>Stuck 10 minutes → read the solution → understand it → <strong>close it and rewrite from blank.</strong><br>That last step is the entire point.</p>
+<h2>Self-test before moving to Day 3</h2>
+<p>Write, from a blank screen, with no help:</p>
+<ul><li>Month-over-month growth % using LAG</li><li>Top 3 per group using DENSE_RANK</li><li>Customers with no orders using LEFT JOIN</li></ul>
+<p>If you can do those three, your SQL is interview-ready.</p><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

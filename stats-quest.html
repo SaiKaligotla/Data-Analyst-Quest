@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statistics Quest</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--pan2:#1b2130;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#a855f7}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+code,pre,textarea,input.num,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:100;background:rgba(11,14,20,.93);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:17px;letter-spacing:-.3px;cursor:pointer}
+.logo span{color:var(--ac)}
+.hm{font-size:12px;color:var(--mut);text-decoration:none;border:1px solid var(--br);padding:4px 9px;border-radius:7px}
+.hm:hover{color:var(--tx)}
+.stats{display:flex;gap:10px;margin-left:auto;align-items:center;font-size:13px;font-weight:700;flex-wrap:wrap}
+.stat{display:flex;align-items:center;gap:5px;background:var(--pan);border:1px solid var(--br);
+padding:5px 11px;border-radius:99px}
+.xpbar{flex:1;min-width:90px;max-width:200px;height:7px;background:var(--pan);border-radius:99px;overflow:hidden}
+.xpbar>div{height:100%;background:linear-gradient(90deg,var(--ac),#a855f7);width:0;transition:width .5s}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px 80px}
+.hero{text-align:center;padding:26px 0 10px}
+.hero h1{font-size:34px;font-weight:800;letter-spacing:-1px}
+.hero p{color:var(--mut);margin-top:6px}
+.world{margin-top:30px}
+.wh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.wdot{width:11px;height:11px;border-radius:99px}
+.wh h2{font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.wh .wc{font-size:12px;color:var(--mut);margin-left:auto;font-weight:600}
+.nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+.node{background:var(--pan);border:1px solid var(--br);border-radius:12px;padding:13px;cursor:pointer;
+position:relative;transition:transform .12s,border-color .12s}
+.node:hover{transform:translateY(-2px)}
+.node .ln{font-size:11px;color:var(--mut);font-weight:800;letter-spacing:.5px}
+.node .lt{font-size:14px;font-weight:600;margin-top:2px}
+.node.lock{opacity:.38;cursor:not-allowed}.node.lock:hover{transform:none}
+.node.done{border-color:#1e5235;background:linear-gradient(180deg,#14301f22,var(--pan))}
+.node.cur{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac),0 6px 24px -8px var(--ac)}
+.tick{position:absolute;top:10px;right:11px;font-size:14px}
+.lv{display:none}.lv.on{display:block}
+.back{background:none;border:none;color:var(--mut);font-size:13px;cursor:pointer;padding:0;font-weight:600}
+.back:hover{color:var(--tx)}
+.lvhead{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px;flex-wrap:wrap}
+.lvhead .n{font-size:12px;font-weight:800;color:var(--ac);letter-spacing:1px}
+.lvhead h2{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:860px){.cols{grid-template-columns:1fr}}
+.box{background:var(--pan);border:1px solid var(--br);border-radius:14px;padding:18px}
+.box h3{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.lesson p{margin-bottom:9px;font-size:14.5px}
+.lesson ul{margin:0 0 9px 18px;font-size:14.5px}.lesson li{margin-bottom:4px}
+.lesson pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:8px;
+padding:12px;margin:9px 0;font-size:12.5px;color:#a5f3d0;overflow-x:auto;white-space:pre-wrap;line-height:1.5}
+.lesson code{background:#070a10;padding:1px 5px;border-radius:4px;font-size:12.5px;color:#fbbf24}
+.lesson table{margin:9px 0}
+.task{background:linear-gradient(135deg,#1e1b4b55,#312e8133);border:1px solid #4338ca66;
+border-radius:12px;padding:15px;font-size:15px}
+.task b{color:#c7d2fe}
+textarea{width:100%;min-height:130px;background:#070a10;border:1px solid var(--br);border-radius:10px;
+color:#dbe4f0;padding:13px;font-size:13.5px;resize:vertical;line-height:1.6}
+textarea:focus{outline:none;border-color:var(--ac)}
+input.num{width:100%;background:#070a10;border:1px solid var(--br);border-radius:10px;color:#dbe4f0;
+padding:14px;font-size:19px;font-weight:700}
+input.num:focus{outline:none;border-color:var(--ac)}
+.mc{display:flex;flex-direction:column;gap:8px}
+.opt{background:#070a10;border:1px solid var(--br);border-radius:10px;padding:12px 14px;cursor:pointer;
+font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.opt:hover{border-color:#39425a}
+.opt.sel{border-color:var(--ac);background:#11162480}
+.opt .k{font-weight:800;color:var(--mut);flex-shrink:0}
+.opt.sel .k{color:var(--ac)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button.b{background:var(--pan2);border:1px solid var(--br);color:#cdd5e3;padding:9px 15px;border-radius:9px;
+cursor:pointer;font-size:13px;font-weight:700}
+button.b:hover{background:#242c3d}
+button.go{background:var(--ac);border-color:var(--ac);color:#fff;flex:1}
+button.go:hover{filter:brightness(1.12)}
+.msg{margin-top:11px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
+.msg.ok{display:block;background:#0f2a1a;border:1px solid #1e5235;color:#86efac}
+.msg.bad{display:block;background:#2a1414;border:1px solid #5c2626;color:#fca5a5}
+.hintbox{margin-top:10px;background:#1c1708;border-left:3px solid #f59e0b;border-radius:8px;
+padding:10px 13px;font-size:13.5px;color:#fde68a;display:none}
+.hintbox.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;padding:7px 9px;background:#070a10;color:var(--mut);font-weight:700;
+border-bottom:1px solid var(--br);white-space:nowrap;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+td{padding:6px 9px;border-bottom:1px solid #1b2130;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;max-height:290px;overflow-y:auto;border:1px solid var(--br);border-radius:9px}
+.tabsm{display:flex;gap:5px;margin-bottom:9px;flex-wrap:wrap}
+.tabsm button{background:var(--pan2);border:1px solid var(--br);color:var(--mut);font-size:11px;
+padding:4px 9px;border-radius:6px;cursor:pointer;font-weight:700}
+.tabsm button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.sol{display:none;margin-top:10px}.sol.on{display:block}
+.sol pre{background:#070a10;border:1px solid var(--br);border-left:3px solid #22c55e;border-radius:9px;
+padding:13px;font-size:13px;color:#86efac;overflow-x:auto;white-space:pre-wrap;line-height:1.6}
+.why{margin-top:10px;background:#0d1620;border-left:3px solid #38bdf8;border-radius:8px;padding:11px 13px;
+font-size:13.5px;color:#bae6fd;display:none}
+.why.on{display:block}
+.ov{position:fixed;inset:0;background:rgba(5,7,12,.86);backdrop-filter:blur(5px);z-index:200;
+display:none;align-items:center;justify-content:center;padding:20px}
+.ov.on{display:flex}
+.ovc{background:var(--pan);border:1px solid #2f3a52;border-radius:20px;padding:34px;max-width:420px;
+width:100%;text-align:center}
+.ovc .em{font-size:52px}
+.ovc h3{font-size:25px;font-weight:800;margin:8px 0 4px}
+.ovc p{color:var(--mut);font-size:14.5px;margin-bottom:8px}
+.gain{display:inline-block;background:#1e1b4b;border:1px solid #4338ca;color:#c7d2fe;
+padding:5px 14px;border-radius:99px;font-weight:800;font-size:14px;margin:8px 0 18px}
+.ovc .row{justify-content:center}
+.fin{background:linear-gradient(135deg,#312e81,#1e1b4b);border:1px solid #4338ca;border-radius:16px;
+padding:24px;text-align:center;margin-top:26px}
+.fin h3{font-size:21px;font-weight:800}
+.fin p{color:#c7d2fe;font-size:14px;margin-top:6px}
+.note{color:var(--mut);font-size:12.5px;margin-top:14px;text-align:center}
+.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.pl{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--pan2);
+border:1px solid var(--br);color:var(--mut)}
+</style></head><body>
+
+<div class="top">
+  <div class="logo" onclick="goMap()">Stats <span>Quest</span></div>
+  <a class="hm" href="index.html">All games</a>
+  <div class="xpbar"><div id="xpf"></div></div>
+  <div class="stats">
+    <div class="stat">&#9889; <span id="sxp">0</span> XP</div>
+    <div class="stat">&#11088; <span id="sdone">0</span>/<span id="stot">0</span></div>
+    <div class="stat">&#128293; <span id="sstreak">0</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="map">
+    <div class="hero">
+      <h1>Statistics Quest</h1>
+      <p>31 levels. Mostly reasoning and vocabulary - the way it is actually tested.</p>
+      <div class="pillrow" style="justify-content:center">
+        <span class="pl">Works offline</span><span class="pl">Progress saved</span>
+        <span class="pl">Real computed answers</span><span class="pl">Interview-focused</span>
+      </div>
+    </div>
+    <div id="worlds"></div>
+    <div class="note">Levels unlock as you go. Hints cost XP, not pride &mdash; but try first.
+    <br><button class="back" style="margin-top:8px;text-decoration:underline" onclick="resetAll()">Reset all progress</button></div>
+  </div>
+
+  <div id="lv" class="lv">
+    <button class="back" onclick="goMap()">&larr; Back to map</button>
+    <div class="lvhead"><span class="n" id="lvn"></span><h2 id="lvt"></h2></div>
+    <div class="cols">
+      <div>
+        <div class="box lesson" id="lesson"></div>
+        <div class="box" style="margin-top:16px" id="databox">
+          <h3>The data</h3>
+          <div class="tabsm" id="tabsm"></div>
+          <div class="scroll" id="tbl"></div>
+        </div>
+      </div>
+      <div>
+        <div class="task" id="task"></div>
+        <div class="box" style="margin-top:16px">
+          <h3 id="anslabel">Your answer</h3>
+          <div id="inputzone"></div>
+          <div class="row">
+            <button class="b go" onclick="check()">Check answer</button>
+            <button class="b" onclick="hint()">Hint</button>
+            <button class="b" onclick="showSol()">Solution</button>
+          </div>
+          <div class="hintbox" id="hb"></div>
+          <div class="msg" id="msg"></div>
+          <div class="sol" id="sol"><h3 style="margin-top:14px">Model answer</h3><pre id="solp"></pre></div>
+          <div class="why" id="why"></div>
+        </div>
+        <div class="box" style="margin-top:16px" id="expbox">
+          <h3 id="explabel">Target output</h3>
+          <div class="scroll" id="exp"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov"><div class="ovc">
+  <div class="em" id="ovem">&#127881;</div>
+  <h3 id="ovh">Correct</h3>
+  <p id="ovp"></p>
+  <div class="gain" id="ovg"></div>
+  <div class="row">
+    <button class="b" onclick="closeOv()">Stay here</button>
+    <button class="b go" onclick="nextLevel()" id="ovnext">Next level &rarr;</button>
+  </div>
+</div></div>
+
+<script>
+const DATA={"levels": [{"world": 1, "title": "Mean", "lesson": "<p>The <b>mean</b> is the total divided by the count.</p><p>Open the <b>small sample</b> tab on the left: 4, 8, 6, 5, 3, 7, 5.</p>", "task": "What is the <b>mean</b> of the small sample? Round to 2 decimals.", "hints": ["Add all seven values.", "The total is 38, and there are 7 values.", "38 / 7 = 5.43"], "type": "num", "answer": 5.4286, "tol": 0.03, "table": "small sample", "sol": "38 / 7 = 5.43", "n": 1}, {"world": 1, "title": "Median", "lesson": "<p>The <b>median</b> is the middle value once the data is sorted. With an even count, it is the average of the two middle values.</p><p>Sorted small sample: 3, 4, 5, 5, 6, 7, 8</p>", "task": "What is the <b>median</b> of the small sample?", "hints": ["Sort them first.", "Seven values, so the 4th is the middle one.", "5"], "type": "num", "answer": 5, "tol": 0.01, "table": "small sample", "sol": "Sorted: 3,4,5,5,6,7,8 - the 4th value is 5.", "n": 2}, {"world": 1, "title": "When the mean lies", "lesson": "<p>Now switch to the <b>salaries</b> tab. Nine people earn between 32k and 55k. One earns 315k.</p><p>That single value drags the mean far away from what anyone actually earns.</p>", "task": "What is the <b>mean</b> salary, in thousands? Round to 1 decimal.", "hints": ["Add all ten and divide by 10.", "The total is 700.", "700 / 10 = 70.0"], "type": "num", "answer": 70.0, "tol": 0.2, "table": "salaries (k)", "sol": "Total = 700k, divided by 10 = 70.0k", "why": "Notice: nobody in this company earns 70k. The mean describes no actual person.", "n": 3}, {"world": 1, "title": "Median to the rescue", "lesson": "<p>Same data, different measure.</p>", "task": "What is the <b>median</b> salary, in thousands? Round to 1 decimal.", "hints": ["Ten values, so average the 5th and 6th.", "Sorted, those are 42 and 45.", "(42 + 45) / 2 = 43.5"], "type": "num", "answer": 43.5, "tol": 0.1, "table": "salaries (k)", "sol": "Sorted, the 5th and 6th values are 42 and 45, so the median is 43.5k", "why": "Mean 70.0k vs median 43.5k. The median is the honest number here - that gap IS the interview answer.", "n": 4}, {"world": 1, "title": "Which one do you report?", "lesson": "<p>You have the two numbers. Now the judgement call.</p>", "task": "When should you report the <b>median</b> instead of the mean?", "hints": ["Think about what pulls a mean around.", "Outliers and skew.", "When the data is skewed or has extreme values."], "type": "mc", "options": ["Whenever the dataset is small", "When the data is skewed or contains outliers - income, house prices, salaries", "Only for categorical data", "The mean is always better"], "correct": 1, "sol": "Use the median when the distribution is skewed or outliers exist. Classic examples: income, house prices, response times.", "why": "Have a concrete example ready. 'Salaries, because one executive distorts the mean' is a strong answer.", "n": 5}, {"world": 2, "title": "Range", "lesson": "<p>The simplest measure of spread: <b>max minus min</b>. Crude, because a single outlier defines it entirely.</p>", "task": "What is the <b>range</b> of the salaries, in thousands?", "hints": ["Largest minus smallest.", "315 - 32", "283"], "type": "num", "answer": 283, "tol": 0.5, "table": "salaries (k)", "sol": "315 - 32 = 283", "n": 6}, {"world": 2, "title": "Variance", "lesson": "<p><b>Variance</b> is the average squared distance from the mean.</p><p>Squaring makes everything positive and punishes big deviations. The downside: the units are now squared, which is meaningless to a human.</p><p>Small sample: 4, 8, 6, 5, 3, 7, 5 with mean 5.43</p>", "task": "What is the <b>sample variance</b> of the small sample? Round to 2 decimals. (Divide by n-1, which is 6.)", "hints": ["Subtract the mean from each value, square it, add them up.", "The sum of squared deviations is about 16.86.", "16.86 / 6 = 2.81"], "type": "num", "answer": 2.95, "tol": 0.06, "table": "small sample", "sol": "Sum of squared deviations = 16.857, divided by (7-1) = 2.95", "n": 7}, {"world": 2, "title": "Standard deviation", "lesson": "<p><b>Standard deviation</b> is the square root of variance &mdash; which puts it back into the original units, so it is the one you can actually interpret.</p><p style='color:#fbbf24'>'Variance vs standard deviation' is asked constantly. Answer: same idea, but std dev is in the data's own units.</p>", "task": "What is the <b>standard deviation</b> of the small sample? Round to 2 decimals.", "hints": ["Square root of the variance.", "sqrt(2.81)", "1.68"], "type": "num", "answer": 1.72, "tol": 0.04, "table": "small sample", "sol": "sqrt(2.95) = 1.72", "why": "Say it out loud: 'Variance is the average squared deviation; standard deviation is its square root, in the same units as the data, so it is interpretable.'", "n": 8}, {"world": 2, "title": "Reading describe()", "lesson": "<p><code>df.describe()</code> gives you count, mean, std, min, 25%, 50%, 75%, max.</p><p>A fast read: compare <b>mean</b> and <b>50%</b>. If they are far apart, the data is skewed.</p>", "task": "In describe() output, the mean is 70 and the 50% row is 43.5. What does that tell you?", "hints": ["Compare the two numbers.", "The mean sits well above the median.", "The data is right-skewed."], "type": "mc", "options": ["The data is symmetric", "The data is right-skewed - a few large values are pulling the mean up", "There are missing values", "The standard deviation must be zero"], "correct": 1, "sol": "Mean well above median = right skew, caused by large values in the upper tail.", "why": "This single comparison is the quickest skew check there is. Use it on day one of any dataset.", "n": 9}, {"world": 3, "title": "Skew", "lesson": "<p><b>Right-skewed</b> (positive): the tail stretches right, mean &gt; median. Income is the classic.</p><p><b>Left-skewed</b> (negative): the tail stretches left, mean &lt; median. Exam scores with a ceiling often look like this.</p>", "task": "In a <b>right-skewed</b> distribution, what is the relationship between mean and median?", "hints": ["The tail pulls the mean.", "The tail is on the right, so it pulls the mean right.", "Mean is greater than median."], "type": "mc", "options": ["Mean < median", "Mean = median", "Mean > median", "No relationship"], "correct": 2, "sol": "Right skew: the long right tail drags the mean above the median.", "n": 10}, {"world": 3, "title": "The IQR", "lesson": "<p>Quartiles split sorted data into four parts. <b>IQR = Q3 - Q1</b> is the spread of the middle 50% &mdash; and unlike the range, outliers do not control it.</p><p>For the salaries: Q1 = 38.5, Q3 = 49.5</p>", "task": "What is the <b>IQR</b> of the salary data? Round to 1 decimal.", "hints": ["Q3 minus Q1.", "49.5 - 38.5", "11.0"], "type": "num", "answer": 11.0, "tol": 0.3, "table": "salaries (k)", "sol": "IQR = 49.5 - 38.5 = 11.0", "n": 11}, {"world": 3, "title": "Outlier fences", "lesson": "<p>The standard rule:</p><pre>lower = Q1 - 1.5 x IQR\nupper = Q3 + 1.5 x IQR</pre><p>Anything outside is flagged as a potential outlier. This is exactly what the whiskers on a boxplot represent.</p>", "task": "With Q1 = 38.5 and Q3 = 49.5, what is the <b>upper fence</b>? Round to 1 decimal.", "hints": ["Q3 plus 1.5 times the IQR.", "49.5 + 1.5 x 11.0", "66.0"], "type": "num", "answer": 66.0, "tol": 0.6, "table": "salaries (k)", "sol": "49.5 + 1.5 x 11.0 = 66.0  -  so the 315k salary is far outside and gets flagged.", "n": 12}, {"world": 3, "title": "Do you remove it?", "lesson": "<p>You found an outlier. The interview question is never 'how do you find it' &mdash; it is 'what do you do about it'.</p>", "task": "You flag a 315k salary in a dataset where everyone else earns 32k to 55k. What do you do?", "hints": ["It depends on something.", "Is it wrong, or is it real?", "Investigate whether it is an error or a genuine value."], "type": "mc", "options": ["Delete it immediately - outliers always distort analysis", "Find out whether it is a data error or a real value, like the CEO. If real, keep it and report the median instead", "Replace it with the mean", "Ignore outliers entirely"], "correct": 1, "sol": "Investigate first. A typo gets fixed or removed. A genuine CEO salary stays - you just stop using the mean to describe the company.", "why": "Candidates who say 'remove outliers' without qualification sound mechanical. The nuance is the point.", "n": 13}, {"world": 3, "title": "Boxplot", "lesson": "<p>A boxplot shows five numbers at once: min, Q1, median, Q3, max &mdash; with dots for anything past the fences.</p><p>It is the fastest way to compare a numeric variable across categories: revenue by region, delivery time by city.</p>", "task": "What does the line inside the box represent?", "hints": ["Not the mean.", "It is a quartile.", "The median."], "type": "mc", "options": ["The mean", "The median", "The mode", "The standard deviation"], "correct": 1, "sol": "The box spans Q1 to Q3, and the line inside is the median.", "n": 14}, {"world": 4, "title": "Correlation", "lesson": "<p>The correlation coefficient runs from <b>-1 to +1</b>.</p><ul><li><b>+1</b> perfect positive &mdash; one goes up, so does the other</li><li><b>0</b> no linear relationship</li><li><b>-1</b> perfect negative</li></ul><p>Around 0.7 is strong, 0.3 is weak. It only measures <i>linear</i> relationships.</p>", "task": "Two variables have a correlation of <b>-0.85</b>. What does that mean?", "hints": ["The sign matters and the size matters.", "Negative means they move oppositely.", "A strong inverse relationship."], "type": "mc", "options": ["A weak relationship", "A strong relationship where one goes up as the other goes down", "No relationship", "One causes the other to decrease"], "correct": 1, "sol": "-0.85 is a strong negative linear relationship. Strong, but still says nothing about cause.", "n": 15}, {"world": 4, "title": "Correlation is not causation", "lesson": "<p>The most important sentence in analytics.</p><p>Ice cream sales and drowning deaths rise together. Ice cream does not cause drowning &mdash; hot weather drives both. That hidden third variable is a <b>confounder</b>.</p>", "task": "Why is 'ice cream sales correlate with drownings' the standard example?", "hints": ["Something else explains both.", "Look for the hidden variable.", "Temperature causes both - it is a confounder."], "type": "mc", "options": ["Because the correlation is weak", "Because a third variable, hot weather, drives both - so correlation exists without causation", "Because the data is wrong", "Because drowning causes ice cream sales"], "correct": 1, "sol": "A confounder (temperature) drives both. Correlation is real; causation is not.", "why": "Have this example ready word for word. It comes up more often than almost any other stats question.", "n": 16}, {"world": 4, "title": "Proving causation", "lesson": "<p>If correlation cannot prove cause, what can?</p><p>A <b>randomised controlled experiment</b> &mdash; in product work, an <b>A/B test</b>. Random assignment removes confounders, because the groups differ only by chance and the change you made.</p>", "task": "What is the reliable way to establish that a change causes an effect?", "hints": ["Observation alone is not enough.", "You need to intervene, not just watch.", "A randomised experiment or A/B test."], "type": "mc", "options": ["Collect more observational data", "Run a randomised controlled experiment - an A/B test - so the only systematic difference is the change itself", "Compute a higher correlation", "Ask the stakeholders"], "correct": 1, "sol": "Randomised assignment is what buys you causal claims. Observational correlation never does on its own.", "n": 17}, {"world": 5, "title": "Population vs sample", "lesson": "<p>The <b>population</b> is everyone you care about. The <b>sample</b> is who you actually measured. Statistics is the business of inferring the first from the second.</p><p>This is also why <b>sampling bias</b> matters: survey only your active users about why people churn and you will learn nothing useful.</p>", "task": "You survey only current subscribers to learn why people cancel. What is wrong?", "hints": ["Who is missing from your sample?", "The people who already left.", "Sampling bias - you excluded the group you care about."], "type": "mc", "options": ["The sample is too small", "Sampling bias - the people who cancelled are not in the sample, so you cannot learn why they left", "Nothing, this is standard practice", "You should use the median instead"], "correct": 1, "sol": "Classic sampling bias (survivorship bias). The group you most need is the group you excluded.", "n": 18}, {"world": 5, "title": "The null hypothesis", "lesson": "<p>The <b>null hypothesis</b> is the boring default: there is no effect, no difference.</p><p>A test looks for evidence <i>against</i> it. You never 'prove' the null &mdash; you either reject it or fail to reject it.</p>", "task": "In an A/B test of a new checkout page, what is the null hypothesis?", "hints": ["The boring assumption.", "Assume the change did nothing.", "There is no difference between the two versions."], "type": "mc", "options": ["The new page is better", "There is no difference in conversion between the old and new page", "The test will fail", "The sample is biased"], "correct": 1, "sol": "H0: no difference between the variants. The test looks for evidence to reject that.", "n": 19}, {"world": 5, "title": "p-value", "lesson": "<p>The <b>p-value</b> is the probability of seeing a result at least this extreme <i>if the null were true</i>.</p><p>Small p means the data would be surprising under 'no effect', so we reject the null. The usual threshold is <b>0.05</b>.</p><p style='color:#fbbf24'>It is NOT the probability that the null is true. That is the classic misstatement.</p>", "task": "Your A/B test returns <b>p = 0.03</b>. What do you conclude at the 0.05 level?", "hints": ["Compare it to the threshold.", "0.03 is below 0.05.", "Reject the null - the result is statistically significant."], "type": "mc", "options": ["There is a 3% chance the null is true", "The result is statistically significant at the 0.05 level, so we reject the null hypothesis", "The test failed", "We accept the null hypothesis"], "correct": 1, "sol": "p = 0.03 < 0.05, so reject the null. Careful with the wording: it is not 'a 3% chance the null is true'.", "why": "Getting the wording right here separates people who understand it from people who memorised it.", "n": 20}, {"world": 5, "title": "Confidence interval", "lesson": "<p>A range that plausibly contains the true population value.</p><p>'Conversion is 4.2%, 95% CI [3.8%, 4.6%]' is far more useful than a bare 4.2%, because it communicates uncertainty.</p>", "task": "Two variants have 95% confidence intervals that <b>overlap heavily</b>. What does that suggest?", "hints": ["Overlap means the ranges are compatible.", "You cannot tell them apart confidently.", "No clear evidence of a difference."], "type": "mc", "options": ["Variant B is definitely better", "There is no clear evidence of a difference - the data is consistent with them being the same", "The test is broken", "You should stop the test immediately"], "correct": 1, "sol": "Heavily overlapping intervals mean you cannot confidently distinguish the two. Usually: keep running, or accept no detectable difference.", "n": 21}, {"world": 6, "title": "Conversion rate", "lesson": "<p>A <b>funnel</b> tracks users through stages. Conversion rate is the share that make it from one stage to the next, or all the way through.</p><p>Open the <b>funnel</b> tab: 10,000 visited, 2,500 signed up, 900 added to cart, 360 purchased.</p>", "task": "What is the <b>overall conversion rate</b> from visit to purchase, as a percentage? Round to 1 decimal.", "hints": ["Purchases divided by visits.", "360 / 10000", "3.6%"], "type": "num", "answer": 3.6, "tol": 0.06, "table": "funnel", "sol": "360 / 10,000 x 100 = 3.6%", "n": 22}, {"world": 6, "title": "Find the leak", "lesson": "<p>The overall number hides where the problem is. Compute <b>step by step</b> conversion and the worst stage jumps out.</p>", "task": "What percentage of people who <b>signed up</b> went on to <b>add to cart</b>? Round to 1 decimal.", "hints": ["Compare the two adjacent stages.", "900 / 2500", "36.0%"], "type": "num", "answer": 36.0, "tol": 0.06, "table": "funnel", "sol": "900 / 2,500 x 100 = 36.0%", "why": "Always break a funnel into steps. 'Conversion is low' is useless; 'we lose 75% between signup and cart' is actionable.", "n": 23}, {"world": 6, "title": "Retention and churn", "lesson": "<p>Two sides of one coin. If <b>8% churn</b> in a month, <b>92% are retained</b>.</p><p>Churn is usually the headline for subscription businesses because it compounds &mdash; 8% monthly is roughly 63% of your base gone in a year.</p>", "task": "Monthly churn is <b>8%</b>. What is monthly retention, as a percentage?", "hints": ["They sum to 100.", "100 - 8", "92"], "type": "num", "answer": 92.0, "tol": 0.1, "showdata": false, "sol": "100% - 8% = 92% retained.", "n": 24}, {"world": 6, "title": "DAU, MAU and stickiness", "lesson": "<p><b>DAU/MAU</b> is the stickiness ratio: of the people who use the product in a month, what share use it on a given day?</p><p>Roughly: 20% is normal, 50%+ is excellent (messaging apps), under 10% is a weekly-or-less habit.</p>", "task": "DAU is <b>12,000</b> and MAU is <b>48,000</b>. What is stickiness, as a percentage?", "hints": ["Divide daily by monthly.", "12000 / 48000", "25%"], "type": "num", "answer": 25.0, "tol": 0.1, "showdata": false, "sol": "12,000 / 48,000 x 100 = 25%", "n": 25}, {"world": 6, "title": "LTV and CAC", "lesson": "<p><b>CAC</b> is what you spend to acquire a customer. <b>LTV</b> is the total profit they bring. The business only works if LTV comfortably exceeds CAC &mdash; a ratio of 3 or more is the usual rule of thumb.</p>", "task": "LTV is <b>4800</b> and CAC is <b>1200</b>. What is the LTV:CAC ratio? (Just the number.)", "hints": ["Divide LTV by CAC.", "4800 / 1200", "4"], "type": "num", "answer": 4.0, "tol": 0.1, "showdata": false, "sol": "4800 / 1200 = 4  -  healthy, comfortably above the rule-of-thumb 3.", "n": 26}, {"world": 6, "title": "Cohort analysis", "lesson": "<p>Group users by <b>when they joined</b>, then track each group over time.</p><p>It answers a question a single average cannot: are newer customers behaving better or worse than older ones? An overall retention number hides that completely.</p>", "task": "Why use cohort analysis rather than a single overall retention number?", "hints": ["Averages hide change over time.", "You want to compare joining groups.", "It reveals whether newer users behave differently."], "type": "mc", "options": ["It is faster to compute", "It shows whether newer joiners retain better or worse than older ones - trends an overall average hides", "It removes the need for segmentation", "It is required for A/B testing"], "correct": 1, "sol": "Cohorts separate 'how we are doing now' from 'how we did historically'. Overall retention blends them and can look flat while recent cohorts collapse.", "n": 27}, {"world": 7, "title": "BOSS: sales dropped 20%", "lesson": "<p>The most common analytical-thinking question there is. They want a <b>structure</b>, not a guess.</p>", "task": "'Sales dropped 20% last month. How would you investigate?'", "hints": ["Do not jump to a cause.", "Start by checking the number is even real.", "Verify, segment, look at the time shape, then external and internal causes."], "type": "mc", "options": ["Guess the most likely cause and check it", "Verify the data is correct -> segment by region, product, channel -> look at the time shape -> check external causes -> check internal causes -> quantify the driver and recommend", "Ask the sales team what happened", "Build a predictive model"], "correct": 1, "sol": "1) Verify the data. 2) Segment - is it everywhere or concentrated? 3) Time shape - sudden or gradual, seasonal, vs last year. 4) External - competitor, pricing, campaign ended. 5) Internal - outage, stock-out, policy change. 6) Quantify and recommend.", "why": "Memorise the shape of this. It works for any 'why did metric X change' question.", "n": 28}, {"world": 7, "title": "BOSS: choose the metric", "lesson": "<p>They are testing whether you think about the business, not just the maths.</p>", "task": "'What metrics would you track for a food delivery app?'", "hints": ["Cover the whole journey, not one number.", "Think acquisition, engagement, money, quality.", "Orders per user, retention, AOV, delivery time, churn."], "type": "mc", "options": ["Total revenue only", "A small set across the journey: orders per active user and retention for engagement, AOV and LTV:CAC for money, delivery time and cancellation rate for quality", "Number of app downloads", "Server uptime"], "correct": 1, "sol": "Pick a handful spanning acquisition, engagement, monetisation and quality - then name the one you would treat as the north star and say why.", "why": "Naming a single north star metric and defending it is what turns a decent answer into a memorable one.", "n": 29}, {"world": 7, "title": "BOSS: explain it to a stakeholder", "lesson": "<p>A huge part of the job, and a question many candidates fumble.</p>", "task": "A marketing manager asks what your p-value of 0.02 means. What do you say?", "hints": ["Avoid the jargon entirely.", "Translate it into business language.", "'The result is very unlikely to be a fluke, so the change probably worked.'"], "type": "mc", "options": ["'The p-value is 0.02, which is below our alpha threshold of 0.05, so we reject the null hypothesis'", "'There is only about a 2% chance we would see a lift this big if the change actually did nothing - so it very likely worked. I would roll it out.'", "'It means there is a 2% chance the change does not work'", "'It is statistically significant'"], "correct": 1, "sol": "Translate, then recommend. No jargon, state the practical meaning, end with what you would do about it.", "why": "The best answer always ends with a recommendation. Analysts who stop at the number get treated as report-runners.", "n": 30}, {"world": 7, "title": "BOSS: the honest answer", "lesson": "<p>Final level. You will be asked something you do not know. How you handle it matters more than the gap itself.</p>", "task": "An interviewer asks about a regression technique you have not learned. Best response?", "hints": ["Bluffing is the worst option.", "Be honest, show the adjacent knowledge, show direction.", "Admit it, say what you do know, say how you would find out."], "type": "mc", "options": ["Guess confidently and hope it lands", "Say you have not used it, briefly state the related thing you do know, and explain how you would get up to speed", "Change the subject", "Say statistics is not relevant to data analysis"], "correct": 1, "sol": "'I have not worked with that directly. I have used correlation analysis and understand regression at a conceptual level - R-squared, fitting a line. I would read up on it and test it on a dataset.' Honest, anchored, forward-looking.", "why": "Interviewers probe limits on purpose. A calm honest answer beats a confident wrong one every single time.", "n": 31}], "worlds": {"1": ["Centre", "#a855f7"], "2": ["Spread", "#8b5cf6"], "3": ["Shape and outliers", "#6366f1"], "4": ["Relationships", "#3b82f6"], "5": ["Inference vocabulary", "#06b6d4"], "6": ["Business metrics", "#f97316"], "7": ["Interview boss", "#ef4444"]}, "tables": {"salaries (k)": {"cols": ["#", "salary_k"], "rows": [[1, 32], [2, 35], [3, 38], [4, 40], [5, 42], [6, 45], [7, 48], [8, 50], [9, 55], [10, 315]]}, "small sample": {"cols": ["#", "value"], "rows": [[1, 4], [2, 8], [3, 6], [4, 5], [5, 3], [6, 7], [7, 5]]}, "funnel": {"cols": ["Stage", "Users"], "rows": [["Visited site", 10000], ["Signed up", 2500], ["Added to cart", 900], ["Purchased", 360]]}}};
+
+const K='statsquest_v1';
+function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+function store(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+let S=load();
+S.done=S.done||{}; S.xp=S.xp||0; S.hints=S.hints||{}; S.streak=S.streak||0; S.ans=S.ans||{};
+let cur=0, hintIdx=0, mcPick=null;
+const LV=DATA.levels, W=DATA.worlds, T=DATA.tables||{}, TOT=LV.length;
+
+function maxUnlocked(){let m=1;for(let i=1;i<=TOT;i++){if(S.done[i])m=Math.max(m,i+1);}return m;}
+function buildMap(){
+  const byW={};LV.forEach(l=>{(byW[l.world]=byW[l.world]||[]).push(l)});
+  const mu=maxUnlocked();let h='';
+  Object.keys(byW).forEach(w=>{
+    const nm=W[w][0],col=W[w][1],ls=byW[w];
+    const dn=ls.filter(l=>S.done[l.n]).length;
+    h+='<div class="world"><div class="wh"><span class="wdot" style="background:'+col+'"></span>'+
+       '<h2 style="color:'+col+'">'+nm+'</h2><span class="wc">'+dn+' / '+ls.length+'</span></div><div class="nodes">';
+    ls.forEach(l=>{
+      const done=!!S.done[l.n], lock=l.n>mu, is=l.n===mu&&!done;
+      h+='<div class="node'+(done?' done':'')+(lock?' lock':'')+(is?' cur':'')+'" '+
+         (lock?'':'onclick="openLevel('+l.n+')"')+'>'+
+         (done?'<span class="tick">&#9989;</span>':lock?'<span class="tick">&#128274;</span>':'')+
+         '<div class="ln">LEVEL '+l.n+'</div><div class="lt">'+l.title+'</div></div>';
+    });
+    h+='</div></div>';
+  });
+  if(Object.keys(S.done).length===TOT) h+='<div class="fin"><h3>&#127942; Statistics cleared</h3><p>You can explain spread, skew, correlation, p-values and the core business metrics - in plain language.</p></div>';
+  document.getElementById('worlds').innerHTML=h;hud();
+}
+function hud(){
+  const d=Object.keys(S.done).length;
+  document.getElementById('sxp').textContent=S.xp;
+  document.getElementById('sdone').textContent=d;
+  document.getElementById('stot').textContent=TOT;
+  document.getElementById('sstreak').textContent=S.streak;
+  document.getElementById('xpf').style.width=(100*d/TOT)+'%';
+}
+function goMap(){document.getElementById('lv').classList.remove('on');
+  document.getElementById('map').style.display='';buildMap();window.scrollTo(0,0);}
+
+function tbl(cols,rows){
+  if(!rows||!rows.length)return '<div style="padding:14px;color:#8792a8;font-size:13px">no rows</div>';
+  let h='<table><thead><tr>';cols.forEach(c=>h+='<th>'+c+'</th>');h+='</tr></thead><tbody>';
+  rows.forEach(r=>{h+='<tr>';r.forEach(v=>h+='<td>'+(v===null?'<span style="color:#64748b">NULL</span>':v)+'</td>');h+='</tr>'});
+  return h+'</tbody></table>';
+}
+function showTbl(n){
+  document.querySelectorAll('#tabsm button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));
+  document.getElementById('tbl').innerHTML=tbl(T[n].cols,T[n].rows);}
+
+function openLevel(n){
+  cur=n;hintIdx=0;mcPick=null;
+  const l=LV[n-1];
+  document.getElementById('map').style.display='none';
+  document.getElementById('lv').classList.add('on');
+  document.getElementById('lvn').textContent='LEVEL '+n+' / '+TOT;
+  document.getElementById('lvt').textContent=l.title;
+  document.getElementById('lesson').innerHTML='<h3>Lesson</h3>'+l.lesson;
+  document.getElementById('task').innerHTML='<b>Your task &mdash;</b> '+l.task;
+  document.getElementById('msg').className='msg';document.getElementById('msg').textContent='';
+  document.getElementById('hb').className='hintbox';
+  document.getElementById('sol').className='sol';
+  document.getElementById('solp').textContent=l.sol;
+  const why=document.getElementById('why');
+  if(l.why){why.innerHTML='<b>Why it matters:</b> '+l.why;}else{why.innerHTML='';}
+  why.className='why';
+
+  const iz=document.getElementById('inputzone');
+  if(l.type==='mc'){
+    document.getElementById('anslabel').textContent='Pick one';
+    let h='<div class="mc">';
+    l.options.forEach((o,i)=>{h+='<div class="opt" data-i="'+i+'" onclick="pick('+i+')">'+
+      '<span class="k">'+'ABCD'[i]+'</span><span>'+o+'</span></div>'});
+    iz.innerHTML=h+'</div>';
+  }else if(l.type==='num'){
+    document.getElementById('anslabel').textContent='Your answer (a number)';
+    iz.innerHTML='<input class="num" id="ed" placeholder="type a number" value="'+(S.ans[n]||'')+'">';
+  }else{
+    document.getElementById('anslabel').textContent=l.anslabel||'Your answer';
+    iz.innerHTML='<textarea id="ed" spellcheck="false" placeholder="'+(l.ph||'type here')+'">'+
+      (S.ans[n]||'').replace(/</g,'&lt;')+'</textarea>';
+  }
+  const eb=document.getElementById('expbox');
+  if(l.exp&&l.exp.rows&&l.exp.rows.length){
+    eb.style.display='';
+    document.getElementById('explabel').textContent=l.explabel||'Target output';
+    document.getElementById('exp').innerHTML=tbl(l.exp.cols,l.exp.rows);
+  }else{eb.style.display='none';}
+  const db=document.getElementById('databox');
+  const keys=Object.keys(T);
+  if(keys.length&&l.showdata!==false){
+    db.style.display='';
+    let tb='';keys.forEach(t=>{tb+='<button data-t="'+t+'" onclick="showTbl(\''+t+'\')">'+t+'</button>'});
+    document.getElementById('tabsm').innerHTML=tb;
+    showTbl(l.table||keys[0]);
+  }else{db.style.display='none';}
+  window.scrollTo(0,0);
+}
+function pick(i){mcPick=i;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',+o.dataset.i===i));}
+document.addEventListener('input',e=>{if(e.target.id==='ed'){S.ans[cur]=e.target.value;store();}});
+
+function norm(q){return q.toLowerCase().replace(/#[^\n]*/g,' ').replace(/--[^\n]*/g,' ')
+  .replace(/\s+/g,' ').replace(/;+\s*$/,'').trim();}
+function check(){
+  const l=LV[cur-1];const m=document.getElementById('msg');
+  let good=false, why='';
+  if(l.type==='mc'){
+    if(mcPick===null){m.className='msg bad';m.textContent='Pick an option first.';return;}
+    good = mcPick===l.correct;
+    if(!good) why='Not that one. Re-read the lesson above.';
+  }else if(l.type==='num'){
+    const v=parseFloat((document.getElementById('ed').value||'').replace(/[, ]/g,''));
+    if(isNaN(v)){m.className='msg bad';m.textContent='Enter a number.';return;}
+    const tol=l.tol||0.01;
+    good=Math.abs(v-l.answer)<=tol;
+    if(!good) why = (Math.abs(v-l.answer)<=l.answer*0.25) ? 'Close, but not right. Check your arithmetic.' : 'Not right. Work through it step by step.';
+  }else{
+    const q=norm(document.getElementById('ed').value);
+    if(!q){m.className='msg bad';m.textContent='Write something first.';return;}
+    const miss=l.check.filter(p=>!(new RegExp(p,'i')).test(q));
+    good=miss.length===0;
+    if(!good) why='Your answer is missing <b>'+label(miss[0])+'</b>.';
+  }
+  if(good){
+    if(!S.done[cur]){
+      const used=S.hints[cur]||0;
+      const gain=Math.max(10,30-used*7);
+      S.done[cur]=1;S.xp+=gain;S.streak=(S.streak||0)+1;store();win(gain,used);
+    }else{m.className='msg ok';m.textContent='Correct again. Already cleared.';}
+    document.getElementById('why').className=LV[cur-1].why?'why on':'why';
+    hud();
+  }else{
+    S.streak=0;store();hud();
+    m.className='msg bad';m.innerHTML=why+' Try the Hint button if you are stuck.';
+  }
+}
+const LBL={"group\\s+by": "GROUP BY", "having": "HAVING", "left\\s+join": "LEFT JOIN", "join": "a JOIN", "where": "WHERE", "order\\s+by": "ORDER BY", "limit": "LIMIT", "distinct": "DISTINCT", "over": "an OVER clause", "partition": "PARTITION BY", "with": "a CTE (WITH)", "coalesce": "COALESCE", "case": "CASE", "is\\s+null": "IS NULL", "nullif": "NULLIF", "groupby": "groupby()", "merge": "merge()", "fillna": "fillna()", "dropna": "dropna()", "drop_duplicates": "drop_duplicates()", "value_counts": "value_counts()", "isnull": "isnull()", "sort_values": "sort_values()", "pivot_table": "pivot_table()", "describe": "describe()", "vlookup": "VLOOKUP", "xlookup": "XLOOKUP", "index": "INDEX", "match": "MATCH", "sumifs?": "SUMIF / SUMIFS", "countifs?": "COUNTIF / COUNTIFS", "iferror": "IFERROR", "trim": "TRIM", "calculate": "CALCULATE", "divide": "DIVIDE", "sum": "SUM", "count": "COUNT", "avg|mean": "the average", "median": "median", "std": "std"};
+function label(p){
+  for(const k in LBL){if(p.indexOf(k)>=0)return LBL[k];}
+  const c=p.replace(/\\s\+/g,' ').replace(/[\\^$()?*+\[\]|]/g,'').trim();
+  return c?('something like: '+c):'a required piece';
+}
+function hint(){
+  const l=LV[cur-1];const hb=document.getElementById('hb');
+  if(hintIdx>=l.hints.length){hb.className='hintbox on';
+    hb.innerHTML='<b>No hints left.</b> Press Solution, read it, then close it and redo the level from blank.';return;}
+  S.hints[cur]=Math.max(S.hints[cur]||0,hintIdx+1);store();
+  hb.className='hintbox on';
+  hb.innerHTML='<b>Hint '+(hintIdx+1)+' of '+l.hints.length+':</b> '+l.hints[hintIdx];
+  hintIdx++;
+}
+function showSol(){S.hints[cur]=3;store();document.getElementById('sol').classList.add('on');
+  const l=LV[cur-1];if(l.why)document.getElementById('why').className='why on';}
+function win(gain,used){
+  const last=cur===TOT;
+  document.getElementById('ovem').innerHTML=last?'&#127942;':(used===0?'&#127919;':'&#9989;');
+  document.getElementById('ovh').textContent=last?'Complete':(used===0?'Clean solve':'Correct');
+  document.getElementById('ovp').textContent=last?'You can explain spread, skew, correlation, p-values and the core business metrics - in plain language.'
+    :(used===0?'No hints used. That is how it has to feel in the interview.'
+              :'Solved with '+used+' hint'+(used>1?'s':'')+'. Redo it later from blank.');
+  document.getElementById('ovg').textContent='+'+gain+' XP';
+  document.getElementById('ovnext').style.display=last?'none':'';
+  document.getElementById('ov').classList.add('on');
+}
+function closeOv(){document.getElementById('ov').classList.remove('on');}
+function nextLevel(){closeOv();if(cur<TOT)openLevel(cur+1);else goMap();}
+function resetAll(){if(confirm('Erase all progress for this game?')){
+  S={done:{},xp:0,hints:{},streak:0,ans:{}};store();buildMap();}}
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&document.getElementById('lv').classList.contains('on'))check();
+  if(e.key==='Escape')closeOv();});
+buildMap();
+</script></body></html>

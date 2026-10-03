@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statistics &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n on" href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>Statistics — Learn / Skip</h1>
+<p><strong>Day 5 · ~10% of your interview · mostly 📖, very little 🔨</strong></p>
+<blockquote><strong>Source:</strong> the <strong>Data Analyst roadmap</strong> branches *"Data Analysis Techniques →<br>Descriptive Analysis"* (Central Tendency: Mean/Median/Mode · Dispersion: Range/Variance/<br>Standard Deviation · Distribution Shape: Skewness/Kurtosis · Generating Statistics ·<br>Visualizing Distributions) and <em>"Statistical Analysis"</em> (Hypothesis Testing ·<br>Correlation Analysis · Regression).<br>There is no standalone statistics roadmap, so items marked <strong>[+]</strong> are additions of<br>mine that the roadmap omits but interviews ask for.</blockquote>
+<p>Best resource: StatQuest on YouTube — genuinely worth watching here</p>
+<p>🔨 = practice · 📖 = explain only · ❌ = skip</p>
+<hr>
+<h2>The rule for this whole document</h2>
+<p>Statistics in a fresher DA interview is tested by <strong>conversation, not calculation.</strong><br>Nobody will ask you to compute a p-value. They will ask you what it means.<br>So: understand the intuition, be able to say it in one clear sentence, move on.</p>
+<hr>
+<h2>🔨 LEARN — compute these on real data</h2>
+<h3>Central tendency</h3>
+<ul><li><strong>Mean, Median, Mode</strong></li><li><strong>When median beats mean</strong> ← the actual question. Skewed data and outliers: income, house prices, salaries.</li></ul>
+<h3>Dispersion</h3>
+<ul><li>Range</li><li><strong>Variance</strong> — average squared distance from the mean</li><li><strong>Standard deviation</strong> — square root of variance, back in the original units</li><li><strong>Variance vs standard deviation</strong> ← very commonly asked. Answer: <em>"Same idea, but std dev is in the same units as the data, so it's interpretable."</em></li></ul>
+<h3>Descriptive summary</h3>
+<ul><li><code>df.describe()</code> — be able to read and explain <strong>every row</strong> of that output</li><li>Percentiles and quartiles: Q1, median, Q3, IQR</li></ul>
+<h3>Distributions</h3>
+<ul><li>Normal distribution and the bell curve</li><li><strong>Skew</strong> — right/positive (tail to the right, mean &gt; median) vs left/negative</li><li>Reading a histogram</li><li>Reading a <strong>boxplot</strong> — median, quartiles, whiskers, outlier dots</li></ul>
+<h3>Outliers  <strong>[+ roadmap has this under Data Cleanup, and struck it out — put it back]</strong></h3>
+<ul><li><strong>IQR method:</strong> below <code>Q1 − 1.5×IQR</code> or above <code>Q3 + 1.5×IQR</code></li><li>Z-score method — more than 3 std devs away</li><li>And the judgement question: <em>do you remove it, cap it, or keep it?</em> → depends whether it's an error or a real extreme value</li></ul>
+<h3>Correlation</h3>
+<ul><li>Correlation coefficient, −1 to +1</li><li><strong>Correlation heatmap</strong> — <code>sns.heatmap(df.corr(), annot=True)</code></li><li><strong>Correlation ≠ causation</strong> ← have a concrete example ready (ice cream sales and drownings — both driven by summer)</li></ul>
+<hr>
+<h2>📖 LEARN — vocabulary only, 30–45 minutes</h2>
+<ul><li><strong>Population vs sample</strong></li><li><strong>Hypothesis testing:</strong> null hypothesis (no effect), alternative hypothesis, p-value, the 0.05 threshold</li></ul>
+<p>  → <em>"A p-value below 0.05 means the result is unlikely to be down to chance, so we reject the null."</em></p>
+<ul><li><strong>Confidence interval</strong> — a range the true value likely sits in</li><li><strong>A/B testing</strong> — split users into two groups, change one thing, compare. Know what it <em>is</em>.</li><li><strong>Regression — 10 minutes only.</strong> <em>"Fits a line to predict a continuous outcome. R² tells you how much of the variance is explained."</em> <strong>Stop there.</strong></li><li><strong>[+] Population vs sample, sampling bias</strong> — one example</li><li><strong>Simpson's paradox</strong> — a trend that reverses when you split by group. Bonus points, not essential.</li><li>Central Limit Theorem — one line, if you have time</li></ul>
+<hr>
+<h2>📖 [+] LEARN — Business metrics ← NOT on the roadmap at all, but freshers get caught out here</h2>
+<p>Worth an hour. Interviewers love these because they test analytical thinking, not memorisation.</p>
+<ul><li><strong>DAU / MAU</strong> and stickiness (DAU÷MAU)</li><li><strong>Retention</strong> vs <strong>Churn</strong></li><li><strong>Conversion rate</strong> and the <strong>funnel</strong> (visit → signup → purchase)</li><li><strong>AOV</strong> — average order value</li><li><strong>CAC</strong> and <strong>LTV</strong>, and why LTV &gt; CAC matters</li><li><strong>Cohort analysis</strong> — grouping users by join month and tracking them over time</li><li>Which metric matters for which product — be ready for <em>"what would you track for a food delivery app?"</em></li></ul>
+<hr>
+<h2>🔨 [+] The analytical-thinking drill — NOT on the roadmap</h2>
+<p>Practise answering this out loud:</p>
+<blockquote><strong>"Sales dropped 20% last month. How would you investigate?"</strong></blockquote>
+<p>A good structure:</p>
+<ol><li><strong>Verify</strong> — is the data correct? Tracking bug? Reporting change?</li><li><strong>Segment</strong> — which region, product, channel, customer type? Is it everywhere or concentrated?</li><li><strong>Time</strong> — sudden drop or gradual? Seasonal? Compare year-on-year.</li><li><strong>External</strong> — competitor, pricing change, campaign ended, holiday?</li><li><strong>Internal</strong> — site outage, stock-out, policy change?</li><li><strong>Conclude</strong> — state the likely driver, quantify it, recommend an action.</li></ol>
+<p>This structure works for almost any "why did metric X change" question. Memorise the shape of it.</p>
+<hr>
+<h2>❌ SKIP</h2>
+<ul><li>All machine learning: supervised, unsupervised, reinforcement</li><li>Algorithms: decision trees, Naive Bayes, KNN, K-means, logistic regression, random forest</li><li>Model evaluation: precision, recall, F1, ROC/AUC, confusion matrix, cross-validation</li><li>Deep learning, neural networks, CNN, RNN</li><li>Doing regression properly — coefficients, residuals, assumptions, multicollinearity</li><li>Probability theory, Bayes' theorem, distributions beyond normal</li><li>t-tests, chi-square, ANOVA — the mechanics</li><li>Time-series forecasting, ARIMA</li><li>Kurtosis <em>(know the word exists; that's all)</em></li><li>Experiment design, statistical power, sample size calculations</li></ul>
+<hr>
+<h2>Likely interview questions</h2>
+<ol><li>Variance vs standard deviation</li><li>When would you use median instead of mean?</li><li>Give me an example of correlation without causation</li><li>How do you detect outliers — and do you always remove them?</li><li>What's a p-value? <em>(one sentence)</em></li><li>Sales dropped 20% — how would you investigate?</li><li>What metrics would you track for [some app]?</li></ol><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

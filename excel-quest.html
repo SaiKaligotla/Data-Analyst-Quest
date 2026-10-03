@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Excel Quest</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--pan2:#1b2130;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#16a34a}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+code,pre,textarea,input.num,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:100;background:rgba(11,14,20,.93);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:17px;letter-spacing:-.3px;cursor:pointer}
+.logo span{color:var(--ac)}
+.hm{font-size:12px;color:var(--mut);text-decoration:none;border:1px solid var(--br);padding:4px 9px;border-radius:7px}
+.hm:hover{color:var(--tx)}
+.stats{display:flex;gap:10px;margin-left:auto;align-items:center;font-size:13px;font-weight:700;flex-wrap:wrap}
+.stat{display:flex;align-items:center;gap:5px;background:var(--pan);border:1px solid var(--br);
+padding:5px 11px;border-radius:99px}
+.xpbar{flex:1;min-width:90px;max-width:200px;height:7px;background:var(--pan);border-radius:99px;overflow:hidden}
+.xpbar>div{height:100%;background:linear-gradient(90deg,var(--ac),#a855f7);width:0;transition:width .5s}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px 80px}
+.hero{text-align:center;padding:26px 0 10px}
+.hero h1{font-size:34px;font-weight:800;letter-spacing:-1px}
+.hero p{color:var(--mut);margin-top:6px}
+.world{margin-top:30px}
+.wh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.wdot{width:11px;height:11px;border-radius:99px}
+.wh h2{font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.wh .wc{font-size:12px;color:var(--mut);margin-left:auto;font-weight:600}
+.nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:10px}
+.node{background:var(--pan);border:1px solid var(--br);border-radius:12px;padding:13px;cursor:pointer;
+position:relative;transition:transform .12s,border-color .12s}
+.node:hover{transform:translateY(-2px)}
+.node .ln{font-size:11px;color:var(--mut);font-weight:800;letter-spacing:.5px}
+.node .lt{font-size:14px;font-weight:600;margin-top:2px}
+.node.lock{opacity:.38;cursor:not-allowed}.node.lock:hover{transform:none}
+.node.done{border-color:#1e5235;background:linear-gradient(180deg,#14301f22,var(--pan))}
+.node.cur{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac),0 6px 24px -8px var(--ac)}
+.tick{position:absolute;top:10px;right:11px;font-size:14px}
+.lv{display:none}.lv.on{display:block}
+.back{background:none;border:none;color:var(--mut);font-size:13px;cursor:pointer;padding:0;font-weight:600}
+.back:hover{color:var(--tx)}
+.lvhead{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px;flex-wrap:wrap}
+.lvhead .n{font-size:12px;font-weight:800;color:var(--ac);letter-spacing:1px}
+.lvhead h2{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+@media(max-width:860px){.cols{grid-template-columns:1fr}}
+.box{background:var(--pan);border:1px solid var(--br);border-radius:14px;padding:18px}
+.box h3{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.lesson p{margin-bottom:9px;font-size:14.5px}
+.lesson ul{margin:0 0 9px 18px;font-size:14.5px}.lesson li{margin-bottom:4px}
+.lesson pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:8px;
+padding:12px;margin:9px 0;font-size:12.5px;color:#a5f3d0;overflow-x:auto;white-space:pre-wrap;line-height:1.5}
+.lesson code{background:#070a10;padding:1px 5px;border-radius:4px;font-size:12.5px;color:#fbbf24}
+.lesson table{margin:9px 0}
+.task{background:linear-gradient(135deg,#1e1b4b55,#312e8133);border:1px solid #4338ca66;
+border-radius:12px;padding:15px;font-size:15px}
+.task b{color:#c7d2fe}
+textarea{width:100%;min-height:130px;background:#070a10;border:1px solid var(--br);border-radius:10px;
+color:#dbe4f0;padding:13px;font-size:13.5px;resize:vertical;line-height:1.6}
+textarea:focus{outline:none;border-color:var(--ac)}
+input.num{width:100%;background:#070a10;border:1px solid var(--br);border-radius:10px;color:#dbe4f0;
+padding:14px;font-size:19px;font-weight:700}
+input.num:focus{outline:none;border-color:var(--ac)}
+.mc{display:flex;flex-direction:column;gap:8px}
+.opt{background:#070a10;border:1px solid var(--br);border-radius:10px;padding:12px 14px;cursor:pointer;
+font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.opt:hover{border-color:#39425a}
+.opt.sel{border-color:var(--ac);background:#11162480}
+.opt .k{font-weight:800;color:var(--mut);flex-shrink:0}
+.opt.sel .k{color:var(--ac)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button.b{background:var(--pan2);border:1px solid var(--br);color:#cdd5e3;padding:9px 15px;border-radius:9px;
+cursor:pointer;font-size:13px;font-weight:700}
+button.b:hover{background:#242c3d}
+button.go{background:var(--ac);border-color:var(--ac);color:#fff;flex:1}
+button.go:hover{filter:brightness(1.12)}
+.msg{margin-top:11px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
+.msg.ok{display:block;background:#0f2a1a;border:1px solid #1e5235;color:#86efac}
+.msg.bad{display:block;background:#2a1414;border:1px solid #5c2626;color:#fca5a5}
+.hintbox{margin-top:10px;background:#1c1708;border-left:3px solid #f59e0b;border-radius:8px;
+padding:10px 13px;font-size:13.5px;color:#fde68a;display:none}
+.hintbox.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;padding:7px 9px;background:#070a10;color:var(--mut);font-weight:700;
+border-bottom:1px solid var(--br);white-space:nowrap;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+td{padding:6px 9px;border-bottom:1px solid #1b2130;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+.scroll{overflow-x:auto;max-height:290px;overflow-y:auto;border:1px solid var(--br);border-radius:9px}
+.tabsm{display:flex;gap:5px;margin-bottom:9px;flex-wrap:wrap}
+.tabsm button{background:var(--pan2);border:1px solid var(--br);color:var(--mut);font-size:11px;
+padding:4px 9px;border-radius:6px;cursor:pointer;font-weight:700}
+.tabsm button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.sol{display:none;margin-top:10px}.sol.on{display:block}
+.sol pre{background:#070a10;border:1px solid var(--br);border-left:3px solid #22c55e;border-radius:9px;
+padding:13px;font-size:13px;color:#86efac;overflow-x:auto;white-space:pre-wrap;line-height:1.6}
+.why{margin-top:10px;background:#0d1620;border-left:3px solid #38bdf8;border-radius:8px;padding:11px 13px;
+font-size:13.5px;color:#bae6fd;display:none}
+.why.on{display:block}
+.ov{position:fixed;inset:0;background:rgba(5,7,12,.86);backdrop-filter:blur(5px);z-index:200;
+display:none;align-items:center;justify-content:center;padding:20px}
+.ov.on{display:flex}
+.ovc{background:var(--pan);border:1px solid #2f3a52;border-radius:20px;padding:34px;max-width:420px;
+width:100%;text-align:center}
+.ovc .em{font-size:52px}
+.ovc h3{font-size:25px;font-weight:800;margin:8px 0 4px}
+.ovc p{color:var(--mut);font-size:14.5px;margin-bottom:8px}
+.gain{display:inline-block;background:#1e1b4b;border:1px solid #4338ca;color:#c7d2fe;
+padding:5px 14px;border-radius:99px;font-weight:800;font-size:14px;margin:8px 0 18px}
+.ovc .row{justify-content:center}
+.fin{background:linear-gradient(135deg,#312e81,#1e1b4b);border:1px solid #4338ca;border-radius:16px;
+padding:24px;text-align:center;margin-top:26px}
+.fin h3{font-size:21px;font-weight:800}
+.fin p{color:#c7d2fe;font-size:14px;margin-top:6px}
+.note{color:var(--mut);font-size:12.5px;margin-top:14px;text-align:center}
+.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.pl{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--pan2);
+border:1px solid var(--br);color:var(--mut)}
+</style></head><body>
+
+<div class="top">
+  <div class="logo" onclick="goMap()">Excel <span>Quest</span></div>
+  <a class="hm" href="index.html">All games</a>
+  <div class="xpbar"><div id="xpf"></div></div>
+  <div class="stats">
+    <div class="stat">&#9889; <span id="sxp">0</span> XP</div>
+    <div class="stat">&#11088; <span id="sdone">0</span>/<span id="stot">0</span></div>
+    <div class="stat">&#128293; <span id="sstreak">0</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="map">
+    <div class="hero">
+      <h1>Excel Quest</h1>
+      <p>30 levels. Formulas, lookups, cleaning and pivot tables.</p>
+      <div class="pillrow" style="justify-content:center">
+        <span class="pl">Works offline</span><span class="pl">Progress saved</span>
+        <span class="pl">Real computed answers</span><span class="pl">Interview-focused</span>
+      </div>
+    </div>
+    <div id="worlds"></div>
+    <div class="note">Levels unlock as you go. Hints cost XP, not pride &mdash; but try first.
+    <br><button class="back" style="margin-top:8px;text-decoration:underline" onclick="resetAll()">Reset all progress</button></div>
+  </div>
+
+  <div id="lv" class="lv">
+    <button class="back" onclick="goMap()">&larr; Back to map</button>
+    <div class="lvhead"><span class="n" id="lvn"></span><h2 id="lvt"></h2></div>
+    <div class="cols">
+      <div>
+        <div class="box lesson" id="lesson"></div>
+        <div class="box" style="margin-top:16px" id="databox">
+          <h3>The spreadsheet</h3>
+          <div class="tabsm" id="tabsm"></div>
+          <div class="scroll" id="tbl"></div>
+        </div>
+      </div>
+      <div>
+        <div class="task" id="task"></div>
+        <div class="box" style="margin-top:16px">
+          <h3 id="anslabel">Your answer</h3>
+          <div id="inputzone"></div>
+          <div class="row">
+            <button class="b go" onclick="check()">Check answer</button>
+            <button class="b" onclick="hint()">Hint</button>
+            <button class="b" onclick="showSol()">Solution</button>
+          </div>
+          <div class="hintbox" id="hb"></div>
+          <div class="msg" id="msg"></div>
+          <div class="sol" id="sol"><h3 style="margin-top:14px">Model answer</h3><pre id="solp"></pre></div>
+          <div class="why" id="why"></div>
+        </div>
+        <div class="box" style="margin-top:16px" id="expbox">
+          <h3 id="explabel">Target output</h3>
+          <div class="scroll" id="exp"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov"><div class="ovc">
+  <div class="em" id="ovem">&#127881;</div>
+  <h3 id="ovh">Correct</h3>
+  <p id="ovp"></p>
+  <div class="gain" id="ovg"></div>
+  <div class="row">
+    <button class="b" onclick="closeOv()">Stay here</button>
+    <button class="b go" onclick="nextLevel()" id="ovnext">Next level &rarr;</button>
+  </div>
+</div></div>
+
+<script>
+const DATA={"levels": [{"world": 1, "title": "SUM", "lesson": "<p>Every Excel formula starts with <code>=</code>. A <b>range</b> is written <code>F2:F13</code> &mdash; from cell F2 down to F13.</p><pre>=SUM(F2:F13)</pre><p>The data sheet is on the left. Column F is Revenue, and the data runs from row 2 to row 13.</p>", "task": "Write the formula for <b>total revenue</b> (column F, rows 2 to 13).", "hints": ["It is one function and one range.", "The range is F2:F13.", "=SUM(F2:F13)"], "sol": "=SUM(F2:F13)", "check": ["=\\s*sum\\s*\\(", "f2\\s*:\\s*f13"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[1258000]]}, "explabel": "This should return", "why": "SUM, AVERAGE, COUNT, MIN and MAX are the five functions you will use more than everything else combined.", "n": 1, "type": "code"}, {"world": 1, "title": "AVERAGE and ROUND", "lesson": "<p><b>ROUND</b> wraps another formula to control decimals.</p><pre>=ROUND(AVERAGE(F2:F13), 2)</pre><p>The <code>2</code> means two decimal places. Nesting functions like this is normal.</p>", "task": "Write a formula for the <b>average revenue, rounded to 2 decimals</b>.", "hints": ["You need two functions, one inside the other.", "ROUND goes on the outside.", "=ROUND(AVERAGE(F2:F13),2)"], "sol": "=ROUND(AVERAGE(F2:F13),2)", "check": ["round\\s*\\(", "average\\s*\\(", "f2\\s*:\\s*f13", ",\\s*2\\s*\\)"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[104833.33]]}, "explabel": "This should return", "n": 2, "type": "code"}, {"world": 1, "title": "COUNT vs COUNTA", "lesson": "<p>Two counting functions that behave differently:</p><ul><li><b>COUNT</b> counts cells containing <i>numbers</i></li><li><b>COUNTA</b> counts cells that are <i>not empty</i> &mdash; text included</li></ul><p>So <code>=COUNT(A2:A13)</code> on the Region column returns <b>0</b>, because those are all text.</p>", "task": "You run <code>=COUNT(B2:B13)</code> on the <b>Rep</b> column, which contains names. What do you get?", "hints": ["Rep contains text, not numbers.", "COUNT only counts numeric cells.", "It returns 0."], "type": "mc", "options": ["12", "0", "An error (#VALUE!)", "6"], "correct": 1, "sol": "=COUNT(B2:B13) returns 0 - the Rep column holds text, and COUNT only counts numbers. Use COUNTA to count non-empty text cells.", "why": "A classic trap. If a count looks suspiciously like zero, check whether you used COUNT on text.", "n": 3}, {"world": 1, "title": "MIN and MAX", "lesson": "<p>Same pattern as SUM.</p><pre>=MAX(F2:F13)\n=MIN(F2:F13)</pre>", "task": "Write the formula for the <b>largest</b> value in the Revenue column.", "hints": ["Same shape as SUM.", "Use MAX.", "=MAX(F2:F13)"], "sol": "=MAX(F2:F13)", "check": ["=\\s*max\\s*\\(", "f2\\s*:\\s*f13"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[165000]]}, "explabel": "This should return", "n": 4, "type": "code"}, {"world": 1, "title": "Absolute references", "lesson": "<p>When you copy a formula down, references <b>shift</b>. <code>A1</code> becomes <code>A2</code>, and so on. Lock them with <code>$</code>:</p><ul><li><code>A1</code> &mdash; both shift</li><li><code>$A$1</code> &mdash; nothing shifts</li><li><code>$A1</code> &mdash; column locked, row shifts</li></ul><p>Forgetting this is the number one cause of broken spreadsheets.</p>", "task": "You wrote <code>=F2/SUM(F2:F13)</code> in G2 and dragged it down. Every row below shows the wrong number. Why?", "hints": ["Think about what happens to the range when you drag.", "The SUM range shifted down with the formula.", "The range needs locking: $F$2:$F$13."], "type": "mc", "options": ["SUM cannot be divided", "The SUM range shifted to F3:F14, F4:F15 and so on - it needed to be $F$2:$F$13", "You need to format the column as a percentage first", "F2 should have been locked instead"], "correct": 1, "sol": "=F2/SUM($F$2:$F$13)  -  lock the range that must stay still, leave F2 relative so it moves.", "why": "Interviewers sometimes hand you a broken sheet and ask what is wrong. This is usually the answer.", "n": 5}, {"world": 2, "title": "IF", "lesson": "<p><b>IF</b> is Excel's if/else. Three parts: the test, the value when true, the value when false.</p><pre>=IF(D2&gt;10, \"Bulk\", \"Standard\")</pre><p>Text values must be in double quotes.</p>", "task": "In G2, flag rows where <b>Units (column D) is greater than 10</b> as <code>Bulk</code>, otherwise <code>Standard</code>.", "hints": ["Three arguments, separated by commas.", "=IF(test, value_if_true, value_if_false)", "=IF(D2>10,\"Bulk\",\"Standard\")"], "sol": "=IF(D2>10,\"Bulk\",\"Standard\")", "check": ["=\\s*if\\s*\\(", "d2\\s*>\\s*10", "bulk", "standard"], "ph": "=...", "anslabel": "Your formula", "n": 6, "type": "code"}, {"world": 2, "title": "Nested IF", "lesson": "<p>Put an IF inside an IF to get three or more outcomes.</p><pre>=IF(F2&gt;=150000,\"High\",\n   IF(F2&gt;=100000,\"Mid\",\"Low\"))</pre><p>Order matters &mdash; Excel stops at the first test that is true.</p>", "task": "Band the revenue in F2: <b>150000 or more</b> is <code>High</code>, <b>100000 or more</b> is <code>Mid</code>, anything else is <code>Low</code>.", "hints": ["Start with the highest band.", "The false branch of the first IF is another IF.", "=IF(F2>=150000,\"High\",IF(F2>=100000,\"Mid\",\"Low\"))"], "sol": "=IF(F2>=150000,\"High\",IF(F2>=100000,\"Mid\",\"Low\"))", "check": ["if\\s*\\(.*if\\s*\\(", "150000", "100000", "high", "mid", "low"], "ph": "=...", "anslabel": "Your formula", "why": "Same thinking as SQL's CASE WHEN. If you can do one, say so in the interview.", "n": 7, "type": "code"}, {"world": 2, "title": "IFERROR", "lesson": "<p>When a VLOOKUP finds nothing it returns <code>#N/A</code>, which then poisons every total built on top of it. <b>IFERROR</b> catches that.</p><pre>=IFERROR(VLOOKUP(...), 0)</pre>", "task": "What is the main reason an analyst wraps a lookup in IFERROR?", "hints": ["Think about what a failed lookup does to a SUM below it.", "#N/A spreads through any calculation that touches it.", "It replaces the error with a usable value."], "type": "mc", "options": ["It makes the formula calculate faster", "It replaces errors like #N/A with a chosen value, so downstream totals still work", "It is required whenever you use VLOOKUP", "It converts text to numbers"], "correct": 1, "sol": "=IFERROR(VLOOKUP(...), 0)  -  errors stop being contagious.", "why": "Be careful though: hiding errors can also hide real data problems. Say that in an interview and you sound senior.", "n": 8}, {"world": 3, "title": "VLOOKUP", "lesson": "<p>The most asked Excel function. It looks <b>down</b> the first column of a range and returns a value from a column to the right.</p><pre>=VLOOKUP(lookup_value, table_array, col_index, FALSE)</pre><p>Open the <b>Lookup table</b> tab on the left: products are in H, prices in I.</p>", "task": "Look up the price for the product in <b>C2</b> using the range <b>$H$2:$I$5</b>. Price is the <b>2nd</b> column. Use an exact match.", "hints": ["Four arguments.", "The third is 2 (price is the second column of the range).", "=VLOOKUP(C2,$H$2:$I$5,2,FALSE)"], "sol": "=VLOOKUP(C2,$H$2:$I$5,2,FALSE)", "check": ["vlookup\\s*\\(", "c2", "h\\$?2\\s*:\\s*\\$?i\\$?5", ",\\s*2\\s*,", "false|0\\s*\\)"], "ph": "=...", "anslabel": "Your formula", "table": "Lookup table", "why": "Expect to be asked to explain all four arguments out loud.", "n": 9, "type": "code"}, {"world": 3, "title": "Why FALSE matters", "lesson": "<p>The fourth argument is <code>range_lookup</code>:</p><ul><li><b>FALSE</b> (or 0) &mdash; exact match</li><li><b>TRUE</b> (or omitted) &mdash; approximate match, and it assumes your data is sorted</li></ul><p>Leaving it out is one of the most common real-world spreadsheet bugs.</p>", "task": "What happens if you omit the last argument of VLOOKUP?", "hints": ["The default is not what most people expect.", "It switches to approximate matching.", "It can silently return the wrong row."], "type": "mc", "options": ["Excel shows an error", "It defaults to approximate match and can silently return the wrong value", "It defaults to exact match, which is safe", "Nothing changes"], "correct": 1, "sol": "Omitting it means TRUE = approximate match. It returns the closest value below, which on unsorted data is simply wrong - and there is no error to warn you.", "why": "Silent wrong answers are worse than errors. This is a genuinely good interview talking point.", "n": 10}, {"world": 3, "title": "The VLOOKUP limitation", "lesson": "<p>VLOOKUP can only return columns to the <b>right</b> of the lookup column. If the value you want sits to the left, VLOOKUP cannot do it.</p><p>Two fixes: <b>INDEX + MATCH</b>, or <b>XLOOKUP</b> in newer versions.</p>", "task": "What is VLOOKUP's best known limitation?", "hints": ["It is about direction.", "It only searches the first column of the range and looks rightwards.", "It cannot look to the left."], "type": "mc", "options": ["It only works on numbers", "It cannot look to the left of the lookup column", "It is limited to 100 rows", "It cannot be combined with IF"], "correct": 1, "sol": "VLOOKUP searches the first column of its range and can only return values to the right. Use INDEX+MATCH or XLOOKUP to look left.", "why": "This exact question comes up constantly. Answer it, then immediately name the fix - that is what separates a good answer from a great one.", "n": 11}, {"world": 3, "title": "INDEX + MATCH", "lesson": "<p>Two functions that together beat VLOOKUP.</p><ul><li><b>MATCH</b> finds the <i>position</i> of a value in a range</li><li><b>INDEX</b> returns the value at a given position</li></ul><pre>=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))</pre><p>The <code>0</code> in MATCH means exact match &mdash; same idea as FALSE in VLOOKUP.</p>", "task": "Get the price for the product in <b>C2</b> using INDEX on <b>$I$2:$I$5</b> and MATCH on <b>$H$2:$H$5</b>.", "hints": ["INDEX wraps MATCH.", "MATCH returns a row number that INDEX then uses.", "=INDEX($I$2:$I$5,MATCH(C2,$H$2:$H$5,0))"], "sol": "=INDEX($I$2:$I$5,MATCH(C2,$H$2:$H$5,0))", "check": ["index\\s*\\(", "match\\s*\\(", "c2", ",\\s*0\\s*\\)"], "ph": "=...", "anslabel": "Your formula", "table": "Lookup table", "n": 12, "type": "code"}, {"world": 3, "title": "XLOOKUP", "lesson": "<p>The modern replacement, if your Excel has it. No column counting, looks either direction, and has a built-in not-found value.</p><pre>=XLOOKUP(C2, $H$2:$H$5, $I$2:$I$5, \"Not found\")</pre><p>Arguments: what to find, where to look, what to return, and optionally what to show if nothing matches.</p>", "task": "Write the <b>XLOOKUP</b> that finds <b>C2</b> in <b>$H$2:$H$5</b> and returns from <b>$I$2:$I$5</b>.", "hints": ["Three required arguments.", "find it, search here, return from there.", "=XLOOKUP(C2,$H$2:$H$5,$I$2:$I$5)"], "sol": "=XLOOKUP(C2,$H$2:$H$5,$I$2:$I$5,\"Not found\")", "check": ["xlookup\\s*\\(", "c2", "h\\$?2\\s*:\\s*\\$?h\\$?5", "i\\$?2\\s*:\\s*\\$?i\\$?5"], "ph": "=...", "anslabel": "Your formula", "table": "Lookup table", "why": "Mentioning XLOOKUP signals you keep current. But still know VLOOKUP - most companies run older files.", "n": 13, "type": "code"}, {"world": 4, "title": "SUMIF", "lesson": "<p>Sum only the rows that meet a condition.</p><pre>=SUMIF(range_to_test, criteria, range_to_sum)</pre><p>Note the argument order: what to test, the test, then what to add up.</p>", "task": "Total <b>revenue for the East region</b>. Region is column A, revenue is column F.", "hints": ["Three arguments.", "Test A2:A13 for \"East\", then sum F2:F13.", "=SUMIF(A2:A13,\"East\",F2:F13)"], "sol": "=SUMIF(A2:A13,\"East\",F2:F13)", "check": ["sumif\\s*\\(", "a2\\s*:\\s*a13", "east", "f2\\s*:\\s*f13"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[509000]]}, "explabel": "This should return", "n": 14, "type": "code"}, {"world": 4, "title": "SUMIFS", "lesson": "<p>Plural version, for two or more conditions &mdash; and the argument order <b>flips</b>: the sum range comes <i>first</i>.</p><pre>=SUMIFS(sum_range, range1, crit1, range2, crit2)</pre>", "task": "Total revenue where <b>Region is East AND Product is Laptop</b>.", "hints": ["Sum range goes first in SUMIFS.", "Then pairs: A2:A13 with \"East\", C2:C13 with \"Laptop\".", "=SUMIFS(F2:F13,A2:A13,\"East\",C2:C13,\"Laptop\")"], "sol": "=SUMIFS(F2:F13,A2:A13,\"East\",C2:C13,\"Laptop\")", "check": ["sumifs\\s*\\(", "f2\\s*:\\s*f13", "east", "laptop"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[275000]]}, "explabel": "This should return", "why": "SUMIF vs SUMIFS argument order is a favourite gotcha. SUMIFS puts the sum range first.", "n": 15, "type": "code"}, {"world": 4, "title": "COUNTIF", "lesson": "<p>Counts rows matching a condition.</p><pre>=COUNTIF(range, criteria)</pre><p>It also doubles as a duplicate finder: <code>=COUNTIF($A$2:$A$13,A2)&gt;1</code>.</p>", "task": "How many rows are in the <b>East</b> region? Write the formula.", "hints": ["Two arguments only.", "=COUNTIF(A2:A13,\"East\")", "=COUNTIF(A2:A13,\"East\")"], "sol": "=COUNTIF(A2:A13,\"East\")", "check": ["countif\\s*\\(", "a2\\s*:\\s*a13", "east"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[5]]}, "explabel": "This should return", "n": 16, "type": "code"}, {"world": 4, "title": "COUNTIFS", "lesson": "<p>Multiple conditions. Unlike SUMIFS there is no value range, so it is just pairs.</p><pre>=COUNTIFS(range1, crit1, range2, crit2)</pre>", "task": "Count the rows where <b>Region is East AND Product is Laptop</b>.", "hints": ["Pairs of range and criteria.", "No sum range needed.", "=COUNTIFS(A2:A13,\"East\",C2:C13,\"Laptop\")"], "sol": "=COUNTIFS(A2:A13,\"East\",C2:C13,\"Laptop\")", "check": ["countifs\\s*\\(", "east", "laptop"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[2]]}, "explabel": "This should return", "n": 17, "type": "code"}, {"world": 4, "title": "AVERAGEIF", "lesson": "<p>Same shape as SUMIF.</p><pre>=AVERAGEIF(range, criteria, average_range)</pre>", "task": "Average revenue for the <b>West</b> region.", "hints": ["Same argument order as SUMIF.", "Test A2:A13, then average F2:F13.", "=AVERAGEIF(A2:A13,\"West\",F2:F13)"], "sol": "=AVERAGEIF(A2:A13,\"West\",F2:F13)", "check": ["averageif\\s*\\(", "west", "f2\\s*:\\s*f13"], "ph": "=...", "anslabel": "Your formula", "exp": {"cols": ["Result"], "rows": [[105750.0]]}, "explabel": "This should return", "n": 18, "type": "code"}, {"world": 5, "title": "TRIM", "lesson": "<p>Invisible spaces are the single most common cause of failed lookups. <code>\"East \"</code> and <code>\"East\"</code> are different strings, so VLOOKUP returns #N/A and you have no idea why.</p><pre>=TRIM(A2)</pre><p>TRIM strips leading and trailing spaces.</p>", "task": "A VLOOKUP keeps returning #N/A even though you can clearly see the value in both sheets. What do you check first?", "hints": ["The values look identical on screen.", "Something invisible is different.", "Trailing spaces, or numbers stored as text."], "type": "mc", "options": ["The file is too large", "Hidden spaces or a type mismatch - text vs number - so use TRIM and check the data type", "VLOOKUP is broken and you should use SUM", "The worksheet needs recalculating"], "correct": 1, "sol": "=TRIM(A2) for stray spaces. Also check that one side is not a number stored as text - that mismatch breaks lookups silently too.", "why": "A great practical answer. It shows you have actually cleaned real data rather than only read about it.", "n": 19}, {"world": 5, "title": "Remove Duplicates", "lesson": "<p><b>Data &gt; Remove Duplicates</b> deletes repeat rows based on the columns you tick.</p><p style='color:#fbbf24'>Important: it deletes in place and cannot be undone after saving. Find them first with Conditional Formatting or COUNTIF, check they are genuinely duplicates, then remove.</p>", "task": "What is the safe order of operations when you suspect duplicate rows?", "hints": ["Deleting first is risky.", "You want to look before you delete.", "Identify, verify, then remove."], "type": "mc", "options": ["Remove Duplicates immediately, then check the row count", "Highlight them with Conditional Formatting or COUNTIF, confirm they are true duplicates, then remove", "Sort the data and delete rows manually", "Duplicates never matter in analysis"], "correct": 1, "sol": "Identify (Conditional Formatting / COUNTIF > 1) -> verify they are genuine duplicates and not legitimately repeated values -> then Remove Duplicates.", "why": "Two customers can genuinely share a name. Deleting without checking destroys real data.", "n": 20}, {"world": 5, "title": "Text to Columns", "lesson": "<p><b>Data &gt; Text to Columns</b> splits one column into several using a delimiter &mdash; a comma, a space, a dash.</p><p>It has a second life as a type-fixer: running it on a column of numbers-stored-as-text converts them to real numbers.</p>", "task": "A column contains \"Asha Kumar\" and you need first and last name separately. Which tool?", "hints": ["There is a built-in feature for exactly this.", "It is under the Data tab.", "Text to Columns, split on space."], "type": "mc", "options": ["Remove Duplicates", "Text to Columns, using space as the delimiter", "Conditional Formatting", "Freeze Panes"], "correct": 1, "sol": "Data > Text to Columns > Delimited > Space. (In newer Excel, TEXTSPLIT does it with a formula.)", "n": 21}, {"world": 5, "title": "Numbers stored as text", "lesson": "<p>You SUM a column and get <b>0</b>. The cells show numbers, but they are left-aligned and there is a little green triangle in the corner.</p><p>Those are <b>text</b>, not numbers. SUM ignores text, so the total is zero.</p>", "task": "Your SUM over a column of apparent numbers returns 0. What is going on?", "hints": ["SUM only adds numbers.", "Look at the alignment - text goes left, numbers go right.", "They are stored as text."], "type": "mc", "options": ["The range is wrong", "The values are stored as text, so SUM ignores them - convert with Text to Columns or VALUE()", "Excel needs restarting", "You must format the cell as currency"], "correct": 1, "sol": "Stored as text. Fix with Data > Text to Columns (finish immediately), multiply by 1, or use VALUE(). Tell-tale sign: left-aligned numbers with a green triangle.", "why": "Extremely common in exported CSVs. Recognising it instantly makes you look experienced.", "n": 22}, {"world": 6, "title": "What a pivot table is", "lesson": "<p>A <b>pivot table</b> groups and aggregates raw rows by drag and drop &mdash; no formulas.</p><p>It is the exact same idea as SQL's <code>GROUP BY</code>: pick a field to group by, pick a number to aggregate.</p><p style='color:#fbbf24'>This is the number one Excel interview topic. Do not skip it.</p>", "task": "What is the best one-sentence description of a pivot table?", "hints": ["Compare it to something you already know from SQL.", "It groups and aggregates.", "It is drag-and-drop GROUP BY."], "type": "mc", "options": ["A chart type for showing trends", "A drag-and-drop tool that groups rows and aggregates values - the Excel equivalent of SQL GROUP BY", "A way to lock cells so they cannot be edited", "A formula for looking up values across sheets"], "correct": 1, "sol": "A pivot table summarises raw rows by grouping on chosen fields and aggregating a value - same concept as GROUP BY in SQL.", "why": "Linking it to GROUP BY in the interview shows you understand the concept, not just the clicks.", "n": 23}, {"world": 6, "title": "The four areas", "lesson": "<p>A pivot has four drop zones:</p><ul><li><b>Rows</b> &mdash; what to group down the side</li><li><b>Columns</b> &mdash; what to group across the top</li><li><b>Values</b> &mdash; the number being aggregated</li><li><b>Filters</b> &mdash; what to restrict the whole table to</li></ul>", "task": "To get <b>total revenue by region</b>, where do Region and Revenue go?", "hints": ["One is the grouping, one is the number.", "Region groups; Revenue is aggregated.", "Region to Rows, Revenue to Values."], "type": "mc", "options": ["Region to Values, Revenue to Rows", "Region to Rows, Revenue to Values", "Both to Filters", "Region to Columns, Revenue to Filters"], "correct": 1, "sol": "Region -> Rows, Revenue -> Values (set the aggregation to Sum).", "n": 24}, {"world": 6, "title": "Reading the pivot", "lesson": "<p>Build it mentally: Region in Rows, Revenue in Values as <b>Sum</b>. Excel produces one row per region with the totals.</p><p>Use the data table on the left and work it out.</p>", "task": "With Region in Rows and Sum of Revenue in Values, what number appears for <b>North</b>?", "hints": ["Find the three North rows in the data.", "Laptop 110000, Chair 120000, Monitor 96000.", "110000 + 120000 + 96000."], "type": "num", "answer": 326000, "tol": 0.5, "sol": "North = 110000 + 120000 + 96000 = 326000", "exp": {"cols": ["Region", "Sum of Revenue"], "rows": [["East", 509000], ["West", 423000], ["North", 326000]]}, "explabel": "The full pivot output", "n": 25}, {"world": 6, "title": "Show Values As % of total", "lesson": "<p>Right-click a value &gt; <b>Show Values As</b> &gt; <b>% of Grand Total</b>. Instantly turns absolute numbers into shares, with no formula.</p><p>This is usually what a stakeholder actually wanted.</p>", "task": "East revenue is <b>509,000</b> and total revenue is <b>1,258,000</b>. What percentage of the total is East? Give it to <b>1 decimal place</b>.", "hints": ["Divide East by the total.", "Then multiply by 100.", "509000 / 1258000 * 100 = 40.5"], "type": "num", "answer": 40.5, "tol": 0.15, "sol": "509000 / 1258000 x 100 = 40.5%", "n": 26}, {"world": 6, "title": "Slicers", "lesson": "<p>A <b>slicer</b> is a set of filter buttons attached to a pivot table. Click 'East' and the whole summary filters.</p><p>Why it matters: a non-technical manager can explore the data without touching a formula. That is the real job.</p>", "task": "Why would you add a slicer rather than just using the Filters area?", "hints": ["Think about who is using the file.", "It is about the person who did not build it.", "It is visible and clickable for non-technical users."], "type": "mc", "options": ["Slicers calculate faster", "They are visible and clickable, so non-technical users can filter without understanding the pivot", "Slicers are required for charts", "They reduce file size"], "correct": 1, "sol": "Slicers make filtering obvious and self-service for the audience. A filter dropdown is easy to miss; a slicer is not.", "why": "Answers that mention the end user, not just the feature, stand out in interviews.", "n": 27}, {"world": 7, "title": "BOSS: pick the right tool", "lesson": "<p>Interviewers test judgement, not just syntax.</p>", "task": "You need to summarise 80,000 rows of sales by region and month, and the data lives in a database. What is the sensible approach?", "hints": ["Think about where the data is and how big it is.", "Excel is not the right first step here.", "Aggregate in SQL, visualise after."], "type": "mc", "options": ["Export all 80,000 rows to Excel and build a pivot table", "Aggregate it in SQL with GROUP BY, then bring the small summary into Excel or Power BI", "Open it in Notepad first", "Use VLOOKUP across all rows"], "correct": 1, "sol": "Aggregate at the source with SQL, then visualise the small result. Dragging 80k raw rows into Excel is slow, fragile and unnecessary.", "why": "This is the answer that makes you sound like an analyst rather than a spreadsheet user.", "n": 28}, {"world": 7, "title": "BOSS: VLOOKUP vs INDEX-MATCH", "lesson": "<p>Time to assemble a complete spoken answer.</p>", "task": "Which is the strongest interview answer to 'VLOOKUP or INDEX-MATCH?'", "hints": ["A good answer covers both and shows judgement.", "Mention direction, robustness, and when each is fine.", "INDEX-MATCH is more flexible; VLOOKUP is simpler."], "type": "mc", "options": ["INDEX-MATCH is always better, VLOOKUP is obsolete", "VLOOKUP is simpler for quick work, but INDEX-MATCH can look left and does not break when columns are inserted - and XLOOKUP replaces both where available", "They are identical", "VLOOKUP is faster so always use it"], "correct": 1, "sol": "VLOOKUP: simpler, fine for quick one-off work. INDEX-MATCH: looks either direction, survives column insertion, better on large sheets. XLOOKUP: replaces both if your version supports it.", "why": "Nuanced answers beat absolute ones. 'It depends, and here is what it depends on' is what they want to hear.", "n": 29}, {"world": 7, "title": "BOSS: clean this sheet", "lesson": "<p>Final level. You are handed a messy export and asked how you would approach it.</p>", "task": "What is the best order to clean an unfamiliar spreadsheet?", "hints": ["Look before you change anything.", "Understand the shape first, then fix structure, then fix values.", "Inspect, then fix types, then dedupe, then handle blanks."], "type": "mc", "options": ["Delete all blank rows, then start calculating", "Inspect size and columns -> fix data types -> TRIM text -> find and remove duplicates -> handle blanks -> sanity check totals", "Build the pivot table first and fix problems if they appear", "Sort alphabetically and remove anything that looks wrong"], "correct": 1, "sol": "Inspect (size, columns, obvious oddities) -> fix data types -> TRIM -> identify and remove duplicates -> decide what to do about blanks -> sanity check the totals against something you trust.", "why": "Saying 'sanity check the totals against something I trust' at the end is the detail that makes this answer land.", "n": 30}], "worlds": {"1": ["Formula basics", "#16a34a"], "2": ["Logic", "#0ea5e9"], "3": ["Lookups", "#eab308"], "4": ["Conditional maths", "#f97316"], "5": ["Cleaning", "#a855f7"], "6": ["Pivot tables", "#ec4899"], "7": ["Interview boss", "#ef4444"]}, "tables": {"Sheet1 (data)": {"cols": ["Row", "A Region", "B Rep", "C Product", "D Units", "E Price", "F Revenue"], "rows": [[1, "Region", "Rep", "Product", "Units", "Price", "Revenue"], [2, "East", "Asha", "Laptop", 3, 55000, 165000], [3, "West", "Ravi", "Monitor", 10, 12000, 120000], [4, "East", "Meera", "Chair", 12, 8000, 96000], [5, "North", "Dev", "Laptop", 2, 55000, 110000], [6, "West", "Asha", "Desk", 4, 22000, 88000], [7, "East", "Ravi", "Monitor", 6, 12000, 72000], [8, "North", "Sana", "Chair", 15, 8000, 120000], [9, "West", "Meera", "Laptop", 1, 55000, 55000], [10, "East", "Dev", "Desk", 3, 22000, 66000], [11, "North", "Asha", "Monitor", 8, 12000, 96000], [12, "West", "Sana", "Chair", 20, 8000, 160000], [13, "East", "Sana", "Laptop", 2, 55000, 110000]]}, "Lookup table": {"cols": ["Row", "H Product", "I Price"], "rows": [[1, "Product", "Price"], [2, "Chair", 8000], [3, "Desk", 22000], [4, "Laptop", 55000], [5, "Monitor", 12000]]}}};
+
+const K='excelquest_v1';
+function load(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+function store(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+let S=load();
+S.done=S.done||{}; S.xp=S.xp||0; S.hints=S.hints||{}; S.streak=S.streak||0; S.ans=S.ans||{};
+let cur=0, hintIdx=0, mcPick=null;
+const LV=DATA.levels, W=DATA.worlds, T=DATA.tables||{}, TOT=LV.length;
+
+function maxUnlocked(){let m=1;for(let i=1;i<=TOT;i++){if(S.done[i])m=Math.max(m,i+1);}return m;}
+function buildMap(){
+  const byW={};LV.forEach(l=>{(byW[l.world]=byW[l.world]||[]).push(l)});
+  const mu=maxUnlocked();let h='';
+  Object.keys(byW).forEach(w=>{
+    const nm=W[w][0],col=W[w][1],ls=byW[w];
+    const dn=ls.filter(l=>S.done[l.n]).length;
+    h+='<div class="world"><div class="wh"><span class="wdot" style="background:'+col+'"></span>'+
+       '<h2 style="color:'+col+'">'+nm+'</h2><span class="wc">'+dn+' / '+ls.length+'</span></div><div class="nodes">';
+    ls.forEach(l=>{
+      const done=!!S.done[l.n], lock=l.n>mu, is=l.n===mu&&!done;
+      h+='<div class="node'+(done?' done':'')+(lock?' lock':'')+(is?' cur':'')+'" '+
+         (lock?'':'onclick="openLevel('+l.n+')"')+'>'+
+         (done?'<span class="tick">&#9989;</span>':lock?'<span class="tick">&#128274;</span>':'')+
+         '<div class="ln">LEVEL '+l.n+'</div><div class="lt">'+l.title+'</div></div>';
+    });
+    h+='</div></div>';
+  });
+  if(Object.keys(S.done).length===TOT) h+='<div class="fin"><h3>&#127942; Excel cleared</h3><p>You can write lookups, conditional maths and explain a pivot table. That is the Excel bar for a fresher analyst.</p></div>';
+  document.getElementById('worlds').innerHTML=h;hud();
+}
+function hud(){
+  const d=Object.keys(S.done).length;
+  document.getElementById('sxp').textContent=S.xp;
+  document.getElementById('sdone').textContent=d;
+  document.getElementById('stot').textContent=TOT;
+  document.getElementById('sstreak').textContent=S.streak;
+  document.getElementById('xpf').style.width=(100*d/TOT)+'%';
+}
+function goMap(){document.getElementById('lv').classList.remove('on');
+  document.getElementById('map').style.display='';buildMap();window.scrollTo(0,0);}
+
+function tbl(cols,rows){
+  if(!rows||!rows.length)return '<div style="padding:14px;color:#8792a8;font-size:13px">no rows</div>';
+  let h='<table><thead><tr>';cols.forEach(c=>h+='<th>'+c+'</th>');h+='</tr></thead><tbody>';
+  rows.forEach(r=>{h+='<tr>';r.forEach(v=>h+='<td>'+(v===null?'<span style="color:#64748b">NULL</span>':v)+'</td>');h+='</tr>'});
+  return h+'</tbody></table>';
+}
+function showTbl(n){
+  document.querySelectorAll('#tabsm button').forEach(b=>b.classList.toggle('on',b.dataset.t===n));
+  document.getElementById('tbl').innerHTML=tbl(T[n].cols,T[n].rows);}
+
+function openLevel(n){
+  cur=n;hintIdx=0;mcPick=null;
+  const l=LV[n-1];
+  document.getElementById('map').style.display='none';
+  document.getElementById('lv').classList.add('on');
+  document.getElementById('lvn').textContent='LEVEL '+n+' / '+TOT;
+  document.getElementById('lvt').textContent=l.title;
+  document.getElementById('lesson').innerHTML='<h3>Lesson</h3>'+l.lesson;
+  document.getElementById('task').innerHTML='<b>Your task &mdash;</b> '+l.task;
+  document.getElementById('msg').className='msg';document.getElementById('msg').textContent='';
+  document.getElementById('hb').className='hintbox';
+  document.getElementById('sol').className='sol';
+  document.getElementById('solp').textContent=l.sol;
+  const why=document.getElementById('why');
+  if(l.why){why.innerHTML='<b>Why it matters:</b> '+l.why;}else{why.innerHTML='';}
+  why.className='why';
+
+  const iz=document.getElementById('inputzone');
+  if(l.type==='mc'){
+    document.getElementById('anslabel').textContent='Pick one';
+    let h='<div class="mc">';
+    l.options.forEach((o,i)=>{h+='<div class="opt" data-i="'+i+'" onclick="pick('+i+')">'+
+      '<span class="k">'+'ABCD'[i]+'</span><span>'+o+'</span></div>'});
+    iz.innerHTML=h+'</div>';
+  }else if(l.type==='num'){
+    document.getElementById('anslabel').textContent='Your answer (a number)';
+    iz.innerHTML='<input class="num" id="ed" placeholder="type a number" value="'+(S.ans[n]||'')+'">';
+  }else{
+    document.getElementById('anslabel').textContent=l.anslabel||'Your answer';
+    iz.innerHTML='<textarea id="ed" spellcheck="false" placeholder="'+(l.ph||'type here')+'">'+
+      (S.ans[n]||'').replace(/</g,'&lt;')+'</textarea>';
+  }
+  const eb=document.getElementById('expbox');
+  if(l.exp&&l.exp.rows&&l.exp.rows.length){
+    eb.style.display='';
+    document.getElementById('explabel').textContent=l.explabel||'Target output';
+    document.getElementById('exp').innerHTML=tbl(l.exp.cols,l.exp.rows);
+  }else{eb.style.display='none';}
+  const db=document.getElementById('databox');
+  const keys=Object.keys(T);
+  if(keys.length&&l.showdata!==false){
+    db.style.display='';
+    let tb='';keys.forEach(t=>{tb+='<button data-t="'+t+'" onclick="showTbl(\''+t+'\')">'+t+'</button>'});
+    document.getElementById('tabsm').innerHTML=tb;
+    showTbl(l.table||keys[0]);
+  }else{db.style.display='none';}
+  window.scrollTo(0,0);
+}
+function pick(i){mcPick=i;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',+o.dataset.i===i));}
+document.addEventListener('input',e=>{if(e.target.id==='ed'){S.ans[cur]=e.target.value;store();}});
+
+function norm(q){return q.toLowerCase().replace(/#[^\n]*/g,' ').replace(/--[^\n]*/g,' ')
+  .replace(/\s+/g,' ').replace(/;+\s*$/,'').trim();}
+function check(){
+  const l=LV[cur-1];const m=document.getElementById('msg');
+  let good=false, why='';
+  if(l.type==='mc'){
+    if(mcPick===null){m.className='msg bad';m.textContent='Pick an option first.';return;}
+    good = mcPick===l.correct;
+    if(!good) why='Not that one. Re-read the lesson above.';
+  }else if(l.type==='num'){
+    const v=parseFloat((document.getElementById('ed').value||'').replace(/[, ]/g,''));
+    if(isNaN(v)){m.className='msg bad';m.textContent='Enter a number.';return;}
+    const tol=l.tol||0.01;
+    good=Math.abs(v-l.answer)<=tol;
+    if(!good) why = (Math.abs(v-l.answer)<=l.answer*0.25) ? 'Close, but not right. Check your arithmetic.' : 'Not right. Work through it step by step.';
+  }else{
+    const q=norm(document.getElementById('ed').value);
+    if(!q){m.className='msg bad';m.textContent='Write something first.';return;}
+    const miss=l.check.filter(p=>!(new RegExp(p,'i')).test(q));
+    good=miss.length===0;
+    if(!good) why='Your answer is missing <b>'+label(miss[0])+'</b>.';
+  }
+  if(good){
+    if(!S.done[cur]){
+      const used=S.hints[cur]||0;
+      const gain=Math.max(10,30-used*7);
+      S.done[cur]=1;S.xp+=gain;S.streak=(S.streak||0)+1;store();win(gain,used);
+    }else{m.className='msg ok';m.textContent='Correct again. Already cleared.';}
+    document.getElementById('why').className=LV[cur-1].why?'why on':'why';
+    hud();
+  }else{
+    S.streak=0;store();hud();
+    m.className='msg bad';m.innerHTML=why+' Try the Hint button if you are stuck.';
+  }
+}
+const LBL={"group\\s+by": "GROUP BY", "having": "HAVING", "left\\s+join": "LEFT JOIN", "join": "a JOIN", "where": "WHERE", "order\\s+by": "ORDER BY", "limit": "LIMIT", "distinct": "DISTINCT", "over": "an OVER clause", "partition": "PARTITION BY", "with": "a CTE (WITH)", "coalesce": "COALESCE", "case": "CASE", "is\\s+null": "IS NULL", "nullif": "NULLIF", "groupby": "groupby()", "merge": "merge()", "fillna": "fillna()", "dropna": "dropna()", "drop_duplicates": "drop_duplicates()", "value_counts": "value_counts()", "isnull": "isnull()", "sort_values": "sort_values()", "pivot_table": "pivot_table()", "describe": "describe()", "vlookup": "VLOOKUP", "xlookup": "XLOOKUP", "index": "INDEX", "match": "MATCH", "sumifs?": "SUMIF / SUMIFS", "countifs?": "COUNTIF / COUNTIFS", "iferror": "IFERROR", "trim": "TRIM", "calculate": "CALCULATE", "divide": "DIVIDE", "sum": "SUM", "count": "COUNT", "avg|mean": "the average", "median": "median", "std": "std"};
+function label(p){
+  for(const k in LBL){if(p.indexOf(k)>=0)return LBL[k];}
+  const c=p.replace(/\\s\+/g,' ').replace(/[\\^$()?*+\[\]|]/g,'').trim();
+  return c?('something like: '+c):'a required piece';
+}
+function hint(){
+  const l=LV[cur-1];const hb=document.getElementById('hb');
+  if(hintIdx>=l.hints.length){hb.className='hintbox on';
+    hb.innerHTML='<b>No hints left.</b> Press Solution, read it, then close it and redo the level from blank.';return;}
+  S.hints[cur]=Math.max(S.hints[cur]||0,hintIdx+1);store();
+  hb.className='hintbox on';
+  hb.innerHTML='<b>Hint '+(hintIdx+1)+' of '+l.hints.length+':</b> '+l.hints[hintIdx];
+  hintIdx++;
+}
+function showSol(){S.hints[cur]=3;store();document.getElementById('sol').classList.add('on');
+  const l=LV[cur-1];if(l.why)document.getElementById('why').className='why on';}
+function win(gain,used){
+  const last=cur===TOT;
+  document.getElementById('ovem').innerHTML=last?'&#127942;':(used===0?'&#127919;':'&#9989;');
+  document.getElementById('ovh').textContent=last?'Complete':(used===0?'Clean solve':'Correct');
+  document.getElementById('ovp').textContent=last?'You can write lookups, conditional maths and explain a pivot table. That is the Excel bar for a fresher analyst.'
+    :(used===0?'No hints used. That is how it has to feel in the interview.'
+              :'Solved with '+used+' hint'+(used>1?'s':'')+'. Redo it later from blank.');
+  document.getElementById('ovg').textContent='+'+gain+' XP';
+  document.getElementById('ovnext').style.display=last?'none':'';
+  document.getElementById('ov').classList.add('on');
+}
+function closeOv(){document.getElementById('ov').classList.remove('on');}
+function nextLevel(){closeOv();if(cur<TOT)openLevel(cur+1);else goMap();}
+function resetAll(){if(confirm('Erase all progress for this game?')){
+  S={done:{},xp:0,hints:{},streak:0,ans:{}};store();buildMap();}}
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&document.getElementById('lv').classList.contains('on'))check();
+  if(e.key==='Escape')closeOv();});
+buildMap();
+</script></body></html>

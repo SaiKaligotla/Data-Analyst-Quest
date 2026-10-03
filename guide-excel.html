@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Excel &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n on" href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>Excel — Learn / Skip</h1>
+<p><strong>Day 3 · ~15% of your interview · underestimated by most candidates</strong></p>
+<blockquote><strong>Source:</strong> the <strong>Data Analyst roadmap</strong> branch <em>"Analysis / Reporting with Excel"</em> —<br>nodes: Learn Common Functions (SUM, MIN/MAX, AVERAGE, COUNT, IF, DATEDIF,<br>VLOOKUP/HLOOKUP, CONCAT, TRIM, UPPER/LOWER/PROPER, REPLACE/SUBSTITUTE),<br>Charting, Pivot Tables.<br>There is no standalone Excel roadmap on roadmap.sh, so items marked <strong>[+]</strong> are<br>additions of mine that the roadmap omits but interviews ask for.</blockquote>
+<p>Practice: grab a messy CSV from Kaggle and clean it</p>
+<p>🔨 = practice · 📖 = explain only · ❌ = skip</p>
+<hr>
+<h2>🔨 LEARN</h2>
+<h3>Pivot Tables ← spend 2 of your 6 hours here</h3>
+<p>The #1 Excel interview topic. Non-negotiable.</p>
+<ul><li>Build one from raw data</li><li>Rows vs Columns vs Values vs Filters</li><li>Change aggregation: Sum → Count → Average</li><li><strong>Slicers</strong></li><li>Group dates by month/quarter</li><li>Show Values As → % of total</li><li>Refresh after data changes</li></ul>
+<h3>Lookup functions</h3>
+<ul><li><strong><code>VLOOKUP</code></strong> ← most-asked formula. Know the 4 arguments and that the last must be <code>FALSE</code>.</li><li>Its limitation: <strong>can't look left</strong></li><li><code>HLOOKUP</code></li><li><strong>[+]</strong> <code>INDEX</code> + <code>MATCH</code> — the fix for VLOOKUP's limitation</li><li><strong>[+]</strong> <code>XLOOKUP</code> if your version has it (mention it, it scores points)</li></ul>
+<h3>Core formulas</h3>
+<ul><li><code>SUM</code>, <code>AVERAGE</code>, <code>COUNT</code>, <code>COUNTA</code>, <code>MIN</code>, <code>MAX</code></li><li><strong>[+]</strong> <code>SUMIF</code> / <code>SUMIFS</code>, <code>COUNTIF</code> / <code>COUNTIFS</code>, <code>AVERAGEIF</code></li><li><code>IF</code>, nested <code>IF</code>, <code>IFERROR</code></li><li><code>TRIM</code> — removes stray spaces, the classic dirty-data fix</li></ul>
+<h3>Cleaning  <strong>[+ mostly additions — the roadmap has no cleaning nodes for Excel]</strong></h3>
+<ul><li>Remove Duplicates</li><li>Text to Columns</li><li>Find &amp; Replace</li><li>Fixing data types (text-stored numbers, date formats)</li><li>Filters and sorting</li><li>Freeze Panes</li></ul>
+<h3>Charts</h3>
+<ul><li>Bar, Column, Line, Pie, Scatter, Combo</li><li>Conditional formatting (highlight rules, data bars, colour scales)</li></ul>
+<hr>
+<h2>📖 LEARN — explain only</h2>
+<ul><li>When you'd use Excel vs SQL vs Python</li></ul>
+<p>  → <em>Excel for quick ad-hoc work and sharing with business users; SQL for anything large or in a database; Python for repeatable, complex analysis.</em></p>
+<ul><li>What a pivot table does, in one sentence</li><li>Absolute vs relative references (<code>$A$1</code> vs <code>A1</code>)</li></ul>
+<hr>
+<h2>❌ SKIP</h2>
+<ul><li><code>DATEDIF</code>, <code>CONCAT</code>, <code>UPPER</code>/<code>LOWER</code>/<code>PROPER</code>, <code>REPLACE</code>/<code>SUBSTITUTE</code></li></ul>
+<p>  <em>(nice to know, never the deciding question)</em></p>
+<ul><li>Macros and VBA</li><li>Power Pivot / Power Query in Excel <em>(you're learning Power Query inside Power BI instead)</em></li><li>Solver, Goal Seek, What-If, Scenario Manager</li><li>Array formulas, dynamic arrays beyond XLOOKUP</li><li>Advanced charting: sparklines, waterfall, custom combos</li></ul>
+<hr>
+<h2>Day 3 deliverable</h2>
+<p>Take a messy CSV → clean it (duplicates, spaces, data types) → build a pivot table summary with a slicer → add one chart.</p>
+<p><strong>Save this dataset. It becomes your Day 6 project.</strong></p>
+<h2>Likely interview questions</h2>
+<ol><li>Explain VLOOKUP and its limitation</li><li>What's a pivot table and when would you use one?</li><li>How would you find duplicates in Excel?</li><li>VLOOKUP vs INDEX-MATCH</li><li>How do you clean a messy spreadsheet?</li></ol><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

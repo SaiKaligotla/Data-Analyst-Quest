@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python &mdash; Data Analyst Quest</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8;--ac:#6366f1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.7;padding-bottom:70px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.top{position:sticky;top:0;z-index:50;background:rgba(11,14,20,.95);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--br);padding:11px 18px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.top .b{font-weight:800;font-size:16px;text-decoration:none;color:var(--tx);margin-right:4px}
+.top .b span{color:var(--ac)}
+.top a.n{font-size:12.5px;color:var(--mut);text-decoration:none;border:1px solid var(--br);
+padding:4px 10px;border-radius:7px;white-space:nowrap}
+.top a.n:hover{color:var(--tx);border-color:#3a4458}
+.top a.n.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.top .sp{margin-left:auto}
+.play{background:#22c55e;border-color:#22c55e;color:#06210f!important;font-weight:800}
+main{max-width:820px;margin:0 auto;padding:30px 20px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.7px;margin:6px 0 14px}
+h2{font-size:21px;font-weight:800;margin:30px 0 10px;padding-top:12px;border-top:1px solid var(--br)}
+h3{font-size:16px;font-weight:700;margin:20px 0 8px;color:#c7d2fe}
+p{margin:11px 0}
+ul,ol{margin:11px 0 11px 22px}li{margin:5px 0}
+code{background:#070a10;border:1px solid #1d2432;padding:1px 6px;border-radius:5px;font-size:13px;color:#fbbf24}
+pre{background:#070a10;border:1px solid var(--br);border-left:3px solid var(--ac);border-radius:9px;
+padding:14px;overflow-x:auto;margin:13px 0}
+pre code{background:none;border:none;color:#a5f3d0;padding:0;font-size:13px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:14px;display:block;overflow-x:auto}
+th{text-align:left;padding:9px 11px;background:#070a10;border-bottom:1px solid var(--br);
+font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+td{padding:8px 11px;border-bottom:1px solid #1b2130;vertical-align:top}
+blockquote{border-left:3px solid var(--ac);background:#101521;padding:12px 16px;margin:14px 0;
+border-radius:0 9px 9px 0;color:#b9c3d6;font-size:14.5px}
+hr{border:none;border-top:1px solid var(--br);margin:26px 0}
+a{color:#93b4ff}
+strong{color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:40px}
+</style></head><body>
+<div class="top">
+  <a class="b" href="index.html">DA <span>Quest</span></a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n on" href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
+</div>
+<main><h1>Python — Learn / Skip</h1>
+<p><strong>Day 4 · ~15% of your interview</strong></p>
+<blockquote><strong>Source:</strong> node-by-node against <strong>roadmap.sh/python</strong> (fetched from the live roadmap).<br>pandas/seaborn come from the <strong>Data Analyst roadmap</strong> nodes <em>Data Manipulation Libraries → Pandas</em><br>and <em>Data Visualisation Libraries</em>, since the Python roadmap has no pandas node.</blockquote>
+<p>🔨 = practice · 📖 = explain only · ❌ = skip</p>
+<hr>
+<h2>⚠️ Read this first</h2>
+<p>The Python roadmap is a <strong>Python developer</strong> roadmap. Most of it — frameworks, testing,<br>packaging, concurrency, typing — exists to build software. You are not building software.</p>
+<p><strong>You will skip roughly 80% of the Python roadmap.</strong> That is correct, not lazy.<br>Your Python content mostly lives on the <em>Data Analyst</em> roadmap instead.</p>
+<hr>
+<h1>PART 1 — roadmap.sh/python nodes</h1>
+<h2>✅ "Learn the Basics" branch — KEEP most of it</h2>
+<p>🔨 <strong>Basic Syntax</strong><br>🔨 <strong>Variables and Data Types</strong> — int, float, str, bool<br>🔨 <strong>Comments</strong><br>🔨 <strong>Operators</strong> — arithmetic, comparison, logical<br>🔨 <strong>Conditionals</strong> — if / elif / else<br>🔨 <strong>Loops</strong> — for, while, <code>range</code>, <code>enumerate</code><br>🔨 <strong>Lists</strong> — indexing, slicing, append, sort<br>🔨 <strong>Dictionaries</strong> — keys, values, lookup, <code>.items()</code><br>🔨 <strong>Functions, Builtin Functions</strong> — <code>def</code>, arguments, <code>return</code>, <code>len</code>, <code>sum</code>, <code>max</code>, <code>min</code>, <code>sorted</code><br>🔨 <strong>Working with Strings</strong> — f-strings, <code>.split()</code>, <code>.strip()</code>, <code>.lower()</code>, <code>.replace()</code><br>🔨 <strong>Modules → Builtin</strong> — <code>import</code></p>
+<p>📖 <strong>Tuples</strong> — immutable list. Know the word.<br>📖 <strong>Sets</strong> — unique values, deduplication. Know the word.<br>📖 <strong>Type Casting</strong> — <code>int()</code>, <code>str()</code>, <code>float()</code><br>📖 <strong>Exceptions / Error Handling</strong> — read a traceback; recognise <code>try/except</code>. Don't drill it.<br>📖 <strong>Variable Scope</strong> — local vs global, one line</p>
+<p>❌ <strong>File Handling</strong> — <code>pd.read_csv</code> replaces this for you<br>❌ <strong>Modules → Custom</strong></p>
+<h2>✅ "Paradigms" branch — keep one node only</h2>
+<p>🔨 <strong>List Comprehensions</strong> — <code>[x*2 for x in nums]</code>, used constantly in analysis</p>
+<p>❌ Generator Expressions · ❌ Lambdas <em>(skip unless spare time — occasionally used in <code>.apply()</code>)</em><br>❌ Decorators · ❌ Iterators · ❌ Context Manager<br>❌ <strong>Regular Expressions</strong> — useful but too expensive for 7 days</p>
+<h2>❌ "Data Structures &amp; Algorithms" branch — SKIP ENTIRELY</h2>
+<p>Arrays and Linked Lists · Heaps, Stacks and Queues · HashMaps ·<br>Binary Search Tree · Recursion · Sorting Algorithms</p>
+<p><em>This branch is for software engineering interviews. Data analyst interviews test SQL instead.</em></p>
+<h2>❌ "Object Oriented Programming" branch — SKIP ENTIRELY</h2>
+<p>Classes · Inheritance · Methods · Encapsulation</p>
+<p><em>The roadmap itself says you can get away without OOP. For an analyst, definitely.</em></p>
+<h2>❌ "Package Managers" branch — SKIP</h2>
+<p>PyPI · Pip · Conda · Poetry · pdm<br>📖 <em>Exception:</em> know that <code>pip install pandas</code> installs a library. That's all.</p>
+<h2>❌ "Environments" branch — SKIP ENTIRELY</h2>
+<p>uv · pyproject.toml · Pipenv · virtualenv · pyenv · Configuration</p>
+<h2>❌ "Learn a Framework" branch — SKIP ENTIRELY</h2>
+<p>Django · Flask · FastAPI · Pyramid · Plotly Dash · Tornado · Sanic · aiohttp · gevent</p>
+<h2>❌ "Concurrency" branch — SKIP ENTIRELY</h2>
+<p>GIL · Threading · Multiprocessing · Async</p>
+<h2>❌ "Static Typing" branch — SKIP ENTIRELY</h2>
+<p>Pydantic · mypy · pyright · pyre · typing · Type Annotations</p>
+<h2>❌ "Code Formatting" branch — SKIP</h2>
+<p>ruff · black · yapf</p>
+<h2>❌ "Documentation" — SKIP</h2>
+<p>Sphinx</p>
+<h2>❌ "Testing" branch — SKIP ENTIRELY</h2>
+<p>doctest · pytest · unittest · tox</p>
+<hr>
+<h1>PART 2 — Data Analyst roadmap: "Data Manipulation Libraries → Pandas"</h1>
+<p><strong>This is your actual Day 4.</strong> The Python roadmap doesn't cover it; the Data Analyst roadmap<br>reduces it to one node. Here's that node expanded.</p>
+<h3>🔨 Load &amp; inspect</h3>
+<p><code>pd.read_csv()</code> · <code>read_excel()</code> · <code>.head()</code> <code>.info()</code> <code>.describe()</code> <code>.shape</code> <code>.dtypes</code> ·<br><code>.value_counts()</code> · <code>.unique()</code> · <code>.nunique()</code></p>
+<h3>🔨 Select &amp; filter</h3>
+<p><code>df['col']</code> · <code>df[['a','b']]</code> · boolean masks · <code>&amp;</code> and <code>|</code> with parentheses ·<br><strong><code>.loc</code> vs <code>.iloc</code></strong> ← guaranteed question · <code>.isin()</code> · <code>.between()</code> · <code>.str.contains()</code></p>
+<h3>🔨 Clean <em>(Data Analyst roadmap: "Data Cleanup" branch)</em></h3>
+<ul><li><strong>Handling Missing Data</strong> — <code>.isnull().sum()</code>, <code>.fillna()</code>, <code>.dropna()</code> — <strong>justify your choice</strong></li><li><strong>Removing Duplicates</strong> — <code>.drop_duplicates()</code></li><li><strong>Finding Outliers</strong> <em>(roadmap struck this out — put it back)</em> — IQR: <code>Q1 − 1.5×IQR</code>, <code>Q3 + 1.5×IQR</code>, boxplot</li><li><strong>Data Transformation</strong> <em>(also struck out — put it back)</em> — <code>.apply()</code>, <code>.map()</code>, <code>pd.cut()</code>, new columns</li><li><code>.astype()</code> · <code>.rename()</code> · <code>.drop()</code> · <code>pd.to_datetime()</code> · <code>.str.strip()</code></li></ul>
+<h3>🔨 Aggregate</h3>
+<p><strong><code>.groupby()</code> + <code>.agg()</code></strong> · <code>.pivot_table()</code> · <code>.sort_values()</code> · <code>.nlargest()</code></p>
+<h3>🔨 Combine</h3>
+<p><strong><code>pd.merge()</code></strong> with <code>how='inner'/'left'/'right'/'outer'</code> — map directly onto SQL joins ·<br><code>pd.concat()</code> · <strong>merge vs concat</strong> ← common question</p>
+<h3>🔨 Dates</h3>
+<p><code>.dt.year</code> · <code>.dt.month</code> · <code>.dt.day_name()</code></p>
+<h3>❌ Skip in pandas</h3>
+<p>MultiIndex · <code>.pipe()</code> · <code>.melt()</code> / <code>.stack()</code> / <code>.unstack()</code> · performance tuning ·<br><code>.eval()</code> / <code>.query()</code> · categorical dtype</p>
+<hr>
+<h1>PART 3 — Data Analyst roadmap: "Data Visualisation Libraries"</h1>
+<h3>🔨 Seaborn <em>(kept on your personalized roadmap)</em></h3>
+<p><code>barplot</code> · <code>lineplot</code> · <code>histplot</code> · <code>boxplot</code> · <code>scatterplot</code> ·<br><strong><code>sns.heatmap(df.corr(), annot=True)</code></strong> <em>(roadmap struck Heatmap out — put it back)</em></p>
+<h3>🔨 Matplotlib — minimum only</h3>
+<p><em>Your personalized roadmap struck Matplotlib out, but it's the layer under seaborn.</em><br><code>plt.title()</code> · <code>xlabel</code> · <code>ylabel</code> · <code>figsize</code> · <code>plt.show()</code> — <strong>always label your charts</strong></p>
+<h3>❌ Skip</h3>
+<p>ggplot2 · Plotly · Bokeh · Streamlit · Dash</p>
+<hr>
+<h1>❌ Libraries: skip entirely</h1>
+<p>scikit-learn and all ML · TensorFlow · PyTorch · BeautifulSoup / Scrapy / requests<br><em>(Data Analyst roadmap struck out APIs and Web Scraping)</em> · statsmodels ·<br><strong>R, dplyr, ggplot2</strong> <em>(the R Programming roadmap — ignore it completely)</em></p>
+<p>📖 <strong>NumPy</strong> — know it's the array library pandas is built on. One line.</p>
+<hr>
+<h2>Likely interview questions</h2>
+<ol><li><code>.loc</code> vs <code>.iloc</code></li><li><code>merge</code> vs <code>concat</code></li><li><strong>How do you handle missing values — and why that method?</strong></li><li>How do you detect and treat outliers?</li><li>Walk me through exploring a dataset you've never seen</li><li>Top 3 products per category in pandas?</li><li>List vs tuple vs set <em>(occasionally asked)</em></li></ol>
+<h2>Day 4 deliverable</h2>
+<p>Load your Day 3 dataset → clean it → groupby summary → correlation heatmap → write 3 observations.</p><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+</body></html>

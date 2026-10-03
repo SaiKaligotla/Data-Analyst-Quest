@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Analyst Quest &mdash; 7 Day Sprint</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0e14;--pan:#141926;--pan2:#1b2130;--br:#262e40;--tx:#e8ebf2;--mut:#8792a8}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--tx);line-height:1.6;padding-bottom:70px}
+header{background:linear-gradient(135deg,#1e293b,#0f172a);border-bottom:1px solid var(--br);
+padding:48px 20px 38px;text-align:center}
+h1{font-size:34px;font-weight:800;letter-spacing:-1px}
+.sub{color:var(--mut);margin-top:8px;font-size:15px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+.overall{max-width:420px;margin:20px auto 0}
+.obar{height:9px;background:#0b0e14;border:1px solid var(--br);border-radius:99px;overflow:hidden}
+.obar>div{height:100%;background:linear-gradient(90deg,#6366f1,#a855f7,#22c55e);width:0;transition:width .6s}
+.ometa{font-size:12.5px;color:var(--mut);margin-top:7px;font-weight:600}
+h3.sec{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);margin:32px 0 12px}
+.grid{display:grid;gap:13px}
+a.c{display:block;background:var(--pan);border:1px solid var(--br);border-radius:15px;padding:20px;
+text-decoration:none;color:inherit;border-left-width:5px;transition:transform .14s,border-color .14s}
+a.c:hover{transform:translateX(4px)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.t{font-size:20px;font-weight:700}
+.d{font-size:11px;color:var(--mut);font-weight:800;letter-spacing:.6px;text-transform:uppercase}
+.x{color:#9aa4b8;font-size:14px;margin-top:5px}
+.w{font-size:12px;font-weight:800;padding:3px 11px;border-radius:99px;background:var(--pan2);
+border:1px solid var(--br);color:var(--mut)}
+.pbar{background:#0b0e14;border:1px solid var(--br);border-radius:99px;height:7px;overflow:hidden;margin-top:13px}
+.pbar>div{height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);width:0}
+.pt{font-size:11.5px;color:#6b7689;margin-top:6px;font-weight:600}
+.note{background:#101521;border:1px dashed #2f3a52;border-radius:13px;padding:19px;margin-top:30px;
+font-size:14px;color:#9aa4b8}
+.note b{color:#cdd5e3}
+.note ul{margin:8px 0 0 18px}.note li{margin-bottom:5px}
+.gl{display:flex;flex-wrap:wrap;gap:8px}
+.gl a{background:var(--pan);border:1px solid var(--br);border-radius:9px;padding:9px 14px;
+color:#b9c3d6;text-decoration:none;font-size:13.5px;font-weight:600}
+.gl a:hover{border-color:#3a4458;color:#fff}
+.foot{text-align:center;color:#56607a;font-size:12px;margin-top:26px}
+</style></head><body>
+<header>
+  <h1>Data Analyst Quest</h1>
+  <div class="sub">Five games. 159 levels. Plus the written guides.</div>
+  <div class="overall"><div class="obar"><div id="of"></div></div><div class="ometa" id="om">loading</div></div>
+</header>
+<div class="wrap">
+  <h3 class="sec">Play in this order</h3>
+  <div class="grid">
+    <a class="c" href="sql-quest.html" style="border-left-color:#6366f1" data-k="sqlquest_v1" data-n="34">
+      <div class="row"><div><span class="d">Days 1&ndash;2 &middot; start here</span><div class="t">SQL Quest</div></div><span class="w">40%</span></div>
+      <div class="x">34 levels. SELECT through window functions, with real result tables from a live database.</div>
+      <div class="pbar"><div></div></div><div class="pt"></div></a>
+
+    <a class="c" href="excel-quest.html" style="border-left-color:#16a34a" data-k="excelquest_v1" data-n="30">
+      <div class="row"><div><span class="d">Day 3</span><div class="t">Excel Quest</div></div><span class="w">15%</span></div>
+      <div class="x">30 levels. Formulas, VLOOKUP, INDEX-MATCH, conditional maths, cleaning, pivot tables.</div>
+      <div class="pbar"><div></div></div><div class="pt"></div></a>
+
+    <a class="c" href="python-quest.html" style="border-left-color:#eab308" data-k="pyquest_v1" data-n="35">
+      <div class="row"><div><span class="d">Day 4</span><div class="t">Python Quest</div></div><span class="w">15%</span></div>
+      <div class="x">35 levels. pandas: load, filter, clean, groupby, merge, dates &mdash; outputs computed by real pandas.</div>
+      <div class="pbar"><div></div></div><div class="pt"></div></a>
+
+    <a class="c" href="stats-quest.html" style="border-left-color:#a855f7" data-k="statsquest_v1" data-n="31">
+      <div class="row"><div><span class="d">Day 5</span><div class="t">Statistics Quest</div></div><span class="w">10%</span></div>
+      <div class="x">31 levels. Mean vs median, variance, outliers, correlation, p-values, business metrics.</div>
+      <div class="pbar"><div></div></div><div class="pt"></div></a>
+
+    <a class="c" href="powerbi-quest.html" style="border-left-color:#f97316" data-k="pbiquest_v1" data-n="29">
+      <div class="row"><div><span class="d">Day 6</span><div class="t">Power BI Quest</div></div><span class="w">10%</span></div>
+      <div class="x">29 levels. Power Query, star schema, DAX measures, chart choice, and the project narration.</div>
+      <div class="pbar"><div></div></div><div class="pt"></div></a>
+  </div>
+
+
+  <h3 class="sec">Reference guides</h3>
+  <div class="gl">
+    <a href="start-here.html">Start here</a>
+    <a href="plan.html">7-day plan</a>
+    <a href="guide-sql.html">SQL</a>
+    <a href="guide-excel.html">Excel</a>
+    <a href="guide-python.html">Python</a>
+    <a href="guide-statistics.html">Statistics</a>
+    <a href="guide-powerbi.html">Power BI</a>
+    <a href="sql-written.html">SQL written Q&amp;A</a>
+    <a href="guide-postgres.html">PostgreSQL list verdict</a>
+  </div>
+
+  <div class="note">
+    <b>How to play.</b> Levels unlock in order. Each one teaches a concept, then makes you answer &mdash;
+    by writing code, picking an option, or working out a number.
+    <ul>
+      <li><b>Try before hinting.</b> Three hints per level, each one more explicit. Fewer hints, more XP.</li>
+      <li><b>Target output</b> shows the real answer your code should produce &mdash; computed from actual data, not invented.</li>
+      <li><b>Yellow callouts</b> in lessons flag the things interviewers actually ask.</li>
+      <li><b>Day 7:</b> replay the boss levels in every game. If any feel shaky, that is your revision list.</li>
+    </ul>
+  </div>
+
+  <div class="note" style="border-style:solid;border-color:#3b2a1a;background:#140f09">
+    <b>One honest limitation.</b> There is no database or Python runtime in your browser, so code answers
+    are checked <i>structurally</i> &mdash; the game verifies your answer contains the right clauses and
+    functions. It will catch a missing GROUP BY or the wrong join type, but not a typo in a column name.
+    Always compare your result against the target output shown.
+  </div>
+
+  <div class="foot">Works fully offline &middot; progress saved per game in this browser</div>
+</div>
+<script>
+let td=0,tt=0;
+document.querySelectorAll('a.c').forEach(a=>{
+  const k=a.getAttribute('data-k'), n=+a.getAttribute('data-n');
+  let S={};try{S=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}
+  const done=S.done?Object.keys(S.done).length:0, xp=S.xp||0;
+  td+=done;tt+=n;
+  a.querySelector('.pbar>div').style.width=(100*done/n)+'%';
+  a.querySelector('.pt').textContent = done? (done+' / '+n+' levels cleared  \u00b7  '+xp+' XP')
+                                           : 'not started \u2014 '+n+' levels';
+});
+document.getElementById('of').style.width=(100*td/tt)+'%';
+document.getElementById('om').textContent=td+' of '+tt+' levels cleared across all five games';
+</script></body></html>
