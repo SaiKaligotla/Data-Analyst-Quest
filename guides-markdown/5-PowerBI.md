@@ -31,11 +31,11 @@ Tableau out, correctly. Learning two BI tools in a week means knowing neither.
 ❌ Clouds · ❌ APIs
 
 ## ⚠️ "Connection Modes" branch — mostly skip
-📖 **Import Mode vs DirectQuery** — one line each. Import = data copied in, fast. DirectQuery = live, slower.
+📖 **Import Mode vs DirectQuery** — Import copies data into the model and is usually fast; it reflects the last refresh. DirectQuery queries the source when visuals are queried/refreshed and may be fresher, but latency, caching and feature support depend on the source and setup.
 ❌ Direct Lake · ❌ Dual Storage Mode · ❌ On-premises Data Gateway
 
 ## ✅ "Power Query" branch ← this is your cleaning layer, learn it properly
-🔨 **Applied Steps** — the step list on the right, and that it's reproducible
+🔨 **Applied Steps** — the step list on the right, and that it's reproducible; refresh reruns the steps against the configured source (new files appear only if the connector includes them)
 🔨 **Data Types & Casting**
 🔨 **Removing Duplicates**
 🔨 **Changing Text / Changing Numbers / Changing Dates**
@@ -117,15 +117,14 @@ Python & R visuals · Microsoft Fabric · Paginated Reports (RDL)
 Use the dataset you cleaned on Day 3 and analysed on Day 4.
 
 **A one-page sales performance dashboard:**
-- 4 KPI cards — Total Revenue · Total Orders · AOV · Growth %
+- 3 KPI cards — Total Revenue · Total Orders · AOV
 - Revenue trend over time *(line)*
 - Top 10 products *(bar)*
 - Revenue by region *(bar or map)*
 - Slicers — date range, category
 
-Then write **3–5 insights, each with a recommendation.** Not *"revenue went up"* but
-*"revenue is up 12%, driven entirely by one region while three are flat — the regional
-campaign should be replicated."*
+Then write **3–5 insights, each with a recommendation or next step.** Not *"revenue went up"* but
+*"revenue is up 12%, concentrated in the East. I would investigate which products or channels drove it and test whether the campaign contributed before recommending that it be replicated."*
 
 GitHub repo + README: the question, the data, what you cleaned, the insights, a screenshot.
 

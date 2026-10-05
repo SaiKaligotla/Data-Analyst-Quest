@@ -36,7 +36,7 @@ Practice: DataLemur, StrataScratch
 ### Subqueries
 - Scalar subquery (returns one value)
 - Nested subquery in WHERE / IN
-- **Correlated subquery** — runs once per outer row
+- **Correlated subquery** — logically depends on each outer row; the optimizer may transform it, and it can be slower on large data
 
 ### CTEs
 - `WITH name AS (...)` — chaining multiple CTEs
@@ -56,7 +56,7 @@ Practice: DataLemur, StrataScratch
 - Date: `DATE`, `DATEPART`, `DATEADD`, extracting year/month
 
 ### Set operations
-- `UNION` vs `UNION ALL` (the second keeps duplicates and is faster)
+- `UNION` vs `UNION ALL` (`UNION ALL` keeps duplicates and avoids duplicate-elimination work; it may be faster, depending on the query and database)
 
 ---
 
@@ -68,11 +68,13 @@ Practice: DataLemur, StrataScratch
   - DCL = permissions: GRANT, REVOKE
 - **DELETE vs TRUNCATE vs DROP** ← commonly asked
 
-  | | Does | Rollback | Speed |
+  | | Does | Rollback behavior | Speed |
   |---|---|---|---|
-  | DELETE | removes rows, takes WHERE | Yes | Slow |
-  | TRUNCATE | wipes all rows, keeps table | No | Fast |
-  | DROP | removes the table itself | No | Fast |
+  | DELETE | removes rows; can take a WHERE clause | Usually transactional, depending on the database | Varies with the amount of data and indexes |
+  | TRUNCATE | removes all rows, keeps the table (where supported) | Database/transaction dependent | Often fast |
+  | DROP | removes the table itself | Database/transaction dependent | Not comparable to row deletion |
+
+  Transaction and rollback behavior differs by DBMS; do not assume `TRUNCATE` or `DROP` always auto-commit or can never be rolled back.
 
 - Primary Key vs Foreign Key · Unique vs NOT NULL
 - What a relational database is · SQL vs NoSQL in one line
@@ -113,4 +115,4 @@ Practice: DataLemur, StrataScratch
 - Top 3 per group using DENSE_RANK
 - Customers with zero orders using LEFT JOIN
 
-→ Practise: `../practice/sql-quest.html` (34 levels) or `../sql-days-1-2.md` (40 written Q&A)
+→ Practise: `../sql-quest.html` (34 levels) or `sql-days-1-2.md` (40 written practice prompts)

@@ -27,7 +27,7 @@ The #1 Excel interview topic. Non-negotiable.
 - Refresh after data changes
 
 ### Lookup functions
-- **`VLOOKUP`** ← most-asked formula. Know the 4 arguments and that the last must be `FALSE`.
+- **`VLOOKUP`** ← most-asked formula. Know the 4 arguments; use `FALSE` for exact matches, and use approximate matching only intentionally with a sorted lookup column.
 - Its limitation: **can't look left**
 - `HLOOKUP`
 - **[+]** `INDEX` + `MATCH` — the fix for VLOOKUP's limitation
@@ -37,7 +37,7 @@ The #1 Excel interview topic. Non-negotiable.
 - `SUM`, `AVERAGE`, `COUNT`, `COUNTA`, `MIN`, `MAX`
 - **[+]** `SUMIF` / `SUMIFS`, `COUNTIF` / `COUNTIFS`, `AVERAGEIF`
 - `IF`, nested `IF`, `IFERROR`
-- `TRIM` — removes stray spaces, the classic dirty-data fix
+- `TRIM` — removes leading/trailing ordinary spaces and collapses repeated internal ordinary spaces; it does not remove every whitespace character (for example, non-breaking spaces)
 
 ### Cleaning  **[+ mostly additions — the roadmap has no cleaning nodes for Excel]**
 - Remove Duplicates

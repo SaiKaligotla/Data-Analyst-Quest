@@ -32,11 +32,13 @@ If you can't write that line without looking, don't tick it.
   - DCL = permissions: GRANT, REVOKE
 - **DELETE vs TRUNCATE vs DROP** ← commonly asked
 
-  | | Does | Rollback | Speed |
+  | | Does | Rollback behavior | Speed |
   |---|---|---|---|
-  | DELETE | removes rows, takes WHERE | Yes | Slow |
-  | TRUNCATE | wipes all rows, keeps table | No | Fast |
-  | DROP | deletes the table itself | No | Fast |
+  | DELETE | removes rows; can take a WHERE clause | Usually transactional, depending on the database | Varies with the amount of data and indexes |
+  | TRUNCATE | removes all rows, keeps the table (where supported) | Database/transaction dependent | Often fast |
+  | DROP | removes the table itself | Database/transaction dependent | Not comparable to row deletion |
+
+  Transaction and rollback behavior differs by DBMS; do not assume `TRUNCATE` or `DROP` always auto-commit or can never be rolled back.
 
 - Recognise the syntax shape only:
   ```sql

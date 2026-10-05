@@ -39,7 +39,7 @@ strong{color:#fff}
 </style></head><body>
 <div class="top">
   <a class="b" href="index.html">DA <span>Quest</span></a>
-  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n on" href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n on" href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL practice prompts</a>
   <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
 </div>
 <main><h1>Excel — Learn / Skip</h1>
@@ -53,9 +53,9 @@ strong{color:#fff}
 <p>The #1 Excel interview topic. Non-negotiable.</p>
 <ul><li>Build one from raw data</li><li>Rows vs Columns vs Values vs Filters</li><li>Change aggregation: Sum → Count → Average</li><li><strong>Slicers</strong></li><li>Group dates by month/quarter</li><li>Show Values As → % of total</li><li>Refresh after data changes</li></ul>
 <h3>Lookup functions</h3>
-<ul><li><strong><code>VLOOKUP</code></strong> ← most-asked formula. Know the 4 arguments and that the last must be <code>FALSE</code>.</li><li>Its limitation: <strong>can't look left</strong></li><li><code>HLOOKUP</code></li><li><strong>[+]</strong> <code>INDEX</code> + <code>MATCH</code> — the fix for VLOOKUP's limitation</li><li><strong>[+]</strong> <code>XLOOKUP</code> if your version has it (mention it, it scores points)</li></ul>
+<ul><li><strong><code>VLOOKUP</code></strong> ← most-asked formula. Know the 4 arguments; use <code>FALSE</code> for exact matches, and use approximate matching only intentionally with a sorted lookup column.</li><li>Its limitation: <strong>can't look left</strong></li><li><code>HLOOKUP</code></li><li><strong>[+]</strong> <code>INDEX</code> + <code>MATCH</code> — the fix for VLOOKUP's limitation</li><li><strong>[+]</strong> <code>XLOOKUP</code> if your version has it (mention it, it scores points)</li></ul>
 <h3>Core formulas</h3>
-<ul><li><code>SUM</code>, <code>AVERAGE</code>, <code>COUNT</code>, <code>COUNTA</code>, <code>MIN</code>, <code>MAX</code></li><li><strong>[+]</strong> <code>SUMIF</code> / <code>SUMIFS</code>, <code>COUNTIF</code> / <code>COUNTIFS</code>, <code>AVERAGEIF</code></li><li><code>IF</code>, nested <code>IF</code>, <code>IFERROR</code></li><li><code>TRIM</code> — removes stray spaces, the classic dirty-data fix</li></ul>
+<ul><li><code>SUM</code>, <code>AVERAGE</code>, <code>COUNT</code>, <code>COUNTA</code>, <code>MIN</code>, <code>MAX</code></li><li><strong>[+]</strong> <code>SUMIF</code> / <code>SUMIFS</code>, <code>COUNTIF</code> / <code>COUNTIFS</code>, <code>AVERAGEIF</code></li><li><code>IF</code>, nested <code>IF</code>, <code>IFERROR</code></li><li><code>TRIM</code> — removes leading/trailing ordinary spaces and collapses repeated internal ordinary spaces; it does not remove every whitespace character (for example, non-breaking spaces)</li></ul>
 <h3>Cleaning  <strong>[+ mostly additions — the roadmap has no cleaning nodes for Excel]</strong></h3>
 <ul><li>Remove Duplicates</li><li>Text to Columns</li><li>Find &amp; Replace</li><li>Fixing data types (text-stored numbers, date formats)</li><li>Filters and sorting</li><li>Freeze Panes</li></ul>
 <h3>Charts</h3>

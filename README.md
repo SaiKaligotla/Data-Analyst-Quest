@@ -60,7 +60,7 @@ Three answer types:
 | [Python](guide-python.html) | |
 | [Statistics](guide-statistics.html) | |
 | [Power BI](guide-powerbi.html) | |
-| [SQL written Q&A](sql-written.html) | 40 questions with written solutions |
+| [SQL practice prompts](sql-written.html) | 40 written questions for self-testing |
 | [PostgreSQL list verdict](guide-postgres.html) | Why a DBA-oriented syllabus is the wrong list |
 
 Every topic is tagged one of three ways:

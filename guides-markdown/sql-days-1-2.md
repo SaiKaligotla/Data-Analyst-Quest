@@ -111,7 +111,7 @@ Date: DATE, DATEPART, DATEADD
 - RANK vs DENSE_RANK vs ROW_NUMBER — ties, and whether numbers get skipped
 - What PARTITION BY does vs GROUP BY → GROUP BY collapses rows, PARTITION BY doesn't
 - When to use a CTE over a subquery → readability, reuse, chaining
-- What a correlated subquery is → runs once per outer row, slower
+- What a correlated subquery is → it logically depends on each outer row; the optimizer may transform it, and it can be slower on large tables
 
 ---
 
