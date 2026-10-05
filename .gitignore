@@ -12,3 +12,13 @@ __pycache__/
 
 # local scratch
 # (source-roadmaps kept: the original roadmap.sh PDF exports)
+
+# ---- personal data: never commit these ----
+# Your sync endpoint. Contains no secret, but it is machine-specific.
+sync-config.js
+
+# Exported progress files. They contain your answers and XP.
+data-analyst-quest-progress*.json
+progress-export*.json
+my-progress*.json
+*.progress.json

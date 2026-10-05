@@ -1,0 +1,72 @@
+/* ============================================================================
+ * Data Analyst Quest - shared progress UI
+ * The theme variables match the per-game <style> blocks, so this file only
+ * adds new components and never restyles the existing ones.
+ * ========================================================================== */
+
+/* ------------------------------ quest nav ------------------------------- */
+.qnav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 4px}
+.qnav .qn{background:var(--pan);border:1px solid var(--br);color:#cdd5e3;padding:8px 14px;
+border-radius:9px;cursor:pointer;font-size:13px;font-weight:700;line-height:1.2}
+.qnav .qn:hover:not(:disabled){background:#242c3d;border-color:#3a4458;color:#fff}
+.qnav .qn:disabled{opacity:.35;cursor:not-allowed}
+.qnav .qp{font-size:12px;color:var(--mut);font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+margin-left:auto;text-align:right}
+.qnav .qp b{color:#cdd5e3}
+@media(max-width:620px){.qnav .qp{margin-left:0;width:100%;text-align:left}}
+
+/* --------------------------- progress panel ----------------------------- */
+.pbox{margin-top:26px;background:var(--pan);border:1px solid var(--br);border-radius:14px;padding:18px}
+.pbox h3{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+color:var(--mut);margin-bottom:12px}
+.pbox .hint{font-size:12.5px;color:#7f8aa3;margin:-4px 0 12px;line-height:1.5}
+.pstat{font-size:13px;color:#9aa4b8;line-height:1.6;margin-bottom:12px}
+.pstat b{color:#cdd5e3}
+.pstat code{background:#070a10;border:1px solid var(--br);border-radius:4px;padding:1px 5px;
+font-size:11.5px;color:#fbbf24}
+.prow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.prow .b{flex:0 1 auto}
+.pimp{display:none;margin-top:12px;border-top:1px dashed #2f3a52;padding-top:12px}
+.pimp.on{display:block}
+.pimp textarea{width:100%;min-height:110px;background:#070a10;border:1px solid var(--br);
+border-radius:10px;color:#dbe4f0;padding:11px;font-size:12.5px;resize:vertical;line-height:1.5}
+.pimp textarea:focus{outline:none;border-color:var(--ac)}
+.pimp input[type=file]{display:block;margin-top:9px;font-size:12px;color:var(--mut)}
+.pchk{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:#9aa4b8;margin-top:9px;
+cursor:pointer;line-height:1.45}
+.pchk input{margin-top:3px}
+.pchk b{color:#cdd5e3}
+.pmsg{margin-top:12px;font-size:13px;border-radius:10px;padding:11px 13px;display:none;line-height:1.55}
+.pmsg.on{display:block}
+.pmsg.ok{background:#0f2a1a;border:1px solid #1e5235;color:#86efac}
+.pmsg.bad{background:#2a1414;border:1px solid #5c2626;color:#fca5a5}
+.pmsg.info{background:#101521;border:1px dashed #2f3a52;color:#9aa4b8}
+.pmsg ul{margin:6px 0 0 18px}.pmsg li{margin-bottom:3px}
+.plist{margin:10px 0 0;padding:0;list-style:none;font-size:12.5px}
+.plist li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;
+border-bottom:1px solid #1b2130}
+.plist li:last-child{border-bottom:none}
+.plist .pn{color:#cdd5e3;font-weight:700}
+.plist .pv{color:#8792a8}
+.pbackups{margin-top:10px;font-size:12.5px;color:#8792a8}
+.pbackups select{background:#070a10;border:1px solid var(--br);color:#dbe4f0;border-radius:8px;
+padding:6px 8px;font-size:12px;max-width:100%}
+
+/* ------------------------------- sync ----------------------------------- */
+.sync{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px;
+border-top:1px dashed #2f3a52;padding-top:13px}
+.dot{width:9px;height:9px;border-radius:99px;background:#64748b;flex-shrink:0}
+.dot.off{background:#64748b}
+.dot.on{background:#22c55e;box-shadow:0 0 8px #22c55e88}
+.dot.wait{background:#f59e0b}
+.dot.err{background:#ef4444}
+.sync .sl{font-size:12.5px;color:#9aa4b8;font-weight:600}
+.sync .sn{font-size:11.5px;color:#6b7689;margin-top:2px;width:100%;line-height:1.5}
+.sync .sn a{color:#7dd3fc}
+
+/* --------------------------- level view extras -------------------------- */
+.lvbadge{display:none;margin-top:10px;background:#0d1620;border-left:3px solid #38bdf8;
+border-radius:8px;padding:9px 12px;font-size:12.5px;color:#bae6fd;line-height:1.5}
+.lvbadge.on{display:block}
+button.b.warn{background:#2a1414;border-color:#5c2626;color:#fca5a5}
+button.b.warn:hover{background:#3a1c1c}

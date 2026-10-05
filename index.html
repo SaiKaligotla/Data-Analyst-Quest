@@ -37,7 +37,7 @@ font-size:14px;color:#9aa4b8}
 color:#b9c3d6;text-decoration:none;font-size:13.5px;font-weight:600}
 .gl a:hover{border-color:#3a4458;color:#fff}
 .foot{text-align:center;color:#56607a;font-size:12px;margin-top:26px}
-</style></head><body>
+</style><link rel="stylesheet" href="progress.css"></head><body>
 <header>
   <h1>Data Analyst Quest</h1>
   <div class="sub">Five games. 159 levels. Plus the written guides.</div>
@@ -94,6 +94,8 @@ color:#b9c3d6;text-decoration:none;font-size:13.5px;font-weight:600}
       <li><b>Target output</b> shows the real answer your code should produce &mdash; computed from actual data, not invented.</li>
       <li><b>Yellow callouts</b> in lessons flag the things interviewers actually ask.</li>
       <li><b>Day 7:</b> replay the boss levels in every game. If any feel shaky, that is your revision list.</li>
+      <li><b>Replay freely.</b> Any cleared level can be redone as often as you like &mdash; replays never add XP again, and every level has its own reset button.</li>
+      <li><b>Move your progress.</b> Download an export below and import it on another device. Cross-device sync needs a one-off backend setup &mdash; see <a href="docs/sync.md">docs/sync.md</a>.</li>
     </ul>
   </div>
 
@@ -105,18 +107,38 @@ color:#b9c3d6;text-decoration:none;font-size:13.5px;font-weight:600}
   </div>
 
   <div class="foot">Works fully offline &middot; progress saved per game in this browser</div>
+
+  <div class="pbox" id="pbox"></div>
 </div>
+<script src="progress.js"></script>
+<script src="progress-ui.js"></script>
+<script src="sync.js"></script>
 <script>
+/* Progress bars. Reads the shared engine (progress.js) when it is available -
+   that is the same data the games write, including anything migrated from the
+   old per-game keys - and falls back to reading those keys directly. */
+function qstat(k,n){
+  if(window.DAQ&&DAQ.ready()){
+    const id={'sqlquest_v1':'sql','excelquest_v1':'excel','pyquest_v1':'python',
+              'statsquest_v1':'stats','pbiquest_v1':'powerbi'}[k];
+    if(id){const s=DAQ.summary(id);return{done:s.done,xp:s.xp};}
+  }
+  let S={};try{S=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}
+  return {done:S.done?Object.keys(S.done).length:0,xp:S.xp||0};
+}
 let td=0,tt=0;
 document.querySelectorAll('a.c').forEach(a=>{
   const k=a.getAttribute('data-k'), n=+a.getAttribute('data-n');
-  let S={};try{S=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}
-  const done=S.done?Object.keys(S.done).length:0, xp=S.xp||0;
-  td+=done;tt+=n;
-  a.querySelector('.pbar>div').style.width=(100*done/n)+'%';
-  a.querySelector('.pt').textContent = done? (done+' / '+n+' levels cleared  \u00b7  '+xp+' XP')
+  const st=qstat(k,n);
+  td+=st.done;tt+=n;
+  a.querySelector('.pbar>div').style.width=(100*st.done/n)+'%';
+  a.querySelector('.pt').textContent = st.done? (st.done+' / '+n+' levels cleared  \u00b7  '+st.xp+' XP')
                                            : 'not started \u2014 '+n+' levels';
 });
 document.getElementById('of').style.width=(100*td/tt)+'%';
 document.getElementById('om').textContent=td+' of '+tt+' levels cleared across all five games';
+
+/* The export / import / backup panel. No quest is current here, so a
+   single-game (legacy) export has to be imported from that game's own page. */
+if(window.DAQ&&DAQ.ui)DAQ.ui.mountPanel();
 </script></body></html>

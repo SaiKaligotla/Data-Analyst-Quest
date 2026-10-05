@@ -1,0 +1,23 @@
+/* ============================================================================
+ * wrangler.toml - reference configuration for the sync backend.
+ * Copy to sync-backend/ and edit, or deploy with the flags in docs/sync.md.
+ *
+ * Secrets (never in this file):
+ *   wrangler secret put GITHUB_APP_CLIENT_ID
+ *   wrangler secret put GITHUB_APP_CLIENT_SECRET
+ *   wrangler secret put SESSION_SECRET
+ * ========================================================================== */
+
+name = "data-analyst-quest-sync"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+# The private repo that holds progress.json. Format: owner/repo
+PROGRESS_REPO = "your-username/data-analyst-quest-progress"
+PROGRESS_FILE = "progress.json"
+PROGRESS_BRANCH = "main"
+
+# Where the site lives. Used for CORS and for the post-login redirect.
+ALLOWED_ORIGIN = "https://your-username.github.io"
+SITE_URL = "https://your-username.github.io/your-repo/"
