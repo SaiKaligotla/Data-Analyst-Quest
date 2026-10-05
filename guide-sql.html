@@ -39,7 +39,7 @@ strong{color:#fff}
 </style></head><body>
 <div class="top">
   <a class="b" href="index.html">DA <span>Quest</span></a>
-  <a class="n " href="start-here.html">Start here</a><a class="n on" href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <a class="n " href="start-here.html">Start here</a><a class="n on" href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL practice prompts</a>
   <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
 </div>
 <main><h1>SQL — Learn / Skip</h1>
@@ -56,7 +56,7 @@ strong{color:#fff}
 <h3>JOINs ← highest-value branch</h3>
 <ul><li><code>INNER JOIN</code> · <code>LEFT JOIN</code> · <code>RIGHT JOIN</code> · <code>FULL OUTER JOIN</code></li><li><strong><code>SELF JOIN</code></strong> — "employees earning more than their manager", "employee + manager name"</li><li>Anti-join pattern: <code>LEFT JOIN ... WHERE right.id IS NULL</code> (find non-matches)</li><li>Joining 3+ tables</li></ul>
 <h3>Subqueries</h3>
-<ul><li>Scalar subquery (returns one value)</li><li>Nested subquery in WHERE / IN</li><li><strong>Correlated subquery</strong> — runs once per outer row</li></ul>
+<ul><li>Scalar subquery (returns one value)</li><li>Nested subquery in WHERE / IN</li><li><strong>Correlated subquery</strong> — logically depends on each outer row; the optimizer may transform it, and it can be slower on large data</li></ul>
 <h3>CTEs</h3>
 <ul><li><code>WITH name AS (...)</code> — chaining multiple CTEs</li><li>When to prefer a CTE over a subquery: readability, reuse</li></ul>
 <h3>Window Functions ← THE interview differentiator</h3>
@@ -64,11 +64,12 @@ strong{color:#fff}
 <h3>Functions</h3>
 <ul><li>Conditional: <code>CASE WHEN</code>, <code>COALESCE</code>, <code>NULLIF</code></li><li>String: <code>CONCAT</code>, <code>LENGTH</code>, <code>SUBSTRING</code>, <code>UPPER</code>, <code>LOWER</code>, <code>TRIM</code></li><li>Numeric: <code>ROUND</code>, <code>FLOOR</code>, <code>CEILING</code></li><li>Date: <code>DATE</code>, <code>DATEPART</code>, <code>DATEADD</code>, extracting year/month</li></ul>
 <h3>Set operations</h3>
-<ul><li><code>UNION</code> vs <code>UNION ALL</code> (the second keeps duplicates and is faster)</li></ul>
+<ul><li><code>UNION</code> vs <code>UNION ALL</code> (<code>UNION ALL</code> keeps duplicates and avoids duplicate-elimination work; it may be faster, depending on the query and database)</li></ul>
 <hr>
 <h2>📖 LEARN — Explain only, ~1 hour total</h2>
 <ul><li><strong>DDL vs DML vs DCL</strong></li><li>DDL = structure: CREATE, ALTER, DROP, TRUNCATE</li><li>DML = data: SELECT, INSERT, UPDATE, DELETE</li><li>DCL = permissions: GRANT, REVOKE</li><li><strong>DELETE vs TRUNCATE vs DROP</strong> ← commonly asked</li></ul>
-<table><thead><tr><th></th><th>Does</th><th>Rollback</th><th>Speed</th></tr></thead><tbody><tr><td>DELETE</td><td>removes rows, takes WHERE</td><td>Yes</td><td>Slow</td></tr><tr><td>TRUNCATE</td><td>wipes all rows, keeps table</td><td>No</td><td>Fast</td></tr><tr><td>DROP</td><td>removes the table itself</td><td>No</td><td>Fast</td></tr></tbody></table>
+<table><thead><tr><th></th><th>Does</th><th>Rollback behavior</th><th>Speed</th></tr></thead><tbody><tr><td>DELETE</td><td>removes rows; can take a WHERE clause</td><td>Usually transactional, depending on the database</td><td>Varies with the amount of data and indexes</td></tr><tr><td>TRUNCATE</td><td>removes all rows, keeps the table (where supported)</td><td>Database/transaction dependent</td><td>Often fast</td></tr><tr><td>DROP</td><td>removes the table itself</td><td>Database/transaction dependent</td><td>Not comparable to row deletion</td></tr></tbody></table>
+<p>Transaction and rollback behavior differs by DBMS; do not assume <code>TRUNCATE</code> or <code>DROP</code> always auto-commit or can never be rolled back.</p>
 <ul><li>Primary Key vs Foreign Key · Unique vs NOT NULL</li><li>What a relational database is · SQL vs NoSQL in one line</li><li>Normalization 1NF/2NF/3NF — one sentence each</li><li><strong>Logical execution order:</strong> FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</li><li>Recognise the syntax of CREATE / ALTER / INSERT / UPDATE / DELETE — don't drill it</li><li>What an index is, in one sentence ("speeds up lookups, costs write speed")</li></ul>
 <hr>
 <h2>❌ SKIP ENTIRELY</h2>
@@ -79,5 +80,5 @@ strong{color:#fff}
 <ol><li>WHERE vs HAVING</li><li>INNER vs LEFT JOIN</li><li>Find the 2nd/Nth highest salary</li><li>RANK vs DENSE_RANK vs ROW_NUMBER</li><li>Find duplicate rows</li><li>DELETE vs TRUNCATE</li></ol>
 <h2>Gate — write these from a blank screen before moving on</h2>
 <ul><li>Month-over-month growth % using LAG</li><li>Top 3 per group using DENSE_RANK</li><li>Customers with zero orders using LEFT JOIN</li></ul>
-<p>→ Practise: <a href="sql-quest.html">SQL Quest</a> (34 levels) or <a href="sql-written.html">the written Q&amp;A</a> (40 written Q&amp;A)</p><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
+<p>→ Practise: <a href="sql-quest.html">SQL Quest</a> (34 levels) or <a href="sql-written.html">the written practice prompts</a> (40 questions)</p><div class="foot">Data Analyst Quest &middot; 7-day sprint</div></main>
 </body></html>

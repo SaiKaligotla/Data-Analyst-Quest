@@ -129,7 +129,7 @@ MultiIndex · `.pipe()` · `.melt()` / `.stack()` / `.unstack()` · performance 
 
 ### 🔨 Seaborn *(kept on your personalized roadmap)*
 `barplot` · `lineplot` · `histplot` · `boxplot` · `scatterplot` ·
-**`sns.heatmap(df.corr(), annot=True)`** *(roadmap struck Heatmap out — put it back)*
+**`sns.heatmap(df.select_dtypes(include='number').corr(), annot=True)`** *(roadmap struck Heatmap out — put it back)*
 
 ### 🔨 Matplotlib — minimum only
 *Your personalized roadmap struck Matplotlib out, but it's the layer under seaborn.*

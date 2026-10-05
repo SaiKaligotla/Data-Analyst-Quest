@@ -27,17 +27,17 @@ node names, and marks each node 🔨 / 📖 / ❌.
 **Roadmaps deliberately ignored:** R Programming · AI & Data Scientist · BI Analyst ·
 Backend · PostgreSQL · MongoDB · Prompt Engineering.
 
-Plus, in the folder above:
-- `../practice/index.html` — **the games.** 159 interactive levels, one per skill. This is where
-  you actually practise; the documents here are the reference.
-- `../my-7-day-tracker.md` — the day-by-day schedule and progress log
-- `../sql-days-1-2.md` — 40 SQL practice questions with written solutions (printable)
+Alongside these source guides:
+- `../index.html` — **the games.** 159 interactive levels across five quests. This is where
+  you actually practise; the documents in this folder are the reference.
+- `my-7-day-tracker.md` — the day-by-day schedule and progress log
+- `sql-days-1-2.md` — 40 SQL practice prompts (printable)
 
 ### Read vs play
 | Use | When |
 |---|---|
-| **Games** (`practice/`) | Daily learning and drilling. Start here each morning. |
-| **Documents** (`learn/`) | Reference — the full learn/skip verdict per topic. Revise from these on Day 7. |
+| **Games** (`../index.html`) | Daily learning and drilling. Start here each morning. |
+| **Documents** (`guides-markdown/`) | Reference — the full learn/skip verdict per topic. Revise from these on Day 7. |
 
 The remaining 10% is **communication** — narrating your project and thinking out loud. Day 7.
 

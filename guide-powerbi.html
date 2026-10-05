@@ -39,7 +39,7 @@ strong{color:#fff}
 </style></head><body>
 <div class="top">
   <a class="b" href="index.html">DA <span>Quest</span></a>
-  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n on" href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n on" href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n " href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL practice prompts</a>
   <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
 </div>
 <main><h1>Power BI — Learn / Skip</h1>
@@ -56,9 +56,9 @@ strong{color:#fff}
 <h2>✅ "Connecting to Data" branch</h2>
 <p>🔨 <strong>Files</strong> — CSV and Excel, the only ones you need<br>📖 <strong>Databases</strong> — know you <em>can</em> connect to SQL Server/Postgres<br>❌ Clouds · ❌ APIs</p>
 <h2>⚠️ "Connection Modes" branch — mostly skip</h2>
-<p>📖 <strong>Import Mode vs DirectQuery</strong> — one line each. Import = data copied in, fast. DirectQuery = live, slower.<br>❌ Direct Lake · ❌ Dual Storage Mode · ❌ On-premises Data Gateway</p>
+<p>📖 <strong>Import Mode vs DirectQuery</strong> — Import copies data into the model and is usually fast; it reflects the last refresh. DirectQuery queries the source when visuals are queried/refreshed and may be fresher, but latency, caching and feature support depend on the source and setup.<br>❌ Direct Lake · ❌ Dual Storage Mode · ❌ On-premises Data Gateway</p>
 <h2>✅ "Power Query" branch ← this is your cleaning layer, learn it properly</h2>
-<p>🔨 <strong>Applied Steps</strong> — the step list on the right, and that it's reproducible<br>🔨 <strong>Data Types &amp; Casting</strong><br>🔨 <strong>Removing Duplicates</strong><br>🔨 <strong>Changing Text / Changing Numbers / Changing Dates</strong><br>🔨 <strong>Splitting Columns</strong><br>🔨 <strong>Custom Columns</strong><br>🔨 <strong>Conditional Columns</strong><br>🔨 <strong>Appending Tables</strong> — stacking<br>📖 <strong>Joins</strong> (Merge Queries) — same idea as SQL joins, which you already know<br>📖 <strong>Data Profiling</strong> — column quality/distribution view. Nice to mention.<br>📖 <strong>Pivot &amp; Transpose</strong></p>
+<p>🔨 <strong>Applied Steps</strong> — the step list on the right, and that it's reproducible; refresh reruns the steps against the configured source (new files appear only if the connector includes them)<br>🔨 <strong>Data Types &amp; Casting</strong><br>🔨 <strong>Removing Duplicates</strong><br>🔨 <strong>Changing Text / Changing Numbers / Changing Dates</strong><br>🔨 <strong>Splitting Columns</strong><br>🔨 <strong>Custom Columns</strong><br>🔨 <strong>Conditional Columns</strong><br>🔨 <strong>Appending Tables</strong> — stacking<br>📖 <strong>Joins</strong> (Merge Queries) — same idea as SQL joins, which you already know<br>📖 <strong>Data Profiling</strong> — column quality/distribution view. Nice to mention.<br>📖 <strong>Pivot &amp; Transpose</strong></p>
 <p>❌ M Language Basics · ❌ Advanced Editor · ❌ Parameters &amp; Functions<br>❌ Query Folding · ❌ Incremental Refresh<br>📖 <strong>DAX vs M Language</strong> — one line: <em>M transforms data on load, DAX calculates after load.</em> Good answer to have.</p>
 <h2>✅ "Data Modeling" branch — keep the basics</h2>
 <p>🔨 <strong>Relationships and Cardinality</strong> — drag key to key, one-to-many<br>🔨 <strong>Calculated Tables &amp; Columns</strong> <em>(the column half)</em><br>📖 <strong>Star vs Snowflake Schema</strong> — star: one fact table surrounded by dimension tables. One line.<br>📖 <strong>Facts &amp; Dimensions</strong> — facts = numbers/events, dimensions = descriptive attributes<br>📖 <strong>Cross Filter Direction</strong> — single vs both. Know it exists.<br>📖 <strong>Granularity</strong> — what one row represents</p>
@@ -80,8 +80,8 @@ strong{color:#fff}
 <h1>🔨 Day 6 deliverable — the thing that actually wins the interview</h1>
 <p>Use the dataset you cleaned on Day 3 and analysed on Day 4.</p>
 <p><strong>A one-page sales performance dashboard:</strong></p>
-<ul><li>4 KPI cards — Total Revenue · Total Orders · AOV · Growth %</li><li>Revenue trend over time <em>(line)</em></li><li>Top 10 products <em>(bar)</em></li><li>Revenue by region <em>(bar or map)</em></li><li>Slicers — date range, category</li></ul>
-<p>Then write <strong>3–5 insights, each with a recommendation.</strong> Not <em>"revenue went up"</em> but<br>*"revenue is up 12%, driven entirely by one region while three are flat — the regional<br>campaign should be replicated."*</p>
+<ul><li>3 KPI cards — Total Revenue · Total Orders · AOV</li><li>Revenue trend over time <em>(line)</em></li><li>Top 10 products <em>(bar)</em></li><li>Revenue by region <em>(bar or map)</em></li><li>Slicers — date range, category</li></ul>
+<p>Then write <strong>3–5 insights, each with a recommendation or next step.</strong> Not <em>"revenue went up"</em> but<br>*"revenue is up 12%, concentrated in the East. I would investigate which products or channels drove it and test whether the campaign contributed before recommending that it be replicated."*</p>
 <p>GitHub repo + README: the question, the data, what you cleaned, the insights, a screenshot.</p>
 <h2>Rehearse — 2 minutes, out loud</h2>
 <ol><li>What question was I answering?</li><li>Where did the data come from?</li><li>What was dirty, and how did I fix it?</li><li>What did I find?</li><li>What would I recommend?</li></ol>

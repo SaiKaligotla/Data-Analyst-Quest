@@ -30,7 +30,7 @@ So: understand the intuition, be able to say it in one clear sentence, move on.
 
 ### Dispersion
 - Range
-- **Variance** — average squared distance from the mean
+- **Variance** — population variance is the mean squared deviation; sample variance commonly divides by *n − 1* to estimate population variance
 - **Standard deviation** — square root of variance, back in the original units
 - **Variance vs standard deviation** ← very commonly asked. Answer: *"Same idea, but std dev is in the same units as the data, so it's interpretable."*
 
@@ -40,18 +40,18 @@ So: understand the intuition, be able to say it in one clear sentence, move on.
 
 ### Distributions
 - Normal distribution and the bell curve
-- **Skew** — right/positive (tail to the right, mean > median) vs left/negative
+- **Skew** — right/positive (tail to the right; mean is often greater than median) vs left/negative (tail to the left; mean is often lower). These are patterns, not guarantees.
 - Reading a histogram
-- Reading a **boxplot** — median, quartiles, whiskers, outlier dots
+- Reading a **boxplot** — median and quartiles; whiskers usually reach the most extreme observations within 1.5×IQR fences, with points beyond shown separately
 
 ### Outliers  **[+ roadmap has this under Data Cleanup, and struck it out — put it back]**
 - **IQR method:** below `Q1 − 1.5×IQR` or above `Q3 + 1.5×IQR`
-- Z-score method — more than 3 std devs away
+- Z-score method — values more than 3 standard deviations away are a rough flag under suitable distribution assumptions, not an automatic error
 - And the judgement question: *do you remove it, cap it, or keep it?* → depends whether it's an error or a real extreme value
 
 ### Correlation
 - Correlation coefficient, −1 to +1
-- **Correlation heatmap** — `sns.heatmap(df.corr(), annot=True)`
+- **Correlation heatmap** — `sns.heatmap(df.select_dtypes(include='number').corr(), annot=True)`
 - **Correlation ≠ causation** ← have a concrete example ready (ice cream sales and drownings — both driven by summer)
 
 ---
@@ -60,8 +60,8 @@ So: understand the intuition, be able to say it in one clear sentence, move on.
 
 - **Population vs sample**
 - **Hypothesis testing:** null hypothesis (no effect), alternative hypothesis, p-value, the 0.05 threshold
-  → *"A p-value below 0.05 means the result is unlikely to be down to chance, so we reject the null."*
-- **Confidence interval** — a range the true value likely sits in
+  → *"Assuming the null hypothesis and test assumptions, a p-value is the chance of seeing a result at least this extreme. If a pre-set α is 0.05 and p < 0.05, the result is statistically significant; this is not the probability that the null is true or that the result is merely ‘due to chance’."*
+- **Confidence interval** — a range from a procedure that captures the true value in 95% of repeated samples (for a 95% method); not a 95% probability statement about this one fixed interval
 - **A/B testing** — split users into two groups, change one thing, compare. Know what it *is*.
 - **Regression — 10 minutes only.** *"Fits a line to predict a continuous outcome. R² tells you how much of the variance is explained."* **Stop there.**
 - **[+] Population vs sample, sampling bias** — one example
@@ -77,7 +77,7 @@ Worth an hour. Interviewers love these because they test analytical thinking, no
 - **Retention** vs **Churn**
 - **Conversion rate** and the **funnel** (visit → signup → purchase)
 - **AOV** — average order value
-- **CAC** and **LTV**, and why LTV > CAC matters
+- **CAC** and **LTV** (LTV often means expected lifetime gross profit, though definitions vary); a 3:1 LTV:CAC ratio is a common rule of thumb, not a universal threshold
 - **Cohort analysis** — grouping users by join month and tracking them over time
 - Which metric matters for which product — be ready for *"what would you track for a food delivery app?"*
 

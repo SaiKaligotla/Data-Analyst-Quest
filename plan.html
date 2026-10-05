@@ -39,7 +39,7 @@ strong{color:#fff}
 </style></head><body>
 <div class="top">
   <a class="b" href="index.html">DA <span>Quest</span></a>
-  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n on" href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL written Q&amp;A</a>
+  <a class="n " href="start-here.html">Start here</a><a class="n " href="guide-sql.html">SQL</a><a class="n " href="guide-excel.html">Excel</a><a class="n " href="guide-python.html">Python</a><a class="n " href="guide-statistics.html">Statistics</a><a class="n " href="guide-powerbi.html">Power BI</a><a class="n " href="guide-postgres.html">PostgreSQL list verdict</a><a class="n on" href="plan.html">7-day plan</a><a class="n " href="sql-written.html">SQL practice prompts</a>
   <span class="sp"></span><a class="n play" href="index.html">&#9654; Play the games</a>
 </div>
 <main><h1>My 7-Day Data Analyst Interview Plan</h1>
@@ -54,7 +54,7 @@ strong{color:#fff}
 <h1>DAY 1 — SQL foundations + JOINs</h1>
 <h3>📖 Theory block (1 hr — do this first, get it out of the way)</h3>
 <ul><li>4 Types of Analytics: Descriptive (what happened) · Diagnostic (why) · Predictive (what will) · Prescriptive (what to do)</li><li>Relational databases · SQL vs NoSQL — one line each</li><li>Primary Key vs Foreign Key</li><li><strong>DDL vs DML vs DCL</strong></li><li>DDL = structure: CREATE, ALTER, DROP, TRUNCATE</li><li>DML = data: SELECT, INSERT, UPDATE, DELETE</li><li>DCL = permissions: GRANT, REVOKE</li><li><strong>DELETE vs TRUNCATE vs DROP</strong> ← commonly asked</li></ul>
-<table><thead><tr><th></th><th>Does</th><th>Rollback</th><th>Speed</th></tr></thead><tbody><tr><td>DELETE</td><td>removes rows, takes WHERE</td><td>Yes</td><td>Slow</td></tr><tr><td>TRUNCATE</td><td>wipes all rows, keeps table</td><td>No</td><td>Fast</td></tr><tr><td>DROP</td><td>deletes the table itself</td><td>No</td><td>Fast</td></tr></tbody></table>
+<table><thead><tr><th></th><th>Does</th><th>Rollback behavior</th><th>Speed</th></tr></thead><tbody><tr><td>DELETE</td><td>removes rows; can take a WHERE clause</td><td>Usually transactional, depending on the database</td><td>Varies with the amount of data and indexes</td></tr><tr><td>TRUNCATE</td><td>removes all rows, keeps the table (where supported)</td><td>Database/transaction dependent</td><td>Often fast</td></tr><tr><td>DROP</td><td>removes the table itself</td><td>Database/transaction dependent</td><td>Not comparable to row deletion</td></tr></tbody></table><p>Transaction and rollback behavior differs by DBMS; do not assume <code>TRUNCATE</code> or <code>DROP</code> always auto-commit or can never be rolled back.</p>
 <ul><li>Recognise the syntax shape only:</li></ul>
 <p>  ```sql<br>  CREATE TABLE t (id INT PRIMARY KEY, name VARCHAR(50));<br>  ALTER TABLE t ADD COLUMN dept VARCHAR(30);<br>  INSERT INTO t (id, name) VALUES (1, 'Asha');<br>  UPDATE t SET name = 'Ravi' WHERE id = 1;<br>  DELETE FROM t WHERE id = 1;<br>  ```</p>
 <h3>🔨 Practice block (5 hrs)</h3>
